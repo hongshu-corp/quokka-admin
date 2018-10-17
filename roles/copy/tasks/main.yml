@@ -1,0 +1,6 @@
+- name: make sure the directory exists
+  command: mkdir -p {{latest_release}}
+- name: copies the app folder over
+  synchronize: src=dist/ dest={{latest_release}} checksum=yes delete=yes
+- name: link the current release
+  command: ln -nfs {{latest_release}} {{current_release}}
