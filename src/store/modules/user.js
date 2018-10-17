@@ -51,7 +51,6 @@ const user = {
       return new Promise((resolve, reject) => {
         loginByUsername(username, userInfo.password).then(response => {
           const token = response.headers.authorization
-          console.log(token)
           commit('SET_TOKEN', token)
           setToken(token)
           resolve()
