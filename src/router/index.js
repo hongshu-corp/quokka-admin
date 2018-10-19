@@ -63,6 +63,11 @@ export const constantRouterMap = [
     component: () => import('@/views/errorPage/401'),
     hidden: true
   },
+  // {
+  //   path: '/users/new',
+  //   component: () => import('@/views/users/new'),
+  //   hidden: true
+  // },
   {
     path: '',
     component: Layout,

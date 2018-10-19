@@ -65,6 +65,7 @@ export default {
 
     // custom
     userManagement: 'User management',
+    createUser: 'Create User',
     userAll: 'User list'
   },
   navbar: {

@@ -27,6 +27,9 @@
         </template>
       </el-table-column>
     </el-table>
+    <div class="bottom-button">
+      <router-link class="pan-btn tiffany-btn" to="/users/new">添加</router-link>
+    </div>
   </div>
 </template>
 
@@ -78,5 +81,8 @@ export default {
   position: absolute;
   right: 15px;
   top: 10px;
+}
+.bottom-button {
+  margin-top: 10px;
 }
 </style>
