@@ -7,3 +7,35 @@ export function fetchList(query) {
     params: query
   })
 }
+
+export function fetchUser(query) {
+  return request({
+    url: '/users',
+    method: 'get',
+    params: query
+  })
+}
+
+export function createUser(data) {
+  return request({
+    url: '/users',
+    method: 'post',
+    data
+  })
+}
+
+export function updateUser(id, data) {
+  return request({
+    url: `/users/${id}`,
+    method: 'put',
+    data
+  })
+}
+
+export function deleteUser(id, data) {
+  return request({
+    url: `/users/${id}`,
+    method: 'delete',
+    data
+  })
+}

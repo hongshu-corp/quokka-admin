@@ -31,8 +31,7 @@
 
 <script>
 import MDinput from '@/components/MDinput'
-import Sticky from '@/components/Sticky'
-import { fetchArticle } from '@/api/article'
+import { fetchUser, createUser } from '@/api/user'
 
 const defaultForm = {
   name: '',
@@ -43,7 +42,7 @@ const defaultForm = {
 
 export default {
   name: 'UserForm',
-  components: { MDinput, Sticky },
+  components: { MDinput },
   props: {
     isEdit: {
       type: Boolean,
@@ -88,7 +87,7 @@ export default {
   },
   methods: {
     fetchData(id) {
-      fetchArticle(id).then(response => {
+      fetchUser(id).then(response => {
         this.postForm = response.data
         // Just for test
         this.postForm.title += `   User Id:${this.postForm.id}`
@@ -97,18 +96,21 @@ export default {
       })
     },
     submitForm() {
-      console.log(this.postForm)
       this.$refs.postForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$notify({
-            title: '成功',
-            message: '保存用户成功',
-            type: 'success',
-            duration: 2000
+          createUser(this.postForm).then(response => {
+            this.$notify({
+              title: '成功',
+              message: '保存用户成功',
+              type: 'success',
+              duration: 2000
+            })
+            this.loading = false
+            this.$router.push({ path: '/users' })
+          }).catch(err => {
+            console.log(err)
           })
-          this.loading = false
-          this.$router.push({ path: '/users' })
         } else {
           console.log('error submit!!')
           return false
