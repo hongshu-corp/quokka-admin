@@ -1,5 +1,5 @@
 <template>
-  <div class="createUser-container">
+  <div class="app-container">
     <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
       <div class="createUser-main-container">
         <el-row>
@@ -22,10 +22,8 @@
           </el-col>
         </el-row>
       </div>
-      <sticky class="sub-navbar">
-        <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">保存
-        </el-button>
-      </sticky>
+      <el-button v-loading="loading" style="margin-left: 10px;" type="primary" @click="submitForm">保存
+      </el-button>
     </el-form>
 
   </div>
@@ -123,22 +121,19 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 @import "src/styles/mixin.scss";
-.createUser-container {
-  position: relative;
-  .createUser-main-container {
-    padding: 40px 45px 20px 50px;
-    .postInfo-container {
-      position: relative;
-      @include clearfix;
-      margin-bottom: 10px;
-      .postInfo-container-item {
-        float: left;
-      }
+.createUser-main-container {
+  padding: 10px;
+  .postInfo-container {
+    position: relative;
+    @include clearfix;
+    margin-bottom: 10px;
+    .postInfo-container-item {
+      float: left;
     }
-    .editor-container {
-      min-height: 500px;
-      margin: 0 0 30px;
-    }
+  }
+  .editor-container {
+    min-height: 500px;
+    margin: 0 0 30px;
   }
 }
 </style>
