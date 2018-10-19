@@ -59,7 +59,7 @@
           <el-input v-model="temp.email"/>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="temp.password"/>
+          <el-input v-model="temp.password" type="password"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -74,23 +74,13 @@
 <script>
 import { fetchList, createUser, updateUser } from '@/api/user'
 import waves from '@/directive/waves' // 水波纹指令
-import { parseTime } from '@/utils'
 
 export default {
-  name: 'ComplexTable',
+  name: 'UserIndex',
   directives: {
     waves
   },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'info',
-        deleted: 'danger'
-      }
-      return statusMap[status]
-    }
-  },
+  filters: { },
   data() {
     return {
       tableKey: 0,
@@ -100,32 +90,26 @@ export default {
       listQuery: {
         page: 1,
         limit: 20,
-        importance: undefined,
-        title: undefined,
-        type: undefined,
+        name: undefined,
         sort: '+id'
       },
       sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
-      showReviewer: false,
       temp: {
         id: undefined,
-        importance: 1,
-        remark: '',
-        timestamp: new Date(),
-        title: '',
-        type: '',
-        status: 'published'
+        name: '',
+        email: '',
+        password: ''
       },
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
-        update: 'Edit',
-        create: 'Create'
+        update: '编辑',
+        create: '创建'
       },
       rules: {
         name: [{ required: true, message: 'name is required', trigger: 'blur' }],
-        email: [{ type: 'email', required: true, message: 'email is required', trigger: 'blur' }],
-        password: [{ type: 'password', required: true, message: 'password is required', trigger: 'blur' }]
+        email: [{ required: true, message: 'email is required', trigger: 'blur' }],
+        password: [{ required: true, message: 'password is required', trigger: 'blur' }]
       }
     }
   },
@@ -202,8 +186,9 @@ export default {
       })
     },
     handleUpdate(row) {
-      this.temp = Object.assign({}, row) // copy obj
-      this.temp.timestamp = new Date(this.temp.timestamp)
+      this.temp = Object.assign({}, row)
+      console.log(this.temp)
+      
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
@@ -214,7 +199,6 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
-          tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
           updateUser(tempData).then(() => {
             for (const v of this.list) {
               if (v.id === this.temp.id) {
@@ -243,15 +227,6 @@ export default {
       })
       const index = this.list.indexOf(row)
       this.list.splice(index, 1)
-    },
-    formatJson(filterVal, jsonData) {
-      return jsonData.map(v => filterVal.map(j => {
-        if (j === 'timestamp') {
-          return parseTime(v[j])
-        } else {
-          return v[j]
-        }
-      }))
     }
   }
 }
