@@ -1,119 +1,103 @@
 <template>
-  <div class="app-container">
-    <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
-      <div class="createUser-main-container">
-        <el-row>
-          <el-col :span="12">
-            <el-form-item prop="name">
-              <MDinput v-model="postForm.name" :maxlength="100" name="name" required>
-                名称
-              </MDinput>
-            </el-form-item>
-            <el-form-item prop="email">
-              <MDinput v-model="postForm.email" :maxlength="100" name="email" required>
-                邮箱
-              </MDinput>
-            </el-form-item>
-            <el-form-item prop="password">
-              <MDinput v-model="postForm.password" type="password" name="password" required>
-                密码
-              </MDinput>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </div>
-      <el-button v-loading="loading" style="margin-left: 10px;" type="primary" @click="submitForm">保存
-      </el-button>
+  <el-dialog :title="title" :visible.sync="visible" :show="show" @close="$emit('update:show', false)">
+    <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+      <el-form-item label="名称" prop="name">
+        <el-input v-model="temp.name"/>
+      </el-form-item>
+      <el-form-item label="邮箱" prop="email">
+        <el-input v-model="temp.email"/>
+      </el-form-item>
+      <el-form-item label="密码" prop="password">
+        <el-input v-model="temp.password" type="password"/>
+      </el-form-item>
     </el-form>
-
-  </div>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="visible = false">{{ $t('table.cancel') }}</el-button>
+      <el-button type="primary" @click="status==='create'?createData():updateData()">{{ $t('table.confirm') }}</el-button>
+    </div>
+  </el-dialog>
 </template>
 
 <script>
-import MDinput from '@/components/MDinput'
-import { fetchUser, createUser } from '@/api/user'
-
-const defaultForm = {
-  name: '',
-  email: '',
-  password: '',
-  id: undefined
-}
+import { createUser, updateUser } from '@/api/user'
 
 export default {
   name: 'UserForm',
-  components: { MDinput },
   props: {
-    isEdit: {
+    show: {
       type: Boolean,
       default: false
+    },
+    status: {
+      type: String,
+      default: 'create'
+    },
+    title: {
+      type: String,
+      default: ''
     }
   },
   data() {
-    const validateRequire = (rule, value, callback) => {
-      if (value === '') {
-        this.$message({
-          message: rule.field + '为必传项',
-          type: 'error'
-        })
-        callback(new Error(rule.field + '为必传项'))
-      } else {
-        callback()
-      }
-    }
     return {
-      postForm: Object.assign({}, defaultForm),
-      loading: false,
-      userListOptions: [],
+      visible: this.show,
+      temp: {
+        name: '',
+        email: '',
+        password: ''
+      },
       rules: {
-        name: [{ validator: validateRequire }],
-        email: [{ validator: validateRequire }],
-        password: [{ validator: validateRequire }]
+        name: [{ required: true, message: 'name is required', trigger: 'blur' }],
+        email: [{ required: true, message: 'email is required', trigger: 'blur' }],
+        password: [{ required: true, message: 'password is required', trigger: 'blur' }]
       }
     }
   },
-  computed: {
-    lang() {
-      return this.$store.getters.language
-    }
-  },
-  created() {
-    if (this.isEdit) {
-      const id = this.$route.params && this.$route.params.id
-      this.fetchData(id)
-    } else {
-      this.postForm = Object.assign({}, defaultForm)
+  watch: {
+    show() {
+      this.visible = this.show
     }
   },
   methods: {
-    fetchData(id) {
-      fetchUser(id).then(response => {
-        this.postForm = response.data
-        // Just for test
-        this.postForm.title += `   User Id:${this.postForm.id}`
-      }).catch(err => {
-        console.log(err)
-      })
+    resetTemp() {
+      this.temp = {
+        id: undefined,
+        name: '',
+        email: '',
+        password: ''
+      }
     },
-    submitForm() {
-      this.$refs.postForm.validate(valid => {
+    createData() {
+      this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          this.loading = true
-          createUser(this.postForm).then(response => {
+          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
+          createUser(this.temp).then(() => {
+            // this.list.unshift(this.temp)
+            this.$emit('createdUser', this.temp)
+            this.status = false
             this.$notify({
               title: '成功',
-              message: '保存用户成功',
+              message: '创建成功',
               type: 'success',
               duration: 2000
             })
-            this.loading = false
-            this.$router.push({ path: '/users' })
-          }).catch(err => {
-            console.log(err)
           })
-        } else {
-          console.log('error submit!!')
-          return false
+        }
+      })
+    },
+    updateData() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          const tempData = Object.assign({}, this.temp)
+          updateUser(tempData).then(() => {
+            this.$emit('updatedUser', this.temp)
+            this.visible = false
+            this.$notify({
+              title: '成功',
+              message: '更新成功',
+              type: 'success',
+              duration: 2000
+            })
+          })
         }
       })
     }
@@ -122,20 +106,4 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-@import "src/styles/mixin.scss";
-.createUser-main-container {
-  padding: 10px;
-  .postInfo-container {
-    position: relative;
-    @include clearfix;
-    margin-bottom: 10px;
-    .postInfo-container-item {
-      float: left;
-    }
-  }
-  .editor-container {
-    min-height: 500px;
-    margin: 0 0 30px;
-  }
-}
 </style>

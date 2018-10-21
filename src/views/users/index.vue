@@ -50,33 +50,19 @@
       <el-pagination v-show="total>0" :current-page="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" :total="total" background layout="total, sizes, prev, pager, next, jumper" @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
     </div>
 
-    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="名称" prop="name">
-          <el-input v-model="temp.name"/>
-        </el-form-item>
-        <el-form-item label="邮箱" prop="email">
-          <el-input v-model="temp.email"/>
-        </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input v-model="temp.password" type="password"/>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">{{ $t('table.confirm') }}</el-button>
-      </div>
-    </el-dialog>
+    <user-form ref="userForm" :show.sync="userFormVisible" :status="formStatus" title="test" @createdUser="handleCreatedUser" @updatedUser="handleUpdatedUser" />
 
   </div>
 </template>
 
 <script>
-import { fetchList, createUser, updateUser } from '@/api/user'
+import { fetchList } from '@/api/user'
 import waves from '@/directive/waves' // 水波纹指令
+import UserForm from './components/form'
 
 export default {
   name: 'UserIndex',
+  components: { UserForm },
   directives: {
     waves
   },
@@ -87,30 +73,15 @@ export default {
       list: null,
       total: null,
       listLoading: true,
+      userFormVisible: false,
+      formStatus: 'create',
       listQuery: {
         page: 1,
         limit: 20,
         name: undefined,
         sort: '+id'
       },
-      sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
-      temp: {
-        id: undefined,
-        name: '',
-        email: '',
-        password: ''
-      },
-      dialogFormVisible: false,
-      dialogStatus: '',
-      textMap: {
-        update: '编辑',
-        create: '创建'
-      },
-      rules: {
-        name: [{ required: true, message: 'name is required', trigger: 'blur' }],
-        email: [{ required: true, message: 'email is required', trigger: 'blur' }],
-        password: [{ required: true, message: 'password is required', trigger: 'blur' }]
-      }
+      sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }]
     }
   },
   created() {
@@ -141,81 +112,35 @@ export default {
       this.listQuery.page = val
       this.getList()
     },
-    handleModifyStatus(row, status) {
-      this.$message({
-        message: '操作成功',
-        type: 'success'
-      })
-      row.status = status
+    handleCreatedUser(addedUser) {
+      this.list.unshift(addedUser)
     },
-    resetTemp() {
-      this.temp = {
-        id: undefined,
-        importance: 1,
-        remark: '',
-        timestamp: new Date(),
-        title: '',
-        status: 'published',
-        type: ''
+    handleUpdatedUser(user) {
+      for (const v of this.list) {
+        if (v.id === user.id) {
+          const index = this.list.indexOf(v)
+          this.list.splice(index, 1, user)
+          break
+        }
       }
     },
     handleCreate() {
-      this.resetTemp()
-      this.dialogStatus = 'create'
-      this.dialogFormVisible = true
+      this.$refs['userForm'].resetTemp()
+      this.userFormVisible = true
+
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
-    },
-    createData() {
-      this.$refs['dataForm'].validate((valid) => {
-        if (valid) {
-          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-          this.temp.author = 'vue-element-admin'
-          createUser(this.temp).then(() => {
-            this.list.unshift(this.temp)
-            this.dialogFormVisible = false
-            this.$notify({
-              title: '成功',
-              message: '创建成功',
-              type: 'success',
-              duration: 2000
-            })
-          })
-        }
+        // this.$refs['dataForm'].clearValidate()
       })
     },
     handleUpdate(row) {
-      this.temp = Object.assign({}, row)
-      console.log(this.temp)
-      
-      this.dialogStatus = 'update'
-      this.dialogFormVisible = true
+      const user = Object.assign({}, row)
+
+      this.formStatus = 'update'
+      this.userFormVisible = true
+      this.$refs['userForm'].temp = user
+
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
-    },
-    updateData() {
-      this.$refs['dataForm'].validate((valid) => {
-        if (valid) {
-          const tempData = Object.assign({}, this.temp)
-          updateUser(tempData).then(() => {
-            for (const v of this.list) {
-              if (v.id === this.temp.id) {
-                const index = this.list.indexOf(v)
-                this.list.splice(index, 1, this.temp)
-                break
-              }
-            }
-            this.dialogFormVisible = false
-            this.$notify({
-              title: '成功',
-              message: '更新成功',
-              type: 'success',
-              duration: 2000
-            })
-          })
-        }
+        // this.$refs['dataForm'].clearValidate()
       })
     },
     handleDelete(row) {
