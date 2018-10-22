@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <common-list :list-action="listUserAction" :create-action="createUserAction" :model-temp="tempUser" @resetTemp="resetTempUser">
+    <common-list :list-action="listUserAction" :create-action="createUserAction" :update-action="updateUserAction" :model="user" @resetModel="resetUserModel" @setModel="setUserModel">
       <el-table-column :label="$t('table.id')" align="center" width="65">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
@@ -26,13 +26,13 @@
       <!-- The dialog contents-->
       <template slot="form" slot-scope="form">
         <el-form-item :label="$t('attributes.common.name')" prop="name">
-          <el-input v-model="tempUser.name"/>
+          <el-input v-model="user.name"/>
         </el-form-item>
         <el-form-item :label="$t('attributes.common.email')" prop="email">
-          <el-input v-model="tempUser.email"/>
+          <el-input v-model="user.email"/>
         </el-form-item>
         <el-form-item :label="$t('attributes.common.password')" prop="password">
-          <el-input v-model="tempUser.password" type="password"/>
+          <el-input v-model="user.password" type="password"/>
         </el-form-item>
       </template>
     </common-list>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { fetchList, createUser } from '@/api/user'
+import { fetchList, createUser, updateUser } from '@/api/user'
 import CommonList from '@/components/CommonList'
 
 export default {
@@ -53,7 +53,8 @@ export default {
       total: null,
       listUserAction: fetchList,
       createUserAction: createUser,
-      tempUser: {
+      updateUserAction: updateUser,
+      user: {
         id: undefined,
         name: '',
         email: '',
@@ -62,12 +63,15 @@ export default {
     }
   },
   methods: {
-    resetTempUser() {
-      this.tempUser = {
+    resetUserModel() {
+      this.user = {
         name: '',
         email: '',
         password: ''
       }
+    },
+    setUserModel(model) {
+      this.user = model
     }
   }
 }

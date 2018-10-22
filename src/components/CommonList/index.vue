@@ -32,7 +32,7 @@
     </div>
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="formVisible">
-      <el-form ref="dataForm" :rules="rules" :model.sync="modelTemp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+      <el-form ref="dataForm" :rules="rules" :model.sync="model" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <slot name="form" />
       </el-form>
 
@@ -55,7 +55,7 @@ export default {
     waves
   },
   props: {
-    modelTemp: {
+    model: {
       type: Object,
       default: null
     },
@@ -68,6 +68,10 @@ export default {
       default: () => new Promise()
     },
     createAction: {
+      type: Function,
+      default: () => new Promise()
+    },
+    updateAction: {
       type: Function,
       default: () => new Promise()
     }
@@ -122,7 +126,7 @@ export default {
       this.getList()
     },
     handleCreate() {
-      this.$emit('resetTemp')
+      this.$emit('resetModel')
       this.formVisible = true
       this.dialogStatus = 'create'
       this.$nextTick(() => {
@@ -132,7 +136,7 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          this.createAction(this.modelTemp).then((ret) => {
+          this.createAction(this.model).then((ret) => {
             this.list.unshift(ret.data)
             this.formVisible = false
             this.$notify({
@@ -146,18 +150,38 @@ export default {
       })
     },
     handleUpdate(row) {
-      // const user = Object.assign({}, row)
+      const user = Object.assign({}, row)
 
-      // this.formStatus = 'update'
-      // this.userFormVisible = true
-      // this.$refs['userForm'].temp = user
+      this.formStatus = 'update'
+      this.formVisible = true
+      this.$emit('setModel', user)
 
-      // this.$nextTick(() => {
-      //   // this.$refs['dataForm'].clearValidate()
-      // })
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
     },
     updateData() {
-
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          const data = Object.assign({}, this.model)
+          this.updateAction(data).then(() => {
+            for (const v of this.list) {
+              if (v.id === this.model.id) {
+                const index = this.list.indexOf(v)
+                this.list.splice(index, 1, this.model)
+                break
+              }
+            }
+            this.formVisible = false
+            this.$notify({
+              title: '成功',
+              message: '更新成功',
+              type: 'success',
+              duration: 2000
+            })
+          })
+        }
+      })
     }
   }
 }
