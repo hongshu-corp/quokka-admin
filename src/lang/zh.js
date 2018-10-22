@@ -155,5 +155,19 @@ export default {
     close: '关闭',
     closeOthers: '关闭其它',
     closeAll: '关闭所有'
+  },
+  model: {
+    user: '用户'
+  },
+  attributes: {
+    common: {
+      createdTime: '创建时间',
+      email: '邮箱',
+      name: '名称',
+      password: '密码',
+      updatedTime: '更新时间'
+    },
+    user: {
+    }
   }
 }

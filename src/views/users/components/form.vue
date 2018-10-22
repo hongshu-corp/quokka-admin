@@ -1,13 +1,13 @@
 <template>
   <el-dialog :title="title" :visible.sync="visible" :show="show" @close="$emit('update:show', false)">
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-      <el-form-item label="名称" prop="name">
+      <el-form-item :label="$t('attributes.common.name')" prop="name">
         <el-input v-model="temp.name"/>
       </el-form-item>
-      <el-form-item label="邮箱" prop="email">
+      <el-form-item :label="$t('attributes.common.email')" prop="email">
         <el-input v-model="temp.email"/>
       </el-form-item>
-      <el-form-item label="密码" prop="password">
+      <el-form-item :label="$t('attributes.common.password')" prop="password">
         <el-input v-model="temp.password" type="password"/>
       </el-form-item>
     </el-form>
@@ -69,7 +69,7 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
+          this.temp.id = parseInt(Math.random() * 10000) + 1024 // mock a id
           createUser(this.temp).then(() => {
             // this.list.unshift(this.temp)
             this.$emit('createdUser', this.temp)
