@@ -2,7 +2,7 @@
   <div>
     <div class="filter-container">
       <slot name="filter-items"/>
-      <el-button v-if="allowAdd" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit">{{ $t('table.add') }}</el-button>
+      <el-button v-if="allowAdd" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
     </div>
 
     <el-table
@@ -31,7 +31,11 @@
       <el-pagination v-show="total>0" :current-page="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" :total="total" background layout="total, sizes, prev, pager, next, jumper" @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
     </div>
 
-    <slot name="form" />
+    <el-dialog :title="textMap[dialogStatus]" :visible.sync="formVisible">
+      <el-form ref="dataForm" :rules="rules" :model.sync="modelTemp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+        <slot name="form" />
+      </el-form>
+    </el-dialog>
 
   </div>
 </template>
@@ -46,6 +50,10 @@ export default {
     waves
   },
   props: {
+    modelTemp: {
+      type: Object,
+      default: null
+    },
     allowAdd: {
       type: Boolean,
       default: true
@@ -61,6 +69,13 @@ export default {
       list: null,
       total: null,
       listLoading: true,
+      dialogStatus: '',
+      formVisible: false,
+      textMap: {
+        update: 'Edit',
+        create: 'Create'
+      },
+      rules: { },
       listQuery: {
         page: 1,
         limit: 20,
@@ -97,14 +112,13 @@ export default {
       this.listQuery.page = val
       this.getList()
     },
-    // handleCreate() {
-    //   this.$refs['userForm'].resetTemp()
-    //   this.userFormVisible = true
-
-    //   this.$nextTick(() => {
-    //     // this.$refs['dataForm'].clearValidate()
-    //   })
-    // },
+    handleCreate() {
+      this.$emit('resetTemp')
+      this.formVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
+    },
     handleUpdate(row) {
       // const user = Object.assign({}, row)
 

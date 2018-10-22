@@ -1,18 +1,22 @@
 <template>
   <div class="app-container">
-    <common-list :list-action="listUserAction">
-      <template>
-        <el-table-column :label="$t('table.id')" align="center" width="65">
-          <template slot-scope="scope">
-            <span>{{ scope.row.id }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="名称" min-width="110px">
-          <template slot-scope="scope">
-            <!-- <span class="link-type" @click="handleUpdate(scope.row)">{{ scope.row.name }}</span> -->
-            <span>{{ scope.row.name }}</span>
-          </template>
-        </el-table-column>
+    <common-list :list-action="listUserAction" :model-temp="tempUser" @resetTemp="resetTempUser">
+      <el-table-column :label="$t('table.id')" align="center" width="65">
+        <template slot-scope="scope">
+          <span>{{ scope.row.id }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="名称" min-width="110px">
+        <template slot-scope="scope">
+          <!-- <span class="link-type" @click="handleUpdate(scope.row)">{{ scope.row.name }}</span> -->
+          <span>{{ scope.row.name }}</span>
+        </template>
+      </el-table-column>
+
+      <template slot="form" slot-scope="form">
+        <el-form-item :label="$t('attributes.common.name')" prop="name">
+          <el-input v-model="form.name"/>
+        </el-form-item>
       </template>
     </common-list>
   </div>
@@ -31,7 +35,11 @@ export default {
       tableKey: 0,
       list: null,
       total: null,
-      listUserAction: fetchList
+      // userFormVisible: false,
+      listUserAction: fetchList,
+      tempUser: {
+        name: ''
+      }
       // userFormVisible: false,
       // formStatus: 'create',
       // listQuery: {
@@ -43,6 +51,11 @@ export default {
     }
   },
   methods: {
+    resetTempUser() {
+      this.tempUser = {
+        name: ''
+      }
+    }
     // handleCreatedUser(addedUser) {
     //   this.list.unshift(addedUser)
     // },
