@@ -2,6 +2,7 @@
   <div>
     <div class="filter-container">
       <slot name="filter-items"/>
+      <el-button v-if="allowAdd" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit">{{ $t('table.add') }}</el-button>
     </div>
 
     <el-table
@@ -13,7 +14,7 @@
       highlight-current-row
       style="width: 100%;">
 
-      <slot name="columns" />
+      <slot />
 
       <el-table-column :label="$t('table.actions')" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -45,6 +46,10 @@ export default {
     waves
   },
   props: {
+    allowAdd: {
+      type: Boolean,
+      default: true
+    },
     listAction: {
       type: Function,
       default: () => new Promise()
@@ -70,7 +75,6 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      console.log(this.listAction)
       this.listAction(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data.total

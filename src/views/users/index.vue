@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <common-list :list-action="listUserAction">
-      <template slot="columns">
+      <template>
         <el-table-column :label="$t('table.id')" align="center" width="65">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
@@ -43,12 +43,6 @@ export default {
     }
   },
   methods: {
-    // fetchUserList() {
-    //   fetchList().then(response => {
-    //     this.list = response.data.items
-    //     this.total = response.data.total
-    //     setTimeout(() => { this.listLoading = false }, 1.5 * 1000) })
-    // }
     // handleCreatedUser(addedUser) {
     //   this.list.unshift(addedUser)
     // },
