@@ -35,6 +35,11 @@
       <el-form ref="dataForm" :rules="rules" :model.sync="modelTemp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <slot name="form" />
       </el-form>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="formVisible = false">{{ $t('table.cancel') }}</el-button>
+        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">{{ $t('table.confirm') }}</el-button>
+      </div>
     </el-dialog>
 
   </div>
@@ -59,6 +64,10 @@ export default {
       default: true
     },
     listAction: {
+      type: Function,
+      default: () => new Promise()
+    },
+    createAction: {
       type: Function,
       default: () => new Promise()
     }
@@ -115,8 +124,25 @@ export default {
     handleCreate() {
       this.$emit('resetTemp')
       this.formVisible = true
+      this.dialogStatus = 'create'
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
+      })
+    },
+    createData() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          this.createAction(this.modelTemp).then((ret) => {
+            this.list.unshift(ret.data)
+            this.formVisible = false
+            this.$notify({
+              title: '成功',
+              message: '创建成功',
+              type: 'success',
+              duration: 2000
+            })
+          })
+        }
       })
     },
     handleUpdate(row) {
@@ -129,17 +155,10 @@ export default {
       // this.$nextTick(() => {
       //   // this.$refs['dataForm'].clearValidate()
       // })
+    },
+    updateData() {
+
     }
-    // handleDelete(row) {
-    //   this.$notify({
-    //     title: '成功',
-    //     message: '删除成功',
-    //     type: 'success',
-    //     duration: 2000
-    //   })
-    //   const index = this.list.indexOf(row)
-    //   this.list.splice(index, 1)
-    // }
   }
 }
 </script>
