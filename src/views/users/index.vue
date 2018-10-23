@@ -7,6 +7,7 @@
       :update-action="updateUserAction"
       :delete-action="deleteUserAction"
       :model="user"
+      :rules="userRules"
       confirm-text="确认要删除该用户吗？"
       allow-add
       allow-edit
@@ -69,6 +70,11 @@ export default {
         name: '',
         email: '',
         password: ''
+      },
+      userRules: {
+        name: [{ required: true, message: 'name is required', trigger: 'blur' }],
+        email: [{ required: true, message: 'email is required', trigger: 'blur' }],
+        password: [{ required: true, message: 'password is required', trigger: 'blur' }]
       }
     }
   },

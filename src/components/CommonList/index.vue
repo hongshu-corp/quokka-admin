@@ -84,6 +84,10 @@ export default {
       type: String,
       default: '确认删除吗？'
     },
+    rules: {
+      type: Object,
+      default: null
+    },
     listAction: {
       type: Function,
       default: () => new Promise()
@@ -114,7 +118,6 @@ export default {
         update: 'Edit',
         create: 'Create'
       },
-      rules: { },
       listQuery: {
         page: 1,
         limit: 20,
