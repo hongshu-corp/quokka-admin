@@ -18,10 +18,8 @@
 
       <el-table-column :label="$t('table.actions')" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
-          <!-- <el-button size="mini" type="danger" @click="handleModifyStatus(scope.row,'deleted')">{{ $t('table.delete') }} -->
-          <!-- </el-button> -->
-
+          <el-button v-if="allowAdd" type="primary" size="mini" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
+          <el-button v-if="allowDelete" type="danger" size="mini" @click="handleDelete(scope.row)">{{ $t('table.delete') }}</el-button>
           <slot name="extra-buttons"/>
         </template>
       </el-table-column>
@@ -40,6 +38,17 @@
         <el-button @click="formVisible = false">{{ $t('table.cancel') }}</el-button>
         <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">{{ $t('table.confirm') }}</el-button>
       </div>
+    </el-dialog>
+
+    <el-dialog
+      :visible.sync="confirmVisible"
+      title="提示"
+      width="30%">
+      <span>{{ confirmText }}</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="confirmVisible = false">取 消</el-button>
+        <el-button type="primary" @click="deleteData">确 定</el-button>
+      </span>
     </el-dialog>
 
   </div>
@@ -61,7 +70,19 @@ export default {
     },
     allowAdd: {
       type: Boolean,
-      default: true
+      default: false
+    },
+    allowEdit: {
+      type: Boolean,
+      default: false
+    },
+    allowDelete: {
+      type: Boolean,
+      default: false
+    },
+    confirmText: {
+      type: String,
+      default: '确认删除吗？'
     },
     listAction: {
       type: Function,
@@ -74,6 +95,10 @@ export default {
     updateAction: {
       type: Function,
       default: () => new Promise()
+    },
+    deleteAction: {
+      type: Function,
+      default: () => new Promise()
     }
   },
   data() {
@@ -84,6 +109,7 @@ export default {
       listLoading: true,
       dialogStatus: '',
       formVisible: false,
+      confirmVisible: false,
       textMap: {
         update: 'Edit',
         create: 'Create'
@@ -181,6 +207,31 @@ export default {
             })
           })
         }
+      })
+    },
+    handleDelete(row) {
+      const user = Object.assign({}, row)
+      this.confirmVisible = true
+      this.$emit('setModel', user)
+    },
+    deleteData() {
+      const id = this.model.id
+
+      this.deleteAction(id).then(() => {
+        for (const v of this.list) {
+          if (v.id === id) {
+            const index = this.list.indexOf(v)
+            this.list.splice(index, 1)
+            break
+          }
+        }
+        this.confirmVisible = false
+        this.$notify({
+          title: '成功',
+          message: '删除成功',
+          type: 'success',
+          duration: 2000
+        })
       })
     }
   }

@@ -1,6 +1,19 @@
 <template>
   <div class="app-container">
-    <common-list ref="userList" :list-action="listUserAction" :create-action="createUserAction" :update-action="updateUserAction" :model="user" @resetModel="resetUserModel" @setModel="setUserModel">
+    <common-list
+      ref="userList"
+      :list-action="listUserAction"
+      :create-action="createUserAction"
+      :update-action="updateUserAction"
+      :delete-action="deleteUserAction"
+      :model="user"
+      confirm-text="确认要删除该用户吗？"
+      allow-add
+      allow-edit
+      allow-delete
+      @resetModel="resetUserModel"
+      @setModel="setUserModel">
+
       <el-table-column :label="$t('table.id')" align="center" width="65">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
@@ -39,7 +52,7 @@
 </template>
 
 <script>
-import { fetchList, createUser, updateUser } from '@/api/user'
+import { fetchList, createUser, updateUser, deleteUser } from '@/api/user'
 import CommonList from '@/components/CommonList'
 
 export default {
@@ -50,6 +63,7 @@ export default {
       listUserAction: fetchList,
       createUserAction: createUser,
       updateUserAction: updateUser,
+      deleteUserAction: deleteUser,
       user: {
         id: undefined,
         name: '',
