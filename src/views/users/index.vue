@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <common-list :list-action="listUserAction" :create-action="createUserAction" :update-action="updateUserAction" :model="user" @resetModel="resetUserModel" @setModel="setUserModel">
+    <common-list ref="userList" :list-action="listUserAction" :create-action="createUserAction" :update-action="updateUserAction" :model="user" @resetModel="resetUserModel" @setModel="setUserModel">
       <el-table-column :label="$t('table.id')" align="center" width="65">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
@@ -8,8 +8,7 @@
       </el-table-column>
       <el-table-column :label="$t('attributes.common.name')">
         <template slot-scope="scope">
-          <!-- <span class="link-type" @click="handleUpdate(scope.row)">{{ scope.row.name }}</span> -->
-          <span>{{ scope.row.name }}</span>
+          <span class="link-type" @click="scope._self.handleUpdate(scope.row)">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('attributes.common.email')" min-width="110px">
@@ -48,9 +47,6 @@ export default {
   components: { CommonList },
   data() {
     return {
-      tableKey: 0,
-      list: null,
-      total: null,
       listUserAction: fetchList,
       createUserAction: createUser,
       updateUserAction: updateUser,
