@@ -161,6 +161,7 @@ export default {
   },
   attributes: {
     common: {
+      id: '序号',
       createdTime: '创建时间',
       email: '邮箱',
       name: '名称',

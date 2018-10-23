@@ -59,26 +59,95 @@ import CommonList from '@/components/CommonList'
 export default {
   name: 'UserIndex',
   components: { CommonList },
+
   data() {
     return {
       listUserAction: fetchList,
       createUserAction: createUser,
       updateUserAction: updateUser,
       deleteUserAction: deleteUser,
-      user: {
-        id: undefined,
-        name: '',
-        email: '',
-        password: ''
-      },
-      userRules: {
-        name: [{ required: true, message: 'name is required', trigger: 'blur' }],
-        email: [{ required: true, message: 'email is required', trigger: 'blur' }],
-        password: [{ required: true, message: 'password is required', trigger: 'blur' }]
-      }
+
+      definitions: this.getDefinitions(),
+      user: this.getModel(),
+      userRules: this.getRules()
     }
   },
   methods: {
+    getModel() {
+      const defs = this.getDefinitions()
+      var ret = {}
+      for (var key in defs) {
+        if (defs[key]['form']) {
+          ret[key] = defs[key]['form']['default']
+        }
+      }
+
+      return ret
+    },
+    getRules() {
+      const defs = this.getDefinitions()
+      var rules = {}
+      for (var key in defs) {
+        if (defs[key]['rules']) {
+          rules[key] = defs[key]['rules']
+        }
+      }
+      return rules
+    },
+    getDefinitions() {
+      return {
+        id: {
+          form: {
+            default: undefined
+          }
+        },
+        name: {
+          column: {
+            type: 'text',
+            width: '100px'
+          },
+          form: {
+            default: '',
+            type: 'input'
+          },
+          rules: [{
+            required: true,
+            message: '名称是必须的',
+            trigger: 'blur'
+          }]
+        },
+        email: {
+          column: {
+            type: 'text',
+            minWidth: '100px'
+          },
+          form: {
+            default: '',
+            type: 'input'
+          },
+          rules: [{
+            required: true,
+            message: '邮箱是必须的',
+            trigger: 'blur'
+          }]
+        },
+        password: {
+          column: {
+            type: 'text',
+            width: '100px'
+          },
+          form: {
+            default: '',
+            type: 'password'
+          },
+          rules: [{
+            required: true,
+            message: '密码是必须的',
+            trigger: 'blur'
+          }]
+        }
+      }
+    },
     resetUserModel() {
       this.user = {
         name: '',

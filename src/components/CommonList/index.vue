@@ -66,7 +66,7 @@ export default {
   props: {
     model: {
       type: Object,
-      default: null
+      default: () => {}
     },
     allowAdd: {
       type: Boolean,
@@ -86,7 +86,7 @@ export default {
     },
     rules: {
       type: Object,
-      default: null
+      default: () => {}
     },
     listAction: {
       type: Function,
@@ -115,8 +115,8 @@ export default {
       formVisible: false,
       confirmVisible: false,
       textMap: {
-        update: 'Edit',
-        create: 'Create'
+        update: '编辑',
+        create: '新增'
       },
       listQuery: {
         page: 1,
@@ -213,9 +213,9 @@ export default {
       })
     },
     handleDelete(row) {
-      const user = Object.assign({}, row)
+      const data = Object.assign({}, row)
       this.confirmVisible = true
-      this.$emit('setModel', user)
+      this.$emit('setModel', data)
     },
     deleteData() {
       const id = this.model.id
