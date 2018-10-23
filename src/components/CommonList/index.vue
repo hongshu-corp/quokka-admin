@@ -14,13 +14,19 @@
       highlight-current-row
       style="width: 100%;">
 
+      <el-table-column v-for="(item) in columns" :key="item.name" v-bind="item">
+        <template slot-scope="scope">
+          <span>{{ scope.row[item.name] }}</span>
+        </template>
+      </el-table-column>
+
       <slot />
 
       <el-table-column :label="$t('table.actions')" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button v-if="allowAdd" type="primary" size="mini" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
           <el-button v-if="allowDelete" type="danger" size="mini" @click="handleDelete(scope.row)">{{ $t('table.delete') }}</el-button>
-          <slot name="extra-buttons"/>
+          <slot name="extra-buttons" />
         </template>
       </el-table-column>
     </el-table>
@@ -68,6 +74,10 @@ export default {
       type: Object,
       default: () => {}
     },
+    modelName: {
+      type: String,
+      default: ''
+    },
     allowAdd: {
       type: Boolean,
       default: false
@@ -85,6 +95,10 @@ export default {
       default: '确认删除吗？'
     },
     rules: {
+      type: Object,
+      default: () => {}
+    },
+    definitions: {
       type: Object,
       default: () => {}
     },
@@ -114,6 +128,7 @@ export default {
       dialogStatus: '',
       formVisible: false,
       confirmVisible: false,
+      columns: this.getColumns(),
       textMap: {
         update: '编辑',
         create: '新增'
@@ -236,6 +251,20 @@ export default {
           duration: 2000
         })
       })
+    },
+    getColumns() {
+      const filter = this.$_.pickBy(this.definitions, (x) => this.$_.has(x, 'column'))
+      var ret = {}
+
+      for (var key in filter) {
+        ret[key] = filter[key]['column']
+        ret[key].name = key
+
+        const i18nPath = `attributes.common.${key}`
+        ret[key].label = this.$t(i18nPath) === i18nPath ? this.$t(`attributes.${this.modelName}.${key}`) : this.$t(i18nPath)
+      }
+
+      return ret
     }
   }
 }

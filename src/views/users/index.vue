@@ -8,14 +8,16 @@
       :delete-action="deleteUserAction"
       :model="user"
       :rules="userRules"
+      :definitions="definitions"
       confirm-text="确认要删除该用户吗？"
+      model-name="user"
       allow-add
       allow-edit
       allow-delete
       @resetModel="resetUserModel"
       @setModel="setUserModel">
 
-      <el-table-column :label="$t('table.id')" align="center" width="65">
+      <!-- <el-table-column :label="$t('table.id')" align="center" width="65">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
         </template>
@@ -34,7 +36,7 @@
         <template slot-scope="scope">
           <span>{{ scope.row.createdTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
       <!-- The dialog contents-->
       <template slot="form" slot-scope="form">
@@ -97,6 +99,10 @@ export default {
     getDefinitions() {
       return {
         id: {
+          column: {
+            type: 'text',
+            width: '65px'
+          },
           form: {
             default: undefined
           }
@@ -132,10 +138,6 @@ export default {
           }]
         },
         password: {
-          column: {
-            type: 'text',
-            width: '100px'
-          },
           form: {
             default: '',
             type: 'password'

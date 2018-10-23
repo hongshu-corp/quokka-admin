@@ -1,6 +1,7 @@
 import Vue from 'vue'
 
 import Cookies from 'js-cookie'
+import _ from 'lodash'
 
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
@@ -32,6 +33,8 @@ Object.keys(filters).forEach(key => {
 })
 
 Vue.config.productionTip = false
+
+Object.defineProperty(Vue.prototype, '$_', { value: _ })
 
 new Vue({
   el: '#app',
