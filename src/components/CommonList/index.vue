@@ -14,9 +14,9 @@
       highlight-current-row
       style="width: 100%;">
 
-      <el-table-column v-for="(item) in columns" :key="item.name" v-bind="item">
+      <el-table-column v-for="(item, key) in getColumns()" :key="key" v-bind="item">
         <template slot-scope="scope">
-          <span>{{ scope.row[item.name] }}</span>
+          <span>{{ scope.row[key] }}</span>
         </template>
       </el-table-column>
 
@@ -36,7 +36,11 @@
     </div>
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="formVisible">
-      <el-form ref="dataForm" :rules="rules" :model.sync="model" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+      <el-form ref="dataForm" :rules="rules" :model="model" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+        <el-form-item v-for="(item, key) in getFormElements()" :key="`el-${key}`" v-bind="item">
+          <text-input :value="model[key]" v-bind="item" @input="updateForm(key, $event)" />
+        </el-form-item>
+
         <slot name="form" />
       </el-form>
 
@@ -62,9 +66,11 @@
 
 <script>
 import waves from '@/directive/waves' // 水波纹指令
+import TextInput from './textInput'
 
 export default {
   name: 'CommonList',
+  components: { TextInput },
   filters: { },
   directives: {
     waves
@@ -128,7 +134,6 @@ export default {
       dialogStatus: '',
       formVisible: false,
       confirmVisible: false,
-      columns: this.getColumns(),
       textMap: {
         update: '编辑',
         create: '新增'
@@ -194,11 +199,11 @@ export default {
       })
     },
     handleUpdate(row) {
-      const user = Object.assign({}, row)
+      const data = Object.assign({}, row)
 
       this.formStatus = 'update'
       this.formVisible = true
-      this.$emit('setModel', user)
+      this.$emit('setModel', data)
 
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
@@ -208,11 +213,11 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           const data = Object.assign({}, this.model)
-          this.updateAction(data).then(() => {
+          this.updateAction(data).then((ret) => {
             for (const v of this.list) {
               if (v.id === this.model.id) {
                 const index = this.list.indexOf(v)
-                this.list.splice(index, 1, this.model)
+                this.list.splice(index, 1, ret.data)
                 break
               }
             }
@@ -258,13 +263,30 @@ export default {
 
       for (var key in filter) {
         ret[key] = filter[key]['column']
-        ret[key].name = key
-
-        const i18nPath = `attributes.common.${key}`
-        ret[key].label = this.$t(i18nPath) === i18nPath ? this.$t(`attributes.${this.modelName}.${key}`) : this.$t(i18nPath)
+        ret[key].label = this.getLabelI18n(key)
       }
 
       return ret
+    },
+    getFormElements() {
+      const filter = this.$_.pickBy(this.definitions, (x) => this.$_.has(x, 'form'))
+      var ret = {}
+
+      for (var key in filter) {
+        ret[key] = filter[key].form
+        ret[key].label = this.getLabelI18n(key)
+        ret[key].prop = key
+        ret[key].type = filter[key].form.type
+      }
+
+      return ret
+    },
+    getLabelI18n(key) {
+      const path = `attributes.common.${key}`
+      return this.$t(path) === path ? this.$t(`attributes.${this.modelName}.${key}`) : this.$t(path)
+    },
+    updateForm(fieldName, value) {
+      this.$set(this.model, fieldName, value)
     }
   }
 }

@@ -39,7 +39,7 @@
       </el-table-column> -->
 
       <!-- The dialog contents-->
-      <template slot="form" slot-scope="form">
+      <!-- <template slot="form" slot-scope="form">
         <el-form-item :label="$t('attributes.common.name')" prop="name">
           <el-input v-model="user.name"/>
         </el-form-item>
@@ -49,7 +49,7 @@
         <el-form-item :label="$t('attributes.common.password')" prop="password">
           <el-input v-model="user.password" type="password"/>
         </el-form-item>
-      </template>
+      </template> -->
     </common-list>
   </div>
 </template>
@@ -79,8 +79,8 @@ export default {
       const defs = this.getDefinitions()
       var ret = {}
       for (var key in defs) {
-        if (defs[key]['form']) {
-          ret[key] = defs[key]['form']['default']
+        if (defs[key].default) {
+          ret[key] = defs[key]['default']
         }
       }
 
@@ -103,9 +103,7 @@ export default {
             type: 'text',
             width: '65px'
           },
-          form: {
-            default: undefined
-          }
+          default: undefined
         },
         name: {
           column: {
@@ -113,9 +111,9 @@ export default {
             width: '100px'
           },
           form: {
-            default: '',
-            type: 'input'
+            type: 'text'
           },
+          default: '',
           rules: [{
             required: true,
             message: '名称是必须的',
@@ -128,9 +126,9 @@ export default {
             minWidth: '100px'
           },
           form: {
-            default: '',
-            type: 'input'
+            type: 'text'
           },
+          default: '',
           rules: [{
             required: true,
             message: '邮箱是必须的',
@@ -139,9 +137,9 @@ export default {
         },
         password: {
           form: {
-            default: '',
             type: 'password'
           },
+          default: '',
           rules: [{
             required: true,
             message: '密码是必须的',
