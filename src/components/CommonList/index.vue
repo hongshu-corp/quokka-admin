@@ -37,10 +37,7 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="formVisible">
       <el-form ref="dataForm" :rules="rules" :model="model" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-        <el-form-item v-for="(item, key) in getFormElements()" :key="`el-${key}`" v-bind="item">
-          <text-input :value="model[key]" v-bind="item" @input="updateForm(key, $event)" />
-        </el-form-item>
-
+        <form-elements :schema="formElements" v-model="model" />
         <slot name="form" />
       </el-form>
 
@@ -66,11 +63,11 @@
 
 <script>
 import waves from '@/directive/waves' // 水波纹指令
-import TextInput from './textInput'
+import FormElements from './formElements'
 
 export default {
   name: 'CommonList',
-  components: { TextInput },
+  components: { FormElements },
   filters: { },
   directives: {
     waves
@@ -134,6 +131,7 @@ export default {
       dialogStatus: '',
       formVisible: false,
       confirmVisible: false,
+      formElements: this.getFormElements(),
       textMap: {
         update: '编辑',
         create: '新增'
@@ -272,11 +270,17 @@ export default {
       const filter = this.$_.pickBy(this.definitions, (x) => this.$_.has(x, 'form'))
       var ret = {}
 
+      const typeMapper = {
+        text: 'TextInput',
+        password: 'PasswordInput'
+      }
+
       for (var key in filter) {
         ret[key] = filter[key].form
         ret[key].label = this.getLabelI18n(key)
         ret[key].prop = key
-        ret[key].type = filter[key].form.type
+
+        ret[key].type = typeMapper[filter[key].form.type]
       }
 
       return ret
@@ -284,9 +288,6 @@ export default {
     getLabelI18n(key) {
       const path = `attributes.common.${key}`
       return this.$t(path) === path ? this.$t(`attributes.${this.modelName}.${key}`) : this.$t(path)
-    },
-    updateForm(fieldName, value) {
-      this.$set(this.model, fieldName, value)
     }
   }
 }
