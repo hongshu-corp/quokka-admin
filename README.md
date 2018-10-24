@@ -26,7 +26,7 @@ yarn dev
       :delete-action="deleteUserAction"
       :model="user"
       :rules="userRules"
-      :definitions="definitions"
+      :schema="schema"
       confirm-text="确认要删除该用户吗？"
       model-name="user"
       allow-add
@@ -53,14 +53,14 @@ export default {
       updateUserAction: updateUser,
       deleteUserAction: deleteUser,
 
-      definitions: this.getDefinitions(),
+      schema: this.getSchema(),
       user: this.getModel(),
       userRules: this.getRules()
     }
   },
   methods: {
     getModel() {
-      const defs = this.getDefinitions()
+      const defs = this.getSchema()
       var ret = {}
       for (var key in defs) {
         if (defs[key].default) {
@@ -71,7 +71,7 @@ export default {
       return ret
     },
     getRules() {
-      const defs = this.getDefinitions()
+      const defs = this.getSchema()
       var rules = {}
       for (var key in defs) {
         if (defs[key]['rules']) {
@@ -80,7 +80,7 @@ export default {
       }
       return rules
     },
-    getDefinitions() {
+    getSchema() {
       return {
         id: {
           column: {
@@ -161,7 +161,7 @@ export default {
       :delete-action="deleteUserAction"
       :model="user"
       :rules="userRules"
-      :definitions="definitions"
+      :schema="schema"
       confirm-text="确认要删除该用户吗？"
       model-name="user"
       allow-add
@@ -222,14 +222,14 @@ export default {
       updateUserAction: updateUser,
       deleteUserAction: deleteUser,
 
-      definitions: this.getDefinitions(),
+      schema: this.getSchema(),
       user: this.getModel(),
       userRules: this.getRules()
     }
   },
   methods: {
     getModel() {
-      const defs = this.getDefinitions()
+      const defs = this.getSchema()
       var ret = {}
       for (var key in defs) {
         if (defs[key].default) {
@@ -240,7 +240,7 @@ export default {
       return ret
     },
     getRules() {
-      const defs = this.getDefinitions()
+      const defs = this.getSchema()
       var rules = {}
       for (var key in defs) {
         if (defs[key]['rules']) {
@@ -249,7 +249,7 @@ export default {
       }
       return rules
     },
-    getDefinitions() {
+    getSchema() {
       return { }
   }
 }

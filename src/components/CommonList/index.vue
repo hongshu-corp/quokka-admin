@@ -101,7 +101,7 @@ export default {
       type: Object,
       default: () => {}
     },
-    definitions: {
+    schema: {
       type: Object,
       default: () => {}
     },
@@ -256,7 +256,7 @@ export default {
       })
     },
     getColumns() {
-      const filter = this.$_.pickBy(this.definitions, (x) => this.$_.has(x, 'column'))
+      const filter = this.$_.pickBy(this.schema, (x) => this.$_.has(x, 'column'))
       var ret = {}
 
       for (var key in filter) {
@@ -267,7 +267,7 @@ export default {
       return ret
     },
     getFormElements() {
-      const filter = this.$_.pickBy(this.definitions, (x) => this.$_.has(x, 'form'))
+      const filter = this.$_.pickBy(this.schema, (x) => this.$_.has(x, 'form'))
       var ret = {}
 
       const typeMapper = {
