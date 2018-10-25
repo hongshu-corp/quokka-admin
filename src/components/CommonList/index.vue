@@ -51,7 +51,7 @@
       :visible.sync="confirmVisible"
       title="提示"
       width="30%">
-      <span>{{ confirmText }}</span>
+      <span>确定要删除这条记录吗？</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="confirmVisible = false">取 消</el-button>
         <el-button type="primary" @click="deleteData">确 定</el-button>
@@ -64,7 +64,7 @@
 <script>
 import waves from '@/directive/waves' // 水波纹指令
 import FormElements from './formElements'
-import { buildModel, buildRules } from './builder'
+import { buildModel, buildRules, buildColumns, buildFormElements } from './builder'
 
 export default {
   name: 'CommonList',
@@ -93,10 +93,6 @@ export default {
     allowDelete: {
       type: Boolean,
       default: false
-    },
-    confirmText: {
-      type: String,
-      default: '确认删除吗？'
     },
     rules: {
       type: Object,
@@ -147,8 +143,10 @@ export default {
   },
   computed: {
     finalRules: function() {
-      console.log('getting final rules...')
       return this.$_.merge(buildRules(this.schema), this.rules)
+    },
+    finalModelName: function() {
+      return this.modelName.length > 0 ? this.modelName : this.schema.name
     }
   },
   created() {
@@ -268,38 +266,14 @@ export default {
       })
     },
     getColumns() {
-      const filter = this.$_.pickBy(this.schema, (x) => this.$_.has(x, 'column'))
-      var ret = {}
-
-      for (var key in filter) {
-        ret[key] = filter[key]['column']
-        ret[key].label = this.getLabelI18n(key)
-      }
-
-      return ret
+      return buildColumns(this.schema, this.powerT)
     },
     getFormElements() {
-      const filter = this.$_.pickBy(this.schema, (x) => this.$_.has(x, 'form'))
-      var ret = {}
-
-      const typeMapper = {
-        text: 'TextInput',
-        password: 'PasswordInput'
-      }
-
-      for (var key in filter) {
-        ret[key] = filter[key].form
-        ret[key].label = this.getLabelI18n(key)
-        ret[key].prop = key
-
-        ret[key].type = typeMapper[filter[key].form.type]
-      }
-
-      return ret
+      return buildFormElements(this.schema, this.powerT)
     },
-    getLabelI18n(key) {
-      const path = `attributes.common.${key}`
-      return this.$t(path) === path ? this.$t(`attributes.${this.modelName}.${key}`) : this.$t(path)
+    powerT(modelName, prop) {
+      const key = `attributes.common.${prop}`
+      return this.$t(key) === key ? this.$t(`attributes.${modelName}.${key}`) : this.$t(key)
     }
   }
 }

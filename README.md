@@ -25,10 +25,7 @@ yarn dev
       :update-action="updateUserAction"
       :delete-action="deleteUserAction"
       :model="user"
-      :rules="userRules"
       :schema="schema"
-      confirm-text="确认要删除该用户吗？"
-      model-name="user"
       allow-add
       allow-edit
       allow-delete
@@ -39,104 +36,81 @@ yarn dev
 </template>
 
 <script>
-import { fetchList, createUser, updateUser, deleteUser } from '@/api/user'
+import * as User from '@/api/user'
 import CommonList from '@/components/CommonList'
+import { buildModel } from '@/components/CommonList/builder'
 
 export default {
   name: 'UserIndex',
   components: { CommonList },
-
   data() {
     return {
-      listUserAction: fetchList,
-      createUserAction: createUser,
-      updateUserAction: updateUser,
-      deleteUserAction: deleteUser,
+      listUserAction: User.list,
+      createUserAction: User.create,
+      updateUserAction: User.update,
+      deleteUserAction: User.destroy,
 
       schema: this.getSchema(),
-      user: this.getModel(),
-      userRules: this.getRules()
+      user: this.getModel()
     }
   },
   methods: {
     getModel() {
-      const defs = this.getSchema()
-      var ret = {}
-      for (var key in defs) {
-        if (defs[key].default) {
-          ret[key] = defs[key]['default']
-        }
-      }
-
-      return ret
-    },
-    getRules() {
-      const defs = this.getSchema()
-      var rules = {}
-      for (var key in defs) {
-        if (defs[key]['rules']) {
-          rules[key] = defs[key]['rules']
-        }
-      }
-      return rules
+      return buildModel(this.getSchema())
     },
     getSchema() {
       return {
-        id: {
-          column: {
-            type: 'text',
-            width: '65px'
+        name: 'user',
+        props: {
+          id: {
+            default: undefined,
+            column: {
+              type: 'text',
+              width: '65px'
+            }
           },
-          default: undefined
-        },
-        name: {
-          column: {
-            type: 'text',
-            width: '100px'
+          name: {
+            default: '',
+            column: {
+              type: 'text',
+              width: '100px'
+            },
+            form: {
+              type: 'text',
+              rules: [{
+                required: true,
+                message: '名称是必须的',
+                trigger: 'blur'
+              }]
+            }
           },
-          form: {
-            type: 'text'
+          email: {
+            default: '',
+            column: {
+              type: 'text',
+              minWidth: '100px'
+            },
+            form: {
+              type: 'text',
+              rules: [{
+                required: true,
+                message: '邮箱是必须的',
+                trigger: 'blur'
+              }]
+            }
           },
-          default: '',
-          rules: [{
-            required: true,
-            message: '名称是必须的',
-            trigger: 'blur'
-          }]
-        },
-        email: {
-          column: {
-            type: 'text',
-            minWidth: '100px'
-          },
-          form: {
-            type: 'text'
-          },
-          default: '',
-          rules: [{
-            required: true,
-            message: '邮箱是必须的',
-            trigger: 'blur'
-          }]
-        },
-        password: {
-          form: {
-            type: 'password'
-          },
-          default: '',
-          rules: [{
-            required: true,
-            message: '密码是必须的',
-            trigger: 'blur'
-          }]
+          password: {
+            default: '',
+            form: {
+              type: 'password',
+              rules: [{
+                required: true,
+                message: '密码是必须的',
+                trigger: 'blur'
+              }]
+            }
+          }
         }
-      }
-    },
-    resetUserModel() {
-      this.user = {
-        name: '',
-        email: '',
-        password: ''
       }
     },
     setUserModel(model) {
@@ -161,7 +135,6 @@ export default {
       :delete-action="deleteUserAction"
       :model="user"
       :rules="userRules"
-      :schema="schema"
       confirm-text="确认要删除该用户吗？"
       model-name="user"
       allow-add
@@ -221,36 +194,24 @@ export default {
       createUserAction: createUser,
       updateUserAction: updateUser,
       deleteUserAction: deleteUser,
-
-      schema: this.getSchema(),
       user: this.getModel(),
       userRules: this.getRules()
     }
   },
   methods: {
     getModel() {
-      const defs = this.getSchema()
-      var ret = {}
-      for (var key in defs) {
-        if (defs[key].default) {
-          ret[key] = defs[key]['default']
-        }
+      return {
+        id: undefined,
+        name: 'tom'
       }
-
-      return ret
     },
     getRules() {
-      const defs = this.getSchema()
-      var rules = {}
-      for (var key in defs) {
-        if (defs[key]['rules']) {
-          rules[key] = defs[key]['rules']
-        }
+      return {
+        type: [{ required: true, message: 'type is required', trigger: 'change' }],
+        timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
+        title: [{ required: true, message: 'title is required', trigger: 'blur' }]
       }
-      return rules
-    },
-    getSchema() {
-      return { }
+    }
   }
 }
 </script>

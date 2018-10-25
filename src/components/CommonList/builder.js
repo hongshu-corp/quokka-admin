@@ -1,8 +1,10 @@
+import _ from 'lodash'
+
 export function buildModel(schema) {
   var ret = {}
-  for (var key in schema) {
-    if (schema[key].default) {
-      ret[key] = schema[key].default
+  for (var key in schema.props) {
+    if (schema.props[key].default) {
+      ret[key] = schema.props[key].default
     }
   }
 
@@ -11,10 +13,42 @@ export function buildModel(schema) {
 
 export function buildRules(schema) {
   var ret = {}
-  for (var key in schema) {
-    if (schema[key]['rules']) {
-      ret[key] = schema[key]['rules']
+  for (var key in schema.props) {
+    if (schema.props[key].form && schema.props[key].form.rules) {
+      ret[key] = schema.props[key].form.rules
     }
   }
+  return ret
+}
+
+export function buildColumns(schema, t) {
+  const filter = _.pickBy(schema.props, (x) => _.has(x, 'column'))
+  var ret = {}
+
+  for (var key in filter) {
+    ret[key] = filter[key]['column']
+    ret[key].label = t(schema.name, key)
+  }
+
+  return ret
+}
+
+export function buildFormElements(schema, t) {
+  const filter = _.pickBy(schema.props, (x) => _.has(x, 'form'))
+  var ret = {}
+
+  const typeMapper = {
+    text: 'TextInput',
+    password: 'PasswordInput'
+  }
+
+  for (var key in filter) {
+    ret[key] = filter[key].form
+    ret[key].label = t(schema.name, key)
+    ret[key].prop = key
+
+    ret[key].type = typeMapper[filter[key].form.type]
+  }
+
   return ret
 }

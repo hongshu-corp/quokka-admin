@@ -8,8 +8,6 @@
       :delete-action="deleteUserAction"
       :model="user"
       :schema="schema"
-      confirm-text="确认要删除该用户吗？"
-      model-name="user"
       allow-add
       allow-edit
       allow-delete
@@ -77,53 +75,56 @@ export default {
     },
     getSchema() {
       return {
-        id: {
-          column: {
-            type: 'text',
-            width: '65px'
+        name: 'user',
+        props: {
+          id: {
+            default: undefined,
+            column: {
+              type: 'text',
+              width: '65px'
+            }
           },
-          default: undefined
-        },
-        name: {
-          column: {
-            type: 'text',
-            width: '100px'
+          name: {
+            default: '',
+            column: {
+              type: 'text',
+              width: '100px'
+            },
+            form: {
+              type: 'text',
+              rules: [{
+                required: true,
+                message: '名称是必须的',
+                trigger: 'blur'
+              }]
+            }
           },
-          form: {
-            type: 'text'
+          email: {
+            default: '',
+            column: {
+              type: 'text',
+              minWidth: '100px'
+            },
+            form: {
+              type: 'text',
+              rules: [{
+                required: true,
+                message: '邮箱是必须的',
+                trigger: 'blur'
+              }]
+            }
           },
-          default: '',
-          rules: [{
-            required: true,
-            message: '名称是必须的',
-            trigger: 'blur'
-          }]
-        },
-        email: {
-          column: {
-            type: 'text',
-            minWidth: '100px'
-          },
-          form: {
-            type: 'text'
-          },
-          default: '',
-          rules: [{
-            required: true,
-            message: '邮箱是必须的',
-            trigger: 'blur'
-          }]
-        },
-        password: {
-          form: {
-            type: 'password'
-          },
-          default: '',
-          rules: [{
-            required: true,
-            message: '密码是必须的',
-            trigger: 'blur'
-          }]
+          password: {
+            default: '',
+            form: {
+              type: 'password',
+              rules: [{
+                required: true,
+                message: '密码是必须的',
+                trigger: 'blur'
+              }]
+            }
+          }
         }
       }
     },
