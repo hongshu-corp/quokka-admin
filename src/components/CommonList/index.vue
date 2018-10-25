@@ -64,6 +64,7 @@
 <script>
 import waves from '@/directive/waves' // 水波纹指令
 import FormElements from './formElements'
+import { buildModel } from './builder'
 
 export default {
   name: 'CommonList',
@@ -173,7 +174,12 @@ export default {
       this.getList()
     },
     handleCreate() {
-      this.$emit('resetModel')
+      if (Object.keys(this.schema).keys.length > 0) {
+        this.model = buildModel(this.schema)
+      } else {
+        this.$emit('resetModel')
+      }
+
       this.formVisible = true
       this.dialogStatus = 'create'
       this.$nextTick(() => {

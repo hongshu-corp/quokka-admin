@@ -14,7 +14,6 @@
       allow-add
       allow-edit
       allow-delete
-      @resetModel="resetUserModel"
       @setModel="setUserModel">
 
       <!-- <el-table-column :label="$t('table.id')" align="center" width="65">
@@ -132,9 +131,6 @@ export default {
           }]
         }
       }
-    },
-    resetUserModel() {
-      this.user = this.getModel()
     },
     setUserModel(model) {
       this.user = model
