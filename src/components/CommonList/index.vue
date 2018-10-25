@@ -36,7 +36,7 @@
     </div>
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="formVisible">
-      <el-form ref="dataForm" :rules="rules" :model="model" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+      <el-form ref="dataForm" :rules="finalRules" :model="model" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <form-elements :schema="formElements" v-model="model" />
         <slot name="form" />
       </el-form>
@@ -64,7 +64,7 @@
 <script>
 import waves from '@/directive/waves' // 水波纹指令
 import FormElements from './formElements'
-import { buildModel } from './builder'
+import { buildModel, buildRules } from './builder'
 
 export default {
   name: 'CommonList',
@@ -145,6 +145,12 @@ export default {
       }
     }
   },
+  computed: {
+    finalRules: function() {
+      console.log('getting final rules...')
+      return this.$_.merge(buildRules(this.schema), this.rules)
+    }
+  },
   created() {
     this.getList()
   },
@@ -174,8 +180,8 @@ export default {
       this.getList()
     },
     handleCreate() {
-      if (Object.keys(this.schema).keys.length > 0) {
-        this.model = buildModel(this.schema)
+      if (Object.keys(this.schema).length > 0) {
+        this.$emit('setModel', buildModel(this.schema))
       } else {
         this.$emit('resetModel')
       }

@@ -7,7 +7,6 @@
       :update-action="updateUserAction"
       :delete-action="deleteUserAction"
       :model="user"
-      :rules="userRules"
       :schema="schema"
       confirm-text="确认要删除该用户吗？"
       model-name="user"
@@ -56,7 +55,7 @@
 <script>
 import { fetchList, createUser, updateUser, deleteUser } from '@/api/user'
 import CommonList from '@/components/CommonList'
-import { buildModel, buildRules } from '@/components/CommonList/builder'
+import { buildModel } from '@/components/CommonList/builder'
 
 export default {
   name: 'UserIndex',
@@ -69,16 +68,12 @@ export default {
       deleteUserAction: deleteUser,
 
       schema: this.getSchema(),
-      user: this.getModel(),
-      userRules: this.getRules()
+      user: this.getModel()
     }
   },
   methods: {
     getModel() {
       return buildModel(this.getSchema())
-    },
-    getRules() {
-      return buildRules(this.getSchema())
     },
     getSchema() {
       return {
