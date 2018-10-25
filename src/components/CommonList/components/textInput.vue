@@ -1,6 +1,7 @@
 <template>
   <el-input
     :value="value"
+    :type="type"
     :placeholder="placeholder"
     @input="handleInput" />
 </template>
@@ -15,6 +16,10 @@ export default {
     value: {
       type: String,
       default: ''
+    },
+    type: {
+      type: String,
+      default: 'text'
     }
   },
   methods: {

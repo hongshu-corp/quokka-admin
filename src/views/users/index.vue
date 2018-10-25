@@ -134,6 +134,7 @@ export default {
             default: '',
             form: {
               type: 'password',
+              placeholder: 'please input',
               rules: [{
                 required: true,
                 message: '密码是必须的',
