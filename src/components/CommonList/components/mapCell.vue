@@ -1,9 +1,12 @@
 <template>
-  <span>{{ display() }}</span>
+  <span @click="handleCopy(display, $event)">{{ display }}</span>
 </template>
 <script>
+import CellMixin from './cellMixin'
+
 export default {
   name: 'MapCell',
+  mixins: [CellMixin],
   props: {
     value: {
       type: String,
@@ -14,8 +17,8 @@ export default {
       default: () => []
     }
   },
-  methods: {
-    display() {
+  computed: {
+    display: function() {
       var index = this.$_.findIndex(this.options, { value: this.value })
 
       return index === -1 ? this.value : this.options[0].label
