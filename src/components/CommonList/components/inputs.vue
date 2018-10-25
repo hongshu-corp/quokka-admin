@@ -13,10 +13,11 @@
 <script>
 import TextInput from './textInput'
 import PasswordInput from './passwordInput'
+import SelectInput from './selectInput'
 
 export default {
   name: 'Inputs',
-  components: { PasswordInput, TextInput },
+  components: { PasswordInput, TextInput, SelectInput },
   props: {
     schema: {
       type: Object,

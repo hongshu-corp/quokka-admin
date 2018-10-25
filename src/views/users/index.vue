@@ -106,11 +106,19 @@ export default {
               minWidth: '100px'
             },
             form: {
-              type: 'text',
+              type: 'select',
               rules: [{
                 required: true,
                 message: '邮箱是必须的',
                 trigger: 'blur'
+              }],
+              options: [{
+                label: 'msn',
+                value: 'tsuijy@msn.com'
+              },
+              {
+                label: 'gmail',
+                value: 'tsuijy@gmail.com'
               }]
             }
           },
