@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { fetchList, createUser, updateUser, deleteUser } from '@/api/user'
+import * as User from '@/api/user'
 import CommonList from '@/components/CommonList'
 import { buildModel } from '@/components/CommonList/builder'
 
@@ -62,10 +62,10 @@ export default {
   components: { CommonList },
   data() {
     return {
-      listUserAction: fetchList,
-      createUserAction: createUser,
-      updateUserAction: updateUser,
-      deleteUserAction: deleteUser,
+      listUserAction: User.list,
+      createUserAction: User.create,
+      updateUserAction: User.update,
+      deleteUserAction: User.destroy,
 
       schema: this.getSchema(),
       user: this.getModel()

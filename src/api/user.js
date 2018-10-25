@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function fetchList(query) {
+export function list(query) {
   return request({
     url: '/users',
     method: 'get',
@@ -8,7 +8,7 @@ export function fetchList(query) {
   })
 }
 
-export function fetchUser(query) {
+export function detail(query) {
   return request({
     url: '/users',
     method: 'get',
@@ -16,7 +16,7 @@ export function fetchUser(query) {
   })
 }
 
-export function createUser(data) {
+export function create(data) {
   return request({
     url: '/users',
     method: 'post',
@@ -24,7 +24,7 @@ export function createUser(data) {
   })
 }
 
-export function updateUser(data) {
+export function update(data) {
   return request({
     url: '/users',
     method: 'put',
@@ -32,7 +32,7 @@ export function updateUser(data) {
   })
 }
 
-export function deleteUser(id) {
+export function destroy(id) {
   return request({
     url: `/users/${id}`,
     method: 'delete'
