@@ -35,7 +35,7 @@
       <el-pagination v-show="total>0" :current-page="listQuery.page" :page-sizes="[10, 20, 30, 50]" :page-size="listQuery.limit" :total="total" background layout="total, sizes, prev, pager, next, jumper" @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
     </div>
 
-    <el-dialog :title="textMap[dialogStatus]" :visible.sync="formVisible">
+    <el-dialog :title="textMap[formStatus]" :visible.sync="formVisible">
       <el-form ref="dataForm" :rules="finalRules" :model="model" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <inputs :schema="formElements" v-model="model" />
         <slot name="form" />
@@ -43,7 +43,7 @@
 
       <div slot="footer" class="dialog-footer">
         <el-button @click="formVisible = false">{{ $t('table.cancel') }}</el-button>
-        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">{{ $t('table.confirm') }}</el-button>
+        <el-button type="primary" @click="formStatus==='create'?createData():updateData()">{{ $t('table.confirm') }}</el-button>
       </div>
     </el-dialog>
 
@@ -127,7 +127,7 @@ export default {
       list: null,
       total: null,
       listLoading: true,
-      dialogStatus: '',
+      formStatus: '',
       formVisible: false,
       confirmVisible: false,
       textMap: {
@@ -192,7 +192,7 @@ export default {
       }
 
       this.formVisible = true
-      this.dialogStatus = 'create'
+      this.formStatus = 'create'
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
       })
