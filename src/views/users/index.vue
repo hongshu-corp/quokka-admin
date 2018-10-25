@@ -57,11 +57,11 @@
 <script>
 import { fetchList, createUser, updateUser, deleteUser } from '@/api/user'
 import CommonList from '@/components/CommonList'
+import { buildModel, buildRules } from '@/components/CommonList/builder'
 
 export default {
   name: 'UserIndex',
   components: { CommonList },
-
   data() {
     return {
       listUserAction: fetchList,
@@ -76,25 +76,10 @@ export default {
   },
   methods: {
     getModel() {
-      const defs = this.getSchema()
-      var ret = {}
-      for (var key in defs) {
-        if (defs[key].default) {
-          ret[key] = defs[key]['default']
-        }
-      }
-
-      return ret
+      return buildModel(this.getSchema())
     },
     getRules() {
-      const defs = this.getSchema()
-      var rules = {}
-      for (var key in defs) {
-        if (defs[key]['rules']) {
-          rules[key] = defs[key]['rules']
-        }
-      }
-      return rules
+      return buildRules(this.getSchema())
     },
     getSchema() {
       return {
@@ -149,11 +134,7 @@ export default {
       }
     },
     resetUserModel() {
-      this.user = {
-        name: '',
-        email: '',
-        password: ''
-      }
+      this.user = this.getModel()
     },
     setUserModel(model) {
       this.user = model
