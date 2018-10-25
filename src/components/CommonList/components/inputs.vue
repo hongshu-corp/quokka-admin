@@ -15,7 +15,7 @@ import TextInput from './textInput'
 import PasswordInput from './passwordInput'
 
 export default {
-  name: 'FormElements',
+  name: 'Inputs',
   components: { PasswordInput, TextInput },
   props: {
     schema: {

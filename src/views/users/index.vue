@@ -124,6 +124,13 @@ export default {
                 trigger: 'blur'
               }]
             }
+          },
+          createdTime: {
+            default: '',
+            column: {
+              type: 'datetime',
+              width: '140px'
+            }
           }
         }
       }
