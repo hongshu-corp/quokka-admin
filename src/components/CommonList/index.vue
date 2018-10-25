@@ -16,7 +16,7 @@
 
       <el-table-column v-for="(item, key) in columns" :key="key" v-bind="item">
         <template slot-scope="scope">
-          <cell :value="{ key: scope.row[key] }" :value-type="item.type" />
+          <cell :value="{ key: scope.row[key] }" :item="item" />
         </template>
       </el-table-column>
 

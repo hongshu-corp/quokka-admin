@@ -1,20 +1,21 @@
 <template>
   <div>
-    <component :is="valueType" :value="getValue()" />
+    <component :is="item.type" :value="getValue()" v-bind="item" />
   </div>
 </template>
 
 <script>
 import TextCell from './textCell'
 import DatetimeCell from './datetimeCell'
+import MapCell from './mapCell'
 
 export default {
   name: 'Cell',
-  components: { TextCell, DatetimeCell },
+  components: { TextCell, DatetimeCell, MapCell },
   props: {
-    valueType: {
-      type: String,
-      default: ''
+    item: {
+      type: Object,
+      default: () => {}
     },
     value: {
       type: Object,

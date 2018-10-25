@@ -81,7 +81,7 @@ export default {
             default: undefined,
             column: {
               type: 'text',
-              width: '65px'
+              width: '50px'
             }
           },
           name: {
@@ -102,8 +102,16 @@ export default {
           email: {
             default: '',
             column: {
-              type: 'text',
-              minWidth: '100px'
+              type: 'map',
+              minWidth: '100px',
+              options: [{
+                label: 'msn',
+                value: 'tsuijy@msn.com'
+              },
+              {
+                label: 'gmail',
+                value: 'tsuijy@gmail.com'
+              }]
             },
             form: {
               type: 'select',
