@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="filter-container">
-      <slot name="filter-items"/>
+      <slot :v-bind="listQuery" name="filter" />
+      <el-button v-waves v-if="allowSearch" class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
       <el-button v-if="allowAdd" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
     </div>
 
@@ -96,6 +97,10 @@ export default {
       type: Boolean,
       default: false
     },
+    allowSearch: {
+      type: Boolean,
+      default: false
+    },
     rules: {
       type: Object,
       default: () => {}
@@ -137,8 +142,7 @@ export default {
       listQuery: {
         page: 1,
         limit: 20,
-        name: undefined,
-        sort: '+id'
+        name: undefined
       }
     }
   },
@@ -174,6 +178,7 @@ export default {
     },
     handleFilter() {
       this.listQuery.page = 1
+      console.log(this.listQuery)
       this.getList()
     },
     handleSizeChange(val) {

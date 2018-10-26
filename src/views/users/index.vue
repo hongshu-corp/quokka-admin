@@ -11,41 +11,24 @@
       allow-add
       allow-edit
       allow-delete
+      allow-search
       @setModel="setUserModel">
 
-      <!-- <el-table-column :label="$t('table.id')" align="center" width="65">
-        <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column :label="$t('attributes.common.name')">
-        <template slot-scope="scope">
-          <span class="link-type" @click="scope._self.handleUpdate(scope.row)">{{ scope.row.name }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column :label="$t('attributes.common.email')" min-width="110px">
-        <template slot-scope="scope">
-          <span>{{ scope.row.email }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column :label="$t('attributes.common.createdTime')" width="150px" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.createdTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
-        </template>
-      </el-table-column> -->
+      <template slot="filter" slot-scope="scope">
+        <el-input
+          :placeholder="$t('attributes.common.name')"
+          v-model="scope.name"
+          class="filter-item filter-name"
+          @input="updateQuery(scope)"
+          @keyup.enter.native="handleFilter" />
+        <el-input
+          :placeholder="$t('attributes.common.email')"
+          v-model="scope.email"
+          class="filter-item filter-name"
+          @input="updateQuery(scope)"
+          @keyup.enter.native="handleFilter" />
+      </template>
 
-      <!-- The dialog contents-->
-      <!-- <template slot="form" slot-scope="form">
-        <el-form-item :label="$t('attributes.common.name')" prop="name">
-          <el-input v-model="user.name"/>
-        </el-form-item>
-        <el-form-item :label="$t('attributes.common.email')" prop="email">
-          <el-input v-model="user.email"/>
-        </el-form-item>
-        <el-form-item :label="$t('attributes.common.password')" prop="password">
-          <el-input v-model="user.password" type="password"/>
-        </el-form-item>
-      </template> -->
     </common-list>
   </div>
 </template>
@@ -154,7 +137,20 @@ export default {
     },
     setUserModel(model) {
       this.user = model
+    },
+    handleFilter() {
+      this.$refs['userList'].handleFilter()
+    },
+    updateQuery(scope) {
+      this.$refs['userList'].listQuery = this.$_.merge(this.$refs['userList'].listQuery, scope)
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.filter-name {
+  width: 200px;
+}
+</style>
+
