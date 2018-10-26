@@ -2,12 +2,12 @@
   <span @click="handleCopy(display, $event)">{{ display }}</span>
 </template>
 <script>
-import ColumnMixin from './columnMixin'
+import Mixin from './mixin'
 import { parseTime } from '@/utils'
 
 export default {
   name: 'DatetimeColumn',
-  mixins: [ColumnMixin],
+  mixins: [Mixin],
   props: {
     value: {
       type: String,

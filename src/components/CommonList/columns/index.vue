@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import TextColumn from './textColumn'
-import DatetimeColumn from './datetimeColumn'
-import MapColumn from './mapColumn'
+import TextColumn from './text'
+import DatetimeColumn from './datetime'
+import MapColumn from './map'
 
 export default {
   name: 'Column',

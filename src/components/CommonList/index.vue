@@ -63,8 +63,8 @@
 
 <script>
 import waves from '@/directive/waves' // 水波纹指令
-import Inputs from './components/inputs'
-import Column from './components/column'
+import Inputs from './inputs'
+import Column from './columns'
 
 import { buildModel, buildRules, buildColumns, buildFormElements } from './builder'
 

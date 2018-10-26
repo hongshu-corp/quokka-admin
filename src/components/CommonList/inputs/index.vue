@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import TextInput from './textInput'
-import SelectInput from './selectInput'
+import TextInput from './text'
+import SelectInput from './select'
 
 export default {
   name: 'Inputs',

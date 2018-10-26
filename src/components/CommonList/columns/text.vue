@@ -2,11 +2,11 @@
   <span @click="handleCopy(value, $event)">{{ value }}</span>
 </template>
 <script>
-import ColumnMixin from './columnMixin'
+import Mixin from './mixin'
 
 export default {
   name: 'TextColumn',
-  mixins: [ColumnMixin],
+  mixins: [Mixin],
   props: {
     value: {
       type: String,
