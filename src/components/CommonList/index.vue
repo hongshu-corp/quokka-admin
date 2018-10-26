@@ -16,7 +16,7 @@
 
       <el-table-column v-for="(item, key) in columns" :key="key" v-bind="item">
         <template slot-scope="scope">
-          <cell :value="{ key: scope.row[key] }" :item="item" />
+          <column :value="{ key: scope.row[key] }" :item="item" />
         </template>
       </el-table-column>
 
@@ -64,13 +64,13 @@
 <script>
 import waves from '@/directive/waves' // 水波纹指令
 import Inputs from './components/inputs'
-import Cell from './components/cell'
+import Column from './components/column'
 
 import { buildModel, buildRules, buildColumns, buildFormElements } from './builder'
 
 export default {
   name: 'CommonList',
-  components: { Inputs, Cell },
+  components: { Inputs, Column },
   filters: { },
   directives: {
     waves

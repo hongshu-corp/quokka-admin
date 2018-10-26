@@ -5,13 +5,13 @@
 </template>
 
 <script>
-import TextCell from './textCell'
-import DatetimeCell from './datetimeCell'
-import MapCell from './mapCell'
+import TextColumn from './textColumn'
+import DatetimeColumn from './datetimeColumn'
+import MapColumn from './mapColumn'
 
 export default {
-  name: 'Cell',
-  components: { TextCell, DatetimeCell, MapCell },
+  name: 'Column',
+  components: { TextColumn, DatetimeColumn, MapColumn },
   props: {
     item: {
       type: Object,
