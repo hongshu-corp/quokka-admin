@@ -16,7 +16,7 @@
 
       <el-table-column v-for="(item, key) in columns" :key="key" v-bind="item">
         <template slot-scope="scope">
-          <column :value="{ key: scope.row[key] }" :item="item" />
+          <column :value="{ key: scope.row[key] }" :item="item" @clickLinkHandler="handleUpdate(scope.row)" />
         </template>
       </el-table-column>
 

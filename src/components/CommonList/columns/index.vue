@@ -1,6 +1,6 @@
 <template>
   <div>
-    <component :is="item.type" :value="getValue()" v-bind="item" />
+    <component :is="item.type" :value="getValue()" v-bind="item" @clickLinkHandler="clickLinkHandler" />
   </div>
 </template>
 
@@ -8,10 +8,11 @@
 import TextColumn from './text'
 import DatetimeColumn from './datetime'
 import MapColumn from './map'
+import LinkUpdateColumn from './linkUpdate'
 
 export default {
   name: 'Column',
-  components: { TextColumn, DatetimeColumn, MapColumn },
+  components: { TextColumn, DatetimeColumn, MapColumn, LinkUpdateColumn },
   props: {
     item: {
       type: Object,
@@ -25,6 +26,9 @@ export default {
   methods: {
     getValue() {
       return this.value.key.toString()
+    },
+    clickLinkHandler() {
+      this.$emit('clickLinkHandler')
     }
   }
 }
