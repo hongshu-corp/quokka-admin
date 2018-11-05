@@ -21,12 +21,6 @@
           class="filter-item filter-name"
           @input="updateQuery(scope)"
           @keyup.enter.native="handleFilter" />
-        <el-input
-          :placeholder="$t('attributes.common.email')"
-          v-model="scope.email"
-          class="filter-item filter-name"
-          @input="updateQuery(scope)"
-          @keyup.enter.native="handleFilter" />
       </template>
 
     </common-list>
@@ -34,7 +28,7 @@
 </template>
 
 <script>
-import * as Role from '@/api/role'
+import * as Crud from '@/api/crud'
 import CommonList from '@/components/CommonList'
 import { buildModel } from '@/components/CommonList/builder'
 
@@ -43,10 +37,12 @@ export default {
   components: { CommonList },
   data() {
     return {
-      listRoleAction: Role.list,
-      createRoleAction: Role.create,
-      updateRoleAction: Role.update,
-      deleteRoleAction: Role.destroy,
+      table: 'roles',
+
+      listRoleAction: (query) => Crud.list(this.table, query),
+      createRoleAction: (query) => Crud.create(this.table, query),
+      updateRoleAction: (query) => Crud.update(this.table, query),
+      deleteRoleAction: (id) => Crud.destroy(this.table, id),
 
       schema: this.getSchema(),
       role: this.getModel()

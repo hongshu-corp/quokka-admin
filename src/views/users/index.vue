@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import * as User from '@/api/user'
+import * as Crud from '@/api/crud'
 import CommonList from '@/components/CommonList'
 import { buildModel } from '@/components/CommonList/builder'
 
@@ -43,10 +43,12 @@ export default {
   components: { CommonList },
   data() {
     return {
-      listUserAction: User.list,
-      createUserAction: User.create,
-      updateUserAction: User.update,
-      deleteUserAction: User.destroy,
+      table: 'users',
+
+      listUserAction: (query) => Crud.list(this.table, query),
+      createUserAction: (query) => Crud.create(this.table, query),
+      updateUserAction: (query) => Crud.update(this.table, query),
+      deleteUserAction: (id) => Crud.destroy(this.table, id),
 
       schema: this.getSchema(),
       user: this.getModel()
