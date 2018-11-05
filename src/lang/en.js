@@ -64,7 +64,7 @@ export default {
     externalLink: 'External Link',
 
     // custom
-    userManagement: 'User management',
+    securityManagement: 'Security management',
     createUser: 'Create User',
     userAll: 'User list'
   },

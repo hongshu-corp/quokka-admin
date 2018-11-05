@@ -1,15 +1,21 @@
 import Layout from '@/views/layout/Layout'
 
-const userManagementRouter = {
+const securityRouter = {
   path: '/users',
   component: Layout,
   redirect: 'noredirect',
-  name: 'userManagement',
+  name: 'securityManagement',
   meta: {
-    title: 'userManagement',
+    title: 'securityManagement',
     icon: 'user'
   },
   children: [
+    {
+      path: '',
+      component: () => import('@/views/roles/index'),
+      name: 'Rolelist',
+      meta: { title: 'roleAll' }
+    },
     {
       path: '',
       component: () => import('@/views/users/index'),
@@ -19,4 +25,4 @@ const userManagementRouter = {
   ]
 }
 
-export default userManagementRouter
+export default securityRouter

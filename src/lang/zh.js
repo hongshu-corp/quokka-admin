@@ -64,8 +64,9 @@ export default {
     externalLink: '外链',
 
     // custom
-    userManagement: '用户管理',
+    securityManagement: '安全',
     createUser: '添加用户',
+    roleAll: '角色列表',
     userAll: '用户列表'
   },
   navbar: {
