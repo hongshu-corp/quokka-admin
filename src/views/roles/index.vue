@@ -66,8 +66,7 @@ export default {
           name: {
             default: '',
             column: {
-              type: 'linkUpdate',
-              width: '100px'
+              type: 'linkUpdate'
             },
             form: {
               type: 'text',
