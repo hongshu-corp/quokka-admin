@@ -159,7 +159,9 @@ export default {
     closeAll: '关闭所有'
   },
   model: {
-    user: '用户'
+    user: '用户',
+    role: '角色',
+    permission: '权限'
   },
   attributes: {
     common: {
