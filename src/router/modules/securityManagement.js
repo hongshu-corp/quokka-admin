@@ -1,7 +1,7 @@
 import Layout from '@/views/layout/Layout'
 
 const securityRouter = {
-  path: '/users',
+  path: '/security',
   component: Layout,
   redirect: 'noredirect',
   name: 'securityManagement',
@@ -11,19 +11,19 @@ const securityRouter = {
   },
   children: [
     {
-      path: '/roles',
-      component: () => import('@/views/security/roles/index'),
-      name: 'Rolelist',
-      meta: { title: 'roleAll' }
-    },
-    {
-      path: '/users',
+      path: 'users',
       component: () => import('@/views/security/users/index'),
       name: 'Userlist',
       meta: { title: 'userAll' }
     },
     {
-      path: '/permissions',
+      path: 'roles',
+      component: () => import('@/views/security/roles/index'),
+      name: 'Rolelist',
+      meta: { title: 'roleAll' }
+    },
+    {
+      path: 'permissions',
       component: () => import('@/views/security/permissions/index'),
       name: 'Permissionlist',
       meta: { title: 'permissionAll' }
