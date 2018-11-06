@@ -12,13 +12,13 @@ const securityRouter = {
   children: [
     {
       path: '/roles',
-      component: () => import('@/views/roles/index'),
+      component: () => import('@/views/security/roles/index'),
       name: 'Rolelist',
       meta: { title: 'roleAll' }
     },
     {
       path: '/users',
-      component: () => import('@/views/users/index'),
+      component: () => import('@/views/security/users/index'),
       name: 'Userlist',
       meta: { title: 'userAll' }
     }
