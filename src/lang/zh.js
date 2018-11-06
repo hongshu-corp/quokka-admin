@@ -67,7 +67,8 @@ export default {
     securityManagement: '安全',
     createUser: '添加用户',
     roleAll: '角色列表',
-    userAll: '用户列表'
+    userAll: '用户列表',
+    permissionAll: '权限列表'
   },
   navbar: {
     logOut: '退出登录',

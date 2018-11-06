@@ -66,7 +66,9 @@ export default {
     // custom
     securityManagement: 'Security management',
     createUser: 'Create User',
-    userAll: 'User list'
+    userAll: 'User list',
+    permissionAll: 'Permission list',
+    roleAll: 'Role list'
   },
   navbar: {
     logOut: 'Log Out',
