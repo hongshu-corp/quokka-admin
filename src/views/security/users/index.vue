@@ -29,6 +29,14 @@
           @keyup.enter.native="handleFilter" />
       </template>
 
+      <template slot="form" slot-scope="scope">
+        <el-form-item :label="$t('model.role')" prop="roles">
+          <el-checkbox-group v-model="user.roles">
+            <el-checkbox v-for="role in roles" :label="role.id" :key="role.name">{{ role.name }}</el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+      </template>
+
     </common-list>
   </div>
 </template>
@@ -51,8 +59,12 @@ export default {
       deleteUserAction: (id) => Crud.destroy(this.table, id),
 
       schema: this.getSchema(),
-      user: this.getModel()
+      user: this.getModel(),
+      roles: []
     }
+  },
+  created() {
+    this.getRoles()
   },
   methods: {
     getModel() {
@@ -145,6 +157,11 @@ export default {
     },
     updateQuery(scope) {
       this.$refs['userList'].listQuery = this.$_.merge(this.$refs['userList'].listQuery, scope)
+    },
+    getRoles() {
+      Crud.list('roles', {}).then(response => {
+        this.roles = response.data.items
+      })
     }
   }
 }
