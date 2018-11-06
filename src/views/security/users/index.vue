@@ -145,6 +145,9 @@ export default {
               type: 'datetime',
               width: '140px'
             }
+          },
+          roles: {
+            default: []
           }
         }
       }
