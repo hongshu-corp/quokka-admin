@@ -9,9 +9,9 @@ export function list(table, query) {
   })
 }
 
-export function detail(table, query) {
+export function detail(table, id, query = {}) {
   return request({
-    url: `/${table}`,
+    url: `/${table}/${id}`,
     method: 'get',
     params: query
   })
