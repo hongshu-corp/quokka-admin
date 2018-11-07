@@ -17,7 +17,7 @@
 
       <el-table-column v-for="(item, key) in columns" :key="key" v-bind="item">
         <template slot-scope="scope">
-          <column :value="{ key: scope.row[key] }" :item="item" @clickLinkHandler="handleUpdate(scope.row)" />
+          <column :value="{ key: scope.row[key] }" :item="item" :model="scope.row" :show-path="showPath" @clickLinkHandler="handleUpdate(scope.row)" />
         </template>
       </el-table-column>
 
@@ -123,6 +123,10 @@ export default {
     deleteAction: {
       type: Function,
       default: () => new Promise()
+    },
+    showPath: {
+      type: String,
+      default: ''
     }
   },
   data() {

@@ -27,6 +27,13 @@ const securityRouter = {
       component: () => import('@/views/security/permissions/index'),
       name: 'Permissionlist',
       meta: { title: 'permissionAll' }
+    },
+    {
+      path: 'users/:id(\\d+)',
+      component: () => import('@/views/security/users/show'),
+      name: 'Userdetail',
+      meta: { title: 'userDetail', noCache: true },
+      hidden: true
     }
   ]
 }

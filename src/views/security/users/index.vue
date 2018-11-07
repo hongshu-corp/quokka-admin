@@ -12,6 +12,7 @@
       allow-edit
       allow-delete
       allow-search
+      show-path="/security/users"
       @setModel="setUserModel">
 
       <template slot="filter" slot-scope="scope">
@@ -77,7 +78,7 @@ export default {
           id: {
             default: undefined,
             column: {
-              type: 'text',
+              type: 'linkShow',
               width: '50px'
             }
           },
