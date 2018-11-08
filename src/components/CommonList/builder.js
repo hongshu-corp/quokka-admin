@@ -28,7 +28,7 @@ export function buildColumns(schema, t) {
   for (var key in filter) {
     ret[key] = filter[key]['column']
     ret[key].label = t(schema.name, key)
-    ret[key].type = `${ret[key].type}Column`
+    ret[key].columnType = `${ret[key].type}Column`
   }
 
   return ret

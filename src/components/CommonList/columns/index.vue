@@ -1,6 +1,6 @@
 <template>
   <div>
-    <component :is="item.type" :value="getValue()" v-bind="item" :show-path="getShowRouter()" @clickLinkHandler="clickLinkHandler" />
+    <component :is="item.columnType" :value="getValue()" v-bind="item" :show-path="getShowRouter()" @clickLinkHandler="clickLinkHandler" />
   </div>
 </template>
 
