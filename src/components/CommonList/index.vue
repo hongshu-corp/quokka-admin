@@ -104,10 +104,6 @@ export default {
       type: Object,
       default: () => {}
     },
-    schema: {
-      type: Object,
-      default: () => {}
-    },
     listAction: {
       type: Function,
       default: () => new Promise()
@@ -125,6 +121,10 @@ export default {
       default: () => new Promise()
     },
     showPath: {
+      type: String,
+      default: ''
+    },
+    name: {
       type: String,
       default: ''
     }
@@ -150,6 +150,9 @@ export default {
     }
   },
   computed: {
+    schema: function() {
+      return this.$store.getters.schemas[this.name]
+    },
     columns: function() {
       return buildColumns(this.schema, this.powerT)
     },

@@ -7,7 +7,7 @@
       :update-action="updatePermissionAction"
       :delete-action="deletePermissionAction"
       :model="permission"
-      :schema="schema"
+      :name="table"
       allow-add
       allow-edit
       allow-delete
@@ -44,55 +44,12 @@ export default {
       updatePermissionAction: (query) => Crud.update(this.table, query),
       deletePermissionAction: (id) => Crud.destroy(this.table, id),
 
-      schema: this.getSchema(),
       permission: this.getModel()
     }
   },
   methods: {
     getModel() {
-      return buildModel(this.getSchema())
-    },
-    getSchema() {
-      return {
-        name: 'permission',
-        props: {
-          id: {
-            default: undefined,
-            column: {
-              type: 'text',
-              width: '50px'
-            }
-          },
-          name: {
-            default: '',
-            column: {
-              type: 'linkUpdate'
-            },
-            form: {
-              type: 'text',
-              rules: [{
-                required: true,
-                message: '名称是必须的',
-                trigger: 'blur'
-              }]
-            }
-          },
-          createdTime: {
-            default: '',
-            column: {
-              type: 'datetime',
-              width: '140px'
-            }
-          },
-          updatedTime: {
-            default: '',
-            column: {
-              type: 'datetime',
-              width: '140px'
-            }
-          }
-        }
-      }
+      return buildModel(this.$store.state.schema.data.permissions)
     },
     setPermissionModel(model) {
       this.permission = model

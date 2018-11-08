@@ -125,6 +125,9 @@ export default {
           }).catch(() => {
             this.loading = false
           })
+
+          // init the schema
+          this.$store.dispatch('initSchema')
         } else {
           console.log('error submit!!')
           return false

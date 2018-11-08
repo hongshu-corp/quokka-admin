@@ -7,7 +7,7 @@
       :update-action="updateRoleAction"
       :delete-action="deleteRoleAction"
       :model="role"
-      :schema="schema"
+      :name="table"
       allow-add
       allow-edit
       allow-delete
@@ -44,55 +44,12 @@ export default {
       updateRoleAction: (query) => Crud.update(this.table, query),
       deleteRoleAction: (id) => Crud.destroy(this.table, id),
 
-      schema: this.getSchema(),
       role: this.getModel()
     }
   },
   methods: {
     getModel() {
-      return buildModel(this.getSchema())
-    },
-    getSchema() {
-      return {
-        name: 'role',
-        props: {
-          id: {
-            default: undefined,
-            column: {
-              type: 'text',
-              width: '50px'
-            }
-          },
-          name: {
-            default: '',
-            column: {
-              type: 'linkUpdate'
-            },
-            form: {
-              type: 'text',
-              rules: [{
-                required: true,
-                message: '名称是必须的',
-                trigger: 'blur'
-              }]
-            }
-          },
-          createdTime: {
-            default: '',
-            column: {
-              type: 'datetime',
-              width: '140px'
-            }
-          },
-          updatedTime: {
-            default: '',
-            column: {
-              type: 'datetime',
-              width: '140px'
-            }
-          }
-        }
-      }
+      return buildModel(this.$store.state.schema.data.roles)
     },
     setRoleModel(model) {
       this.role = model
