@@ -1,28 +1,31 @@
 <template>
-  <div class="app-container">
+  <div class="detail-container">
 
     <el-row :gutter="32">
-      <el-col :xs="24" :sm="12" :lg="8">
+      <el-col :xs="24">
         <div class="card-wrapper">
           <el-card shadow="always">
             <div slot="header" class="clearfix">
-              <span>{{ $t("attributes.common.name") }}:</span>
+              <b class="">用户详情</b>
+            </div>
+            <div class="item">
+              <span class="title">{{ $t("attributes.common.name") }}:</span>
               <span>{{ user.name }}</span>
             </div>
-            <div>
-              <span>{{ $t("attributes.common.email") }}:</span>
+            <div class="item">
+              <span class="title">{{ $t("attributes.common.email") }}:</span>
               <span>{{ user.email }}</span>
             </div>
-            <div>
-              <span>{{ $t("attributes.common.createdTime") }}:</span>
+            <div class="item">
+              <span class="title">{{ $t("attributes.common.createdTime") }}:</span>
               <span>{{ parseTime(user.createdTime, '{y}-{m}-{d} {h}:{i}') }}</span>
             </div>
-            <div>
-              <span>{{ $t("attributes.common.updatedTime") }}:</span>
+            <div class="item">
+              <span class="title">{{ $t("attributes.common.updatedTime") }}:</span>
               <span>{{ parseTime(user.updatedTime, '{y}-{m}-{d} {h}:{i}') }}</span>
             </div>
-            <div>
-              <span>{{ $t("model.role") }}:</span>
+            <div class="item">
+              <span class="title">{{ $t("model.role") }}:</span>
               <span>{{ user.roles }}</span>
             </div>
           </el-card>
@@ -30,7 +33,7 @@
       </el-col>
       <el-col :xs="24" :sm="12" :lg="8">
         <div class="card-wrapper">
-          <el-card shadow="hover">
+          <el-card shadow="always">
             其他信息
           </el-card>
         </div>
@@ -87,7 +90,17 @@ export default {
 
 .card-wrapper {
   padding:16px 16px 0;
-  margin-bottom: 32px;
+}
+
+.item {
+  height: 25px;
+}
+
+.title {
+  width: 150px;
+  display: inline-block;
+  font-weight: bold;
+  text-align: left;
 }
 
 </style>

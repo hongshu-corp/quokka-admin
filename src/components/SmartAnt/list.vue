@@ -69,7 +69,7 @@ import { buildModel, buildRules, buildColumns, buildFormElements } from './build
 import Pagination from '@/components/Pagination'
 
 export default {
-  name: 'CommonList',
+  name: 'SmartList',
   components: { Inputs, Column, Pagination },
   filters: { },
   directives: {
