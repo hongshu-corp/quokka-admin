@@ -6,6 +6,9 @@ const user = {
       column: {
         type: 'linkShow',
         width: '50px'
+      },
+      detail: {
+        type: 'text'
       }
     },
     name: {
@@ -21,6 +24,9 @@ const user = {
           message: '名称是必须的',
           trigger: 'blur'
         }]
+      },
+      detail: {
+        type: 'text'
       }
     },
     email: {

@@ -1,0 +1,191 @@
+<template>
+  <div>
+    <div class="card-wrapper">
+      <el-card shadow="always">
+        <div slot="header" class="clearfix">
+          <b>用户详情</b>
+        </div>
+        <details :schema="detailElements" :v-model="model" />
+      </el-card>
+    </div>
+
+    <slot />
+
+    <el-dialog :title="textMap[formStatus]" :visible.sync="formVisible">
+      <el-form ref="dataForm" :rules="finalRules" :model="model" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+        <inputs :schema="formElements" v-model="model" />
+        <slot name="form" />
+      </el-form>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="formVisible = false">{{ $t('table.cancel') }}</el-button>
+        <el-button type="primary" @click="formStatus==='create'?createData():updateData()">{{ $t('table.confirm') }}</el-button>
+      </div>
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+import Details from './details'
+
+import { buildDetailElements, buildRules, buildFormElements } from './builder'
+
+export default {
+  name: 'SmartShow',
+  components: { Details },
+  props: {
+    modelName: {
+      type: String,
+      default: ''
+    },
+    allowEdit: {
+      type: Boolean,
+      default: false
+    },
+    allowDelete: {
+      type: Boolean,
+      default: false
+    },
+    rules: {
+      type: Object,
+      default: () => {}
+    },
+    updateAction: {
+      type: Function,
+      default: () => new Promise()
+    },
+    deleteAction: {
+      type: Function,
+      default: () => new Promise()
+    },
+    detailAction: {
+      type: Function,
+      default: () => new Promise()
+    },
+    name: {
+      type: String,
+      default: ''
+    }
+  },
+  data() {
+    return {
+      model: {},
+      formStatus: '编辑',
+      formVisible: false,
+      confirmVisible: false,
+      textMap: {
+        update: '编辑',
+        create: '新增'
+      }
+    }
+  },
+  computed: {
+    schema: function() {
+      return this.$store.getters.schemas[this.name]
+    },
+    detailElements: function() {
+      return buildDetailElements(this.schema, this.powerT)
+    },
+    formElements: function() {
+      return buildFormElements(this.schema, this.powerT)
+    },
+    finalRules: function() {
+      return this.$_.merge(buildRules(this.schema), this.rules)
+    },
+    finalModelName: function() {
+      return this.modelName.length > 0 ? this.modelName : this.schema.name
+    }
+  },
+  created() {
+    const id = this.$route.params && this.$route.params.id
+    this.fetchData(id)
+    this.tempRoute = Object.assign({}, this.$route)
+  },
+  methods: {
+    fetchData(id) {
+      this.detailAction(id).then(response => {
+        this.model = response.data
+
+        this.setTagTitle()
+      })
+    },
+    setTagTitle() {
+      const title = this.lang === 'zh' ? '用户详情' : 'User Detail'
+      const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.model.id}` })
+
+      this.$store.dispatch('updateVisitedView', route)
+    },
+    handleUpdate(row) {
+      const data = Object.assign({}, row)
+
+      this.formStatus = 'update'
+      this.formVisible = true
+      this.$emit('setModel', data)
+
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
+    },
+    updateData() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          const data = Object.assign({}, this.model)
+          this.updateAction(data).then((ret) => {
+            // todo
+            this.formVisible = false
+            this.$notify({
+              title: '成功',
+              message: '更新成功',
+              type: 'success',
+              duration: 2000
+            })
+          })
+        }
+      })
+    },
+    handleDelete(row) {
+      const data = Object.assign({}, row)
+      this.confirmVisible = true
+      // todo
+      this.$emit('setModel', data)
+    },
+    deleteData() {
+      const id = this.model.id
+
+      this.deleteAction(id).then(() => {
+        this.confirmVisible = false
+        // todo
+        this.$notify({
+          title: '成功',
+          message: '删除成功',
+          type: 'success',
+          duration: 2000
+        })
+      })
+    },
+    powerT(modelName, prop) {
+      const key = `attributes.common.${prop}`
+      return this.$t(key) === key ? this.$t(`attributes.${modelName}.${key}`) : this.$t(key)
+    }
+  }
+}
+</script>
+
+<style rel="stylesheets/scss" lang="scss" scoped>
+
+.card-wrapper {
+  padding:16px 16px 0;
+}
+
+.item {
+  height: 25px;
+}
+
+.title {
+  width: 150px;
+  display: inline-block;
+  font-weight: bold;
+  text-align: left;
+}
+
+</style>

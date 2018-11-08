@@ -46,3 +46,16 @@ export function buildFormElements(schema, t) {
 
   return ret
 }
+
+export function buildDetailElements(schema, t) {
+  const filter = _.pickBy(schema.props, (x) => _.has(x, 'detail'))
+  var ret = {}
+
+  for (var key in filter) {
+    ret[key] = filter[key].detail
+    ret[key].label = t(schema.name, key)
+    ret[key].prop = key
+  }
+
+  return ret
+}
