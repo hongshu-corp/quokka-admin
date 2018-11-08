@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <common-list
+    <smart-list
       ref="roleList"
       :list-action="listRoleAction"
       :create-action="createRoleAction"
@@ -23,18 +23,18 @@
           @keyup.enter.native="handleFilter" />
       </template>
 
-    </common-list>
+    </smart-list>
   </div>
 </template>
 
 <script>
 import * as Crud from '@/api/crud'
-import CommonList from '@/components/CommonList'
+import SmartList from '@/components/SmartAnt/list'
 import { buildModel } from '@/components/CommonList/builder'
 
 export default {
   name: 'RoleIndex',
-  components: { CommonList },
+  components: { SmartList },
   data() {
     return {
       table: 'roles',

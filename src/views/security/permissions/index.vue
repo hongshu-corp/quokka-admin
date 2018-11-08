@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <common-list
+    <smart-list
       ref="permissionList"
       :list-action="listPermissionAction"
       :create-action="createPermissionAction"
@@ -23,18 +23,18 @@
           @keyup.enter.native="handleFilter" />
       </template>
 
-    </common-list>
+    </smart-list>
   </div>
 </template>
 
 <script>
 import * as Crud from '@/api/crud'
-import CommonList from '@/components/CommonList'
+import SmartList from '@/components/SmartAnt/list'
 import { buildModel } from '@/components/CommonList/builder'
 
 export default {
   name: 'PermissionIndex',
-  components: { CommonList },
+  components: { SmartList },
   data() {
     return {
       table: 'permissions',
