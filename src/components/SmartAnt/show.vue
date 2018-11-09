@@ -4,6 +4,12 @@
       <el-card shadow="always">
         <div slot="header" class="clearfix">
           <b>用户详情</b>
+
+          <div style="float: right; padding: 3px 0">
+            <el-button v-if="allowEdit" type="primary" size="mini" @click="handleUpdate(model)">{{ $t('table.edit') }}</el-button>
+            <el-button v-if="allowDelete" type="danger" size="mini" @click="handleDelete(model)">{{ $t('table.delete') }}</el-button>
+            <slot name="extra-buttons" />
+          </div>
         </div>
         <model-detail :schema="detailElements" :table="name" v-model="model" />
       </el-card>
@@ -22,18 +28,30 @@
         <el-button type="primary" @click="updateData()">{{ $t('table.confirm') }}</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog
+      :visible.sync="confirmVisible"
+      title="提示"
+      width="30%">
+      <span>确定要删除这条记录吗？</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="confirmVisible = false">取 消</el-button>
+        <el-button type="primary" @click="deleteData">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import ModelDetail from './details'
+import Inputs from './inputs'
 import { powerT } from './helpers/powerT'
 
 import { buildDetailElements, buildRules, buildFormElements } from './helpers/builder'
 
 export default {
   name: 'SmartShow',
-  components: { ModelDetail },
+  components: { ModelDetail, Inputs },
   props: {
     modelName: {
       type: String,
@@ -62,6 +80,10 @@ export default {
     detailAction: {
       type: Function,
       default: () => new Promise()
+    },
+    indexPath: {
+      type: String,
+      default: '/dashboard'
     },
     name: {
       type: String,
@@ -117,12 +139,8 @@ export default {
       this.$store.dispatch('updateVisitedView', route)
     },
     handleUpdate(row) {
-      const data = Object.assign({}, row)
-
       this.formStatus = 'update'
       this.formVisible = true
-      this.$emit('setModel', data)
-
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
       })
@@ -132,7 +150,6 @@ export default {
         if (valid) {
           const data = Object.assign({}, this.model)
           this.updateAction(data).then((ret) => {
-            // todo
             this.formVisible = false
             this.$notify({
               title: '成功',
@@ -145,17 +162,16 @@ export default {
       })
     },
     handleDelete(row) {
-      const data = Object.assign({}, row)
       this.confirmVisible = true
-      // todo
-      this.$emit('setModel', data)
     },
     deleteData() {
       const id = this.model.id
 
       this.deleteAction(id).then(() => {
         this.confirmVisible = false
-        // todo
+
+        this.$router.push({ path: this.indexPath })
+
         this.$notify({
           title: '成功',
           message: '删除成功',

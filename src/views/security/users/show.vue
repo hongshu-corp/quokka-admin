@@ -7,6 +7,7 @@
       :delete-action="deleteUserAction"
       :detail-action="detailUserAction"
       :name="table"
+      index-path="/security/users"
       allow-edit
       allow-delete>
 
