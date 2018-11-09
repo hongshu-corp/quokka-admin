@@ -21,7 +21,7 @@ export default {
     display: function() {
       var index = this.$_.findIndex(this.options, { value: this.value })
 
-      return index === -1 ? this.value : this.options[0].label
+      return index === -1 ? this.value : this.options[index].label
     }
   }
 }

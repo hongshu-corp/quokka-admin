@@ -53,10 +53,10 @@ export default {
       deleteRoleAction: (id) => Crud.destroy(this.table, id),
       detailRoleAction: (id) => Crud.detail(this.table, id),
 
-      listUserAction: (query) => Crud.list(this.table, query),
-      createUserAction: (query) => Crud.create(this.table, query),
-      updateUserAction: (query) => Crud.update(this.table, query),
-      deleteUserAction: (id) => Crud.destroy(this.table, id),
+      listUserAction: (query) => Crud.list(this.userTable, query),
+      createUserAction: (query) => Crud.create(this.userTable, query),
+      updateUserAction: (query) => Crud.update(this.userTable, query),
+      deleteUserAction: (id) => Crud.destroy(this.userTable, id),
 
       roles: [],
       user: this.getUserModel()
@@ -66,6 +66,9 @@ export default {
     getUserModel() {
       var schema = this.$store.state.schema.data.users
       return buildModel(schema)
+    },
+    setUserModel(model) {
+      this.user = model
     }
   }
 }
