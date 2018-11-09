@@ -12,6 +12,7 @@
       allow-edit
       allow-delete
       allow-search
+      show-path="/security/roles"
       @setModel="setRoleModel">
 
       <template slot="filter" slot-scope="scope">

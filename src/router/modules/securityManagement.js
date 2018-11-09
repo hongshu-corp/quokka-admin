@@ -34,6 +34,13 @@ const securityRouter = {
       name: 'Userdetail',
       meta: { title: 'userDetail', noCache: true },
       hidden: true
+    },
+    {
+      path: 'roles/:id(\\d+)',
+      component: () => import('@/views/security/roles/show'),
+      name: 'Roledetail',
+      meta: { title: 'roleDetail', noCache: true },
+      hidden: true
     }
   ]
 }

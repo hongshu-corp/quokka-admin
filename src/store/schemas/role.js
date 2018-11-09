@@ -4,8 +4,11 @@ const role = {
     id: {
       default: undefined,
       column: {
-        type: 'text',
+        type: 'linkShow',
         width: '50px'
+      },
+      detail: {
+        type: 'text'
       }
     },
     name: {
@@ -20,6 +23,9 @@ const role = {
           message: '名称是必须的',
           trigger: 'blur'
         }]
+      },
+      detail: {
+        type: 'text'
       }
     },
     createdTime: {
@@ -27,6 +33,9 @@ const role = {
       column: {
         type: 'datetime',
         width: '140px'
+      },
+      detail: {
+        type: 'text'
       }
     },
     updatedTime: {
@@ -34,6 +43,9 @@ const role = {
       column: {
         type: 'datetime',
         width: '140px'
+      },
+      detail: {
+        type: 'text'
       }
     }
   }
