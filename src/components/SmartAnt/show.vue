@@ -1,19 +1,17 @@
 <template>
   <div>
-    <div class="card-wrapper">
-      <el-card shadow="always">
-        <div slot="header" class="clearfix">
-          <b>{{ $t(`models.${name}`) }}{{ $t('actions.detail') }}</b>
+    <el-card shadow="always">
+      <div slot="header" class="clearfix">
+        <b>{{ $t(`models.${name}`) }}{{ $t('actions.detail') }}</b>
 
-          <div style="float: right; padding: 3px 0">
-            <el-button v-if="allowEdit" type="primary" size="mini" @click="handleUpdate(model)">{{ $t('table.edit') }}</el-button>
-            <el-button v-if="allowDelete" type="danger" size="mini" @click="handleDelete(model)">{{ $t('table.delete') }}</el-button>
-            <slot name="extra-buttons" />
-          </div>
+        <div style="float: right; padding: 3px 0">
+          <el-button v-if="allowEdit" type="primary" size="mini" @click="handleUpdate(model)">{{ $t('table.edit') }}</el-button>
+          <el-button v-if="allowDelete" type="danger" size="mini" @click="handleDelete(model)">{{ $t('table.delete') }}</el-button>
+          <slot name="extra-buttons" />
         </div>
-        <model-detail :schema="detailElements" :table="name" v-model="model" />
-      </el-card>
-    </div>
+      </div>
+      <model-detail :schema="detailElements" :table="name" v-model="model" />
+    </el-card>
 
     <slot />
 
@@ -186,10 +184,6 @@ export default {
 </script>
 
 <style rel="stylesheets/scss" lang="scss">
-
-.card-wrapper {
-  padding:16px 16px 0;
-}
 
 .detail-item {
   height: 25px;
