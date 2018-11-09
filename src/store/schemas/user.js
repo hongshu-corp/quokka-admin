@@ -58,6 +58,9 @@ const user = {
           label: 'gmail',
           value: 'tsuijy@gmail.com'
         }]
+      },
+      detail: {
+        type: 'map'
       }
     },
     password: {
@@ -77,6 +80,14 @@ const user = {
       column: {
         type: 'datetime',
         width: '140px'
+      },
+      detail: {
+        type: 'datetime'
+      }
+    },
+    updatedTime: {
+      detail: {
+        type: 'datetime'
       }
     },
     roles: {

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div v-for="(item, key) in schema" :key="key" class="item">
-      <span class="title">{{ powerT(table, key) }}:</span>
+    <div v-for="(item, key) in schema" :key="key" class="detail-item">
+      <span class="detail-title">{{ powerT(table, key) }}:</span>
       <component
         :is="getInputType(item)"
         :value="value[key]"
@@ -11,12 +11,18 @@
 </template>
 
 <script>
-import TextDetail from './text'
+import TextDetail from '../columns/text'
+
+import DatetimeDetail from '../columns/datetime'
+import MapDetail from '../columns/map'
+import LinkUpdateDetail from '../columns/linkUpdate'
+import LinkShowDetail from '../columns/linkShow'
+
 import { powerT } from '../helpers/powerT'
 
 export default {
   name: 'Details',
-  components: { TextDetail },
+  components: { TextDetail, DatetimeDetail, MapDetail, LinkUpdateDetail, LinkShowDetail },
   props: {
     schema: {
       type: Object,

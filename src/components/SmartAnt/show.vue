@@ -27,7 +27,7 @@
 
 <script>
 import ModelDetail from './details'
-
+import { powerT } from './helpers/powerT'
 import { buildDetailElements, buildRules, buildFormElements } from './helpers/builder'
 
 export default {
@@ -163,25 +163,22 @@ export default {
         })
       })
     },
-    powerT(modelName, prop) {
-      const key = `attributes.common.${prop}`
-      return this.$t(key) === key ? this.$t(`attributes.${modelName}.${key}`) : this.$t(key)
-    }
+    powerT
   }
 }
 </script>
 
-<style rel="stylesheets/scss" lang="scss" scoped>
+<style rel="stylesheets/scss" lang="scss">
 
 .card-wrapper {
   padding:16px 16px 0;
 }
 
-.item {
+.detail-item {
   height: 25px;
 }
 
-.title {
+.detail-title {
   width: 150px;
   display: inline-block;
   font-weight: bold;
