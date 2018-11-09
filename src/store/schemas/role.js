@@ -35,7 +35,7 @@ const role = {
         width: '140px'
       },
       detail: {
-        type: 'text'
+        type: 'datetime'
       }
     },
     updatedTime: {
@@ -45,7 +45,7 @@ const role = {
         width: '140px'
       },
       detail: {
-        type: 'text'
+        type: 'datetime'
       }
     }
   }

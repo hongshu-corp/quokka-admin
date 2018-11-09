@@ -3,7 +3,7 @@
     <div class="card-wrapper">
       <el-card shadow="always">
         <div slot="header" class="clearfix">
-          <b>用户详情</b>
+          <b>{{ $t(`models.${name}`) }}{{ $t('actions.detail') }}</b>
 
           <div style="float: right; padding: 3px 0">
             <el-button v-if="allowEdit" type="primary" size="mini" @click="handleUpdate(model)">{{ $t('table.edit') }}</el-button>

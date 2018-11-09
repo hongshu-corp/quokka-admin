@@ -34,11 +34,9 @@
               {{ $t('navbar.dashboard') }}
             </el-dropdown-item>
           </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-element-admin/">
-            <el-dropdown-item>
-              {{ $t('navbar.github') }}
-            </el-dropdown-item>
-          </a>
+          <el-dropdown-item>
+            <span style="display:block;" @click="reloadSchema"> {{ $t('navbar.reloadSchema') }} </span>
+          </el-dropdown-item>
           <el-dropdown-item divided>
             <span style="display:block;" @click="logout">{{ $t('navbar.logOut') }}</span>
           </el-dropdown-item>
@@ -84,6 +82,11 @@ export default {
       this.$store.dispatch('LogOut').then(() => {
         location.reload()// In order to re-instantiate the vue-router object to avoid bugs
       })
+    },
+    reloadSchema() {
+      this.$store.dispatch('initSchema')
+
+      location.reload()
     }
   }
 }
