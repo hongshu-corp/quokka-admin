@@ -28,6 +28,7 @@
 <script>
 import ModelDetail from './details'
 import { powerT } from './helpers/powerT'
+
 import { buildDetailElements, buildRules, buildFormElements } from './helpers/builder'
 
 export default {
@@ -110,7 +111,7 @@ export default {
       })
     },
     setTagTitle() {
-      const title = this.lang === 'zh' ? '用户详情' : 'User Detail'
+      const title = this.$t(`models.${this.name}`) + this.$t('actions.detail')
       const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.model.id}` })
 
       this.$store.dispatch('updateVisitedView', route)

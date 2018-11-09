@@ -1,3 +1,7 @@
+import actions from './zh/action'
+import attributes from './zh/attribute'
+import models from './zh/model'
+
 export default {
   route: {
     dashboard: '首页',
@@ -159,21 +163,7 @@ export default {
     closeOthers: '关闭其它',
     closeAll: '关闭所有'
   },
-  model: {
-    user: '用户',
-    role: '角色',
-    permission: '权限'
-  },
-  attributes: {
-    common: {
-      id: '序号',
-      createdTime: '创建时间',
-      email: '邮箱',
-      name: '名称',
-      password: '密码',
-      updatedTime: '更新时间'
-    },
-    user: {
-    }
-  }
+  models,
+  attributes,
+  actions
 }
