@@ -30,7 +30,7 @@
 <script>
 import * as Crud from '@/api/crud'
 import SmartList from '@/components/SmartAnt/list'
-import { buildModel } from '@/components/CommonList/builder'
+import { buildModel } from '@/components/SmartAnt/helpers/builder'
 
 export default {
   name: 'RoleIndex',

@@ -5,7 +5,7 @@
         <div slot="header" class="clearfix">
           <b>用户详情</b>
         </div>
-        <details :schema="detailElements" :v-model="model" />
+        <model-detail :schema="detailElements" :table="name" v-model="model" />
       </el-card>
     </div>
 
@@ -19,20 +19,20 @@
 
       <div slot="footer" class="dialog-footer">
         <el-button @click="formVisible = false">{{ $t('table.cancel') }}</el-button>
-        <el-button type="primary" @click="formStatus==='create'?createData():updateData()">{{ $t('table.confirm') }}</el-button>
+        <el-button type="primary" @click="updateData()">{{ $t('table.confirm') }}</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import Details from './details'
+import ModelDetail from './details'
 
-import { buildDetailElements, buildRules, buildFormElements } from './builder'
+import { buildDetailElements, buildRules, buildFormElements } from './helpers/builder'
 
 export default {
   name: 'SmartShow',
-  components: { Details },
+  components: { ModelDetail },
   props: {
     modelName: {
       type: String,
@@ -70,7 +70,7 @@ export default {
   data() {
     return {
       model: {},
-      formStatus: '编辑',
+      formStatus: 'edit',
       formVisible: false,
       confirmVisible: false,
       textMap: {

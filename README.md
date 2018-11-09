@@ -18,7 +18,7 @@ yarn dev
 ``` vue
 <template>
   <div class="app-container">
-    <common-list
+    <smart-list
       ref="userList"
       :list-action="listUserAction"
       :create-action="createUserAction"
@@ -31,18 +31,18 @@ yarn dev
       allow-delete
       @resetModel="resetUserModel"
       @setModel="setUserModel">
-      </common-list>
+      </smart-list>
   </div>
 </template>
 
 <script>
 import * as User from '@/api/user'
-import CommonList from '@/components/CommonList'
-import { buildModel } from '@/components/CommonList/builder'
+import SmartAnt/list from '@/components/SmartAnt/list'
+import { buildModel } from '@/components/SmartAnt/helpers/builder'
 
 export default {
   name: 'UserIndex',
-  components: { CommonList },
+  components: { SmartList },
   data() {
     return {
       listUserAction: User.list,
@@ -127,7 +127,7 @@ export default {
 ``` vue
 <template>
   <div class="app-container">
-    <common-list
+    <smart-list
       ref="userList"
       :list-action="listUserAction"
       :create-action="createUserAction"
@@ -176,17 +176,17 @@ export default {
           <el-input v-model="user.password" type="password"/>
         </el-form-item>
       </template>
-    </common-list>
+    </smart-list>
   </div>
 </template>
 
 <script>
 import { fetchList, createUser, updateUser, deleteUser } from '@/api/user'
-import CommonList from '@/components/CommonList'
+import SmartList from '@/components/SmartAnt/list'
 
 export default {
   name: 'UserIndex',
-  components: { CommonList },
+  components: { SmartList },
 
   data() {
     return {

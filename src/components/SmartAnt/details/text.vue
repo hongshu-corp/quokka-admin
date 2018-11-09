@@ -1,14 +1,19 @@
 <template>
-  <span>{{ value }}</span>
+  <span>{{ display }}</span>
 </template>
 
 <script>
 export default {
   name: 'TextDetail',
   props: {
-    value: {
-      type: String,
-      default: ''
+    // eslint-disable-next-line
+    value: { }
+  },
+  computed: {
+    display() {
+      if (this.value) { return this.value.toString() }
+
+      return this.value
     }
   }
 }

@@ -65,7 +65,7 @@ import waves from '@/directive/waves' // 水波纹指令
 import Inputs from './inputs'
 import Column from './columns'
 
-import { buildModel, buildRules, buildColumns, buildFormElements } from './builder'
+import { buildModel, buildRules, buildColumns, buildFormElements } from './helpers/builder'
 import Pagination from '@/components/Pagination'
 
 export default {
