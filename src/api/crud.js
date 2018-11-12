@@ -39,3 +39,11 @@ export function destroy(table, id) {
     method: 'delete'
   })
 }
+
+export function nested_list(based, id, table, query) {
+  return request({
+    url: `/${based}/${id}/${table}`,
+    method: 'get',
+    params: query
+  })
+}
