@@ -27,7 +27,6 @@
         allow-add
         allow-edit
         allow-delete
-        allow-search
         show-path="/security/users"
         @setModel="setUserModel" />
     </el-card>
@@ -56,7 +55,7 @@ export default {
       listUserAction: (query) => Crud.nested_list(this.table, this.getId(), this.userTable, query),
       createUserAction: (query) => Crud.create(this.userTable, query),
       updateUserAction: (query) => Crud.update(this.userTable, query),
-      deleteUserAction: (id) => Crud.destroy(this.userTable, id),
+      deleteUserAction: (id) => Crud.nested_destroy(this.table, this.getId(), this.userTable, id),
 
       roles: [],
       user: this.getUserModel()

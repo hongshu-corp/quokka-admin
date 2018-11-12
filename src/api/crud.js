@@ -47,3 +47,18 @@ export function nested_list(based, id, table, query) {
     params: query
   })
 }
+
+export function nested_create(based, id, table, query) {
+  return request({
+    url: `/${based}/${id}/${table}`,
+    method: 'post',
+    params: query
+  })
+}
+
+export function nested_destroy(based, base_id, table, id) {
+  return request({
+    url: `/${based}/${base_id}/${table}/${id}`,
+    method: 'delete'
+  })
+}
