@@ -53,7 +53,7 @@ export default {
       deleteRoleAction: (id) => Crud.destroy(this.table, id),
       detailRoleAction: (id) => Crud.detail(this.table, id),
 
-      listUserAction: (query) => Crud.nested_list(this.table, this.ref.roleShow.model.id, this.userTable, query),
+      listUserAction: (query) => Crud.nested_list(this.table, this.getId(), this.userTable, query),
       createUserAction: (query) => Crud.create(this.userTable, query),
       updateUserAction: (query) => Crud.update(this.userTable, query),
       deleteUserAction: (id) => Crud.destroy(this.userTable, id),
@@ -69,6 +69,9 @@ export default {
     },
     setUserModel(model) {
       this.user = model
+    },
+    getId() {
+      return this.$route.params && this.$route.params.id
     }
   }
 }
