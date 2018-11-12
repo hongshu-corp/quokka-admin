@@ -28,6 +28,7 @@
         allow-edit
         allow-delete
         show-path="/security/users"
+        delete-button-text="移除"
         @setModel="setUserModel" />
     </el-card>
   </div>
