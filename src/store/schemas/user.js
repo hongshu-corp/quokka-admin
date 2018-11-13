@@ -75,7 +75,12 @@ const user = {
       detail: true
     },
     roles: {
-      default: []
+      default: [],
+      form: {
+        type: 'checkbox',
+        dataUrl: '/roles',
+        method: 'get'
+      }
     }
   }
 }

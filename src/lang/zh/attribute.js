@@ -8,5 +8,6 @@ export default {
     updatedTime: '更新时间'
   },
   user: {
+    roles: '角色'
   }
 }

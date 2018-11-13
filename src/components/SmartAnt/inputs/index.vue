@@ -13,10 +13,11 @@
 <script>
 import TextInput from './text'
 import SelectInput from './select'
+import CheckboxInput from './checkbox'
 
 export default {
   name: 'Inputs',
-  components: { TextInput, SelectInput },
+  components: { TextInput, SelectInput, CheckboxInput },
   props: {
     schema: {
       type: Object,

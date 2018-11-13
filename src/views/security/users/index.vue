@@ -29,15 +29,6 @@
           @input="updateQuery(scope)"
           @keyup.enter.native="handleFilter" />
       </template>
-
-      <template slot="form" slot-scope="scope">
-        <el-form-item :label="$t('models.roles')" prop="roles">
-          <el-checkbox-group v-model="user.roles">
-            <el-checkbox v-for="role in roles" :label="role.id" :key="role.name">{{ role.name }}</el-checkbox>
-          </el-checkbox-group>
-        </el-form-item>
-      </template>
-
     </smart-list>
   </div>
 </template>

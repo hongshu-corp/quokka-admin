@@ -42,7 +42,7 @@ export function buildFormElements(schema, t) {
   for (var key in filter) {
     ret[key] = filter[key].form
     ret[key].label = t(schema.name, key)
-    ret[key].columnType = (ret[key].type || filter[key].type) + 'Column'
+    ret[key].type = ret[key].type || filter[key].type
     ret[key].options = ret[key].options || filter[key].options
     ret[key].prop = key
   }
