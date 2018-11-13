@@ -58,6 +58,8 @@
       </span>
     </el-dialog>
 
+    <slot name="expand" />
+
   </div>
 </template>
 

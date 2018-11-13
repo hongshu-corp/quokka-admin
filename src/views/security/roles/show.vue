@@ -24,12 +24,53 @@
         :delete-action="deleteUserAction"
         :model="user"
         :name="userTable"
-        allow-add
         allow-edit
         allow-delete
         show-path="/security/users"
         delete-button-text="移除"
-        @setModel="setUserModel" />
+        @setModel="setUserModel">
+
+        <template slot="filter" slot-scope="scope">
+          <el-button class="" style="margin-left: 10px;" type="warning" icon="el-icon-edit" @click="popUpSearch">{{ $t('table.add') }}</el-button>
+
+        </template>
+
+        <template slot="expand" slot-scope="scope">
+          <el-dialog :visible.sync="searchVisible" title="查找用户">
+            <el-input
+              :placeholder="$t('attributes.common.name')"
+              v-model="searchForm.name"
+              style="width: 200px"
+              @keyup.enter.native="handleSearch" />
+            <el-button class="" style="margin-left: 10px;" type="warning" icon="el-icon-edit" @click="handleSearch">{{ $t('table.search') }}</el-button>
+
+            <el-table
+              v-loading="searchLoading"
+              :data="searchedList"
+              border
+              fit
+              highlight-current-row
+              stripe
+              style="width: 100%; margin-top: 10px">
+              <el-table-column :label="$t('table.author')" align="center">
+                <template slot-scope="scope">
+                  <span>{{ scope.row.name }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column :label="$t('table.author')" align="center">
+                <template slot-scope="scope">
+                  <span>{{ scope.row.email }}</span>
+                </template>
+              </el-table-column>
+            </el-table>
+
+            <div slot="footer" class="dialog-footer">
+              <el-button @click="searchVisible = false">{{ $t('table.cancel') }}</el-button>
+              <el-button type="warning" @click="searchConfirm">{{ $t('table.confirm') }}</el-button>
+            </div>
+          </el-dialog>
+        </template>
+      </smart-list>
     </el-card>
   </div>
 </template>
@@ -59,7 +100,13 @@ export default {
       deleteUserAction: (id) => Crud.nested_destroy(this.table, this.getId(), this.userTable, id),
 
       roles: [],
-      user: this.getUserModel()
+      user: this.getUserModel(),
+
+      // search
+      searchVisible: false,
+      searchLoading: false,
+      searchForm: {},
+      searchedList: []
     }
   },
   methods: {
@@ -72,6 +119,22 @@ export default {
     },
     getId() {
       return this.$route.params && this.$route.params.id
+    },
+    popUpSearch() {
+      this.searchVisible = true
+    },
+    handleSearch() {
+      this.searchLoading = true
+      Crud.list(this.userTable, {}).then(response => {
+        this.searchedList = response.data.items
+
+        setTimeout(() => {
+          this.searchLoading = false
+        }, 500)
+      })
+    },
+    searchConfirm() {
+      console.log('confirmed')
     }
   }
 }
