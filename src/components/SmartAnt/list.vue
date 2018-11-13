@@ -13,6 +13,7 @@
       border
       fit
       highlight-current-row
+      stripe
       style="width: 100%;">
 
       <el-table-column v-for="(item, key) in columns" :key="key" v-bind="item">

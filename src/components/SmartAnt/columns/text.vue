@@ -5,7 +5,7 @@
 import clip from '../mixin/clip'
 
 export default {
-  name: 'Text',
+  name: 'TextColumn',
   mixins: [clip],
   props: {
     // eslint-disable-next-line
