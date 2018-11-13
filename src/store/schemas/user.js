@@ -3,45 +3,42 @@ const user = {
   props: {
     id: {
       default: undefined,
+      type: 'text',
       column: {
         type: 'linkShow',
         width: '50px'
       },
-      detail: {
-        type: 'text'
-      }
+      detail: true
     },
     name: {
       default: '',
+      type: 'text',
       column: {
         type: 'linkUpdate',
         width: '100px'
       },
       form: {
-        type: 'text',
         rules: [{
           required: true,
           message: '名称是必须的',
           trigger: 'blur'
         }]
       },
-      detail: {
-        type: 'text'
-      }
+      detail: true
     },
     email: {
       default: '',
+      type: 'map',
+      options: [{
+        label: 'msn',
+        value: 'tsuijy@msn.com'
+      },
+      {
+        label: 'gmail',
+        value: 'tsuijy@gmail.com'
+      }],
       column: {
-        type: 'map',
-        minWidth: '100px',
-        options: [{
-          label: 'msn',
-          value: 'tsuijy@msn.com'
-        },
-        {
-          label: 'gmail',
-          value: 'tsuijy@gmail.com'
-        }]
+        minWidth: '100px'
       },
       form: {
         type: 'select',
@@ -49,24 +46,14 @@ const user = {
           required: true,
           message: '邮箱是必须的',
           trigger: 'blur'
-        }],
-        options: [{
-          label: 'msn',
-          value: 'tsuijy@msn.com'
-        },
-        {
-          label: 'gmail',
-          value: 'tsuijy@gmail.com'
         }]
       },
-      detail: {
-        type: 'map'
-      }
+      detail: true
     },
     password: {
       default: '',
+      type: 'password',
       form: {
-        type: 'password',
         placeholder: 'please input',
         rules: [{
           required: true,
@@ -77,18 +64,15 @@ const user = {
     },
     createdTime: {
       default: '',
+      type: 'datetime',
       column: {
-        type: 'datetime',
         width: '140px'
       },
-      detail: {
-        type: 'datetime'
-      }
+      detail: true
     },
     updatedTime: {
-      detail: {
-        type: 'datetime'
-      }
+      type: 'datetime',
+      detail: true
     },
     roles: {
       default: []

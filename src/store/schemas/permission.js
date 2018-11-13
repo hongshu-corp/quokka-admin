@@ -3,18 +3,18 @@ const permission = {
   props: {
     id: {
       default: undefined,
+      type: 'text',
       column: {
-        type: 'text',
         width: '50px'
       }
     },
     name: {
       default: '',
+      type: 'text',
       column: {
         type: 'linkUpdate'
       },
       form: {
-        type: 'text',
         rules: [{
           required: true,
           message: '名称是必须的',
@@ -24,15 +24,15 @@ const permission = {
     },
     createdTime: {
       default: '',
+      type: 'datetime',
       column: {
-        type: 'datetime',
         width: '140px'
       }
     },
     updatedTime: {
       default: '',
+      type: 'datetime',
       column: {
-        type: 'datetime',
         width: '140px'
       }
     }

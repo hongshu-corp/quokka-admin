@@ -3,16 +3,16 @@ const role = {
   props: {
     id: {
       default: undefined,
+      type: 'text',
       column: {
         type: 'linkShow',
         width: '50px'
       },
-      detail: {
-        type: 'text'
-      }
+      detail: true
     },
     name: {
       default: '',
+      type: 'text',
       column: {
         type: 'linkUpdate'
       },
@@ -24,29 +24,23 @@ const role = {
           trigger: 'blur'
         }]
       },
-      detail: {
-        type: 'text'
-      }
+      detail: true
     },
     createdTime: {
       default: '',
+      type: 'datetime',
       column: {
-        type: 'datetime',
         width: '140px'
       },
-      detail: {
-        type: 'datetime'
-      }
+      detail: true
     },
     updatedTime: {
       default: '',
+      type: 'datetime',
       column: {
-        type: 'datetime',
         width: '140px'
       },
-      detail: {
-        type: 'datetime'
-      }
+      detail: true
     }
   }
 }

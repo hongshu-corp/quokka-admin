@@ -55,10 +55,10 @@ export function buildDetailElements(schema, t) {
   var ret = {}
 
   for (var key in filter) {
-    ret[key] = filter[key].detail
+    ret[key] = {}
     ret[key].label = t(schema.name, key)
     ret[key].prop = key
-    ret[key].type = ret[key].type || filter[key].type
+    ret[key].columnType = (ret[key].type || filter[key].type) + 'Column'
     ret[key].options = ret[key].options || filter[key].options
   }
 
