@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-  name: 'LinkShowColumn',
+  name: 'LinkShow',
   props: {
     value: {
       type: String,

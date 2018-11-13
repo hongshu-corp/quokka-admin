@@ -3,7 +3,7 @@
 </template>
 <script>
 export default {
-  name: 'TextColumn',
+  name: 'LinkUpdate',
   props: {
     value: {
       type: String,

@@ -5,15 +5,11 @@
 </template>
 
 <script>
-import TextColumn from './text'
-import DatetimeColumn from './datetime'
-import MapColumn from './map'
-import LinkUpdateColumn from './linkUpdate'
-import LinkShowColumn from './linkShow'
+import types from '../mixin/types'
 
 export default {
   name: 'Column',
-  components: { TextColumn, DatetimeColumn, MapColumn, LinkUpdateColumn, LinkShowColumn },
+  mixins: [types],
   props: {
     item: {
       type: Object,

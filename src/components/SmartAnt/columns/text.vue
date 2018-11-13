@@ -2,11 +2,11 @@
   <span @click="handleCopy(value, $event)">{{ display }}</span>
 </template>
 <script>
-import Mixin from './mixin'
+import clip from '../mixin/clip'
 
 export default {
-  name: 'TextColumn',
-  mixins: [Mixin],
+  name: 'Text',
+  mixins: [clip],
   props: {
     // eslint-disable-next-line
     value: { }

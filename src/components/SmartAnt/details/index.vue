@@ -3,7 +3,7 @@
     <div v-for="(item, key) in schema" :key="key" class="detail-item">
       <span class="detail-title">{{ powerT(table, key) }}:</span>
       <component
-        :is="getInputType(item)"
+        :is="item.columnType"
         :value="value[key]"
         v-bind="item" />
     </div>
@@ -11,18 +11,12 @@
 </template>
 
 <script>
-import TextDetail from '../columns/text'
-
-import DatetimeDetail from '../columns/datetime'
-import MapDetail from '../columns/map'
-import LinkUpdateDetail from '../columns/linkUpdate'
-import LinkShowDetail from '../columns/linkShow'
-
 import { powerT } from '../helpers/powerT'
+import types from '../mixin/types'
 
 export default {
   name: 'Details',
-  components: { TextDetail, DatetimeDetail, MapDetail, LinkUpdateDetail, LinkShowDetail },
+  mixins: [types],
   props: {
     schema: {
       type: Object,
@@ -38,10 +32,7 @@ export default {
     }
   },
   methods: {
-    powerT,
-    getInputType(item) {
-      return `${item.type}Detail`
-    }
+    powerT
   }
 }
 </script>

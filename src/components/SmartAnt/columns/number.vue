@@ -3,7 +3,7 @@
 </template>
 <script>
 export default {
-  name: 'NumberColumn',
+  name: 'Number',
   props: {
     value: {
       type: Number,

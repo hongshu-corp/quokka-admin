@@ -2,11 +2,11 @@
   <span @click="handleCopy(display, $event)">{{ display }}</span>
 </template>
 <script>
-import Mixin from './mixin'
+import clip from '../mixin/clip'
 
 export default {
-  name: 'MapColumn',
-  mixins: [Mixin],
+  name: 'Map',
+  mixins: [clip],
   props: {
     value: {
       type: String,
