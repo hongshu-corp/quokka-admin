@@ -12,7 +12,7 @@ export default {
   },
   methods: {
     handleClick() {
-      this.$emit('clickLinkHandler')
+      this.$emit('pop-form')
     }
   }
 }

@@ -18,7 +18,12 @@
 
       <el-table-column v-for="(item, key) in columns" :key="key" v-bind="item">
         <template slot-scope="scope">
-          <column :value="{ key: scope.row[key] }" :item="item" :model="scope.row" :show-path="showPath" @clickLinkHandler="clickCellLink(scope.row)" />
+          <smart-column
+            :value="getColumnValue(scope.row, key)"
+            :item="item"
+            :model="scope.row"
+            :show-path="showPath"
+            @pop-form="clickRowUpdate(scope.row)" />
         </template>
       </el-table-column>
       <slot name="columns" />
@@ -38,8 +43,7 @@
 
 <script>
 import waves from '@/directive/waves' // 水波纹指令
-import Inputs from './inputs'
-import Column from './columns'
+import SmartColumn from './columns'
 import { powerT } from './helpers/powerT'
 
 import { buildColumns } from './helpers/builder'
@@ -47,7 +51,7 @@ import Pagination from '@/components/Pagination'
 
 export default {
   name: 'SmartTable',
-  components: { Inputs, Column, Pagination },
+  components: { SmartColumn, Pagination },
   directives: {
     waves
   },
@@ -133,6 +137,9 @@ export default {
         }
       }
       this.$notify({ title: '成功', message: '删除成功', type: 'success', duration: 2000 })
+    },
+    getColumnValue(data, key) {
+      return { key: data[key] }
     },
     getList() {
       this.listLoading = true

@@ -1,6 +1,11 @@
 <template>
   <div>
-    <component :is="item.columnType" :value="getValue()" v-bind="item" :show-path="getShowRouter()" @clickLinkHandler="clickLinkHandler" />
+    <component
+      v-bind="item"
+      :is="item.columnType"
+      :value="getValue()"
+      :show-path="getShowRouter()"
+      @pop-form="popForm" />
   </div>
 </template>
 
@@ -32,11 +37,11 @@ export default {
     getValue() {
       return this.value.key.toString()
     },
-    clickLinkHandler() {
-      this.$emit('clickLinkHandler')
-    },
     getShowRouter() {
       return `${this.showPath}/${this.model.id}`
+    },
+    popForm() {
+      this.$emit('pop-form')
     }
   }
 }
