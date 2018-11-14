@@ -12,8 +12,8 @@
       :list-action="listAction"
       :schema="schema"
       @table-add="tableAdd"
-      @table-search="tableSearch"
-      @inner-filter="innerFilter"
+      @table-search="()=>{}"
+      @inner-filter="searchVisible=true"
       @row-delete="rowDelete"
       @row-update="rowUpdate">
       <template slot="actions">
@@ -27,15 +27,13 @@
     </smart-table>
 
     <el-dialog :title="textMap[formStatus]" :visible.sync="formVisible">
-      <el-form ref="dataForm" :rules="finalRules" :model="model" label-position="left" label-width="70px" style="margin-left:50px;">
-        <inputs :schema="formElements" v-model="model" />
-        <slot name="form" />
-      </el-form>
-
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="formVisible = false">{{ $t('table.cancel') }}</el-button>
-        <el-button type="primary" @click="formStatus==='create'?createData():updateData()">{{ $t('table.confirm') }}</el-button>
-      </div>
+      <smart-form
+        ref="form"
+        v-model="model"
+        :schema="schema"
+        :rules="rules"
+        @form-ok="formStatus==='create'?createData():updateData()"
+        @form-cancel="formVisible = false" />
     </el-dialog>
 
     <el-dialog
@@ -64,18 +62,15 @@
 
 <script>
 import waves from '@/directive/waves' // 水波纹指令
-import Inputs from './inputs'
 import Column from './columns'
-
+import SmartForm from './form'
 import SmartTable from './table'
-import { powerT } from './helpers/powerT'
 
-import { buildModel, buildRules, buildFormElements } from './helpers/builder'
-import Pagination from '@/components/Pagination'
+import { buildModel } from './helpers/builder'
 
 export default {
   name: 'SmartList',
-  components: { Inputs, Column, Pagination, SmartTable },
+  components: { Column, SmartTable, SmartForm },
   filters: { },
   directives: {
     waves
@@ -109,6 +104,7 @@ export default {
       type: Boolean,
       default: false
     },
+    // additional rules.
     rules: {
       type: Object,
       default: () => {}
@@ -163,20 +159,11 @@ export default {
     schema: function() {
       return this.$store.getters.schemas[this.name]
     },
-    formElements: function() {
-      return buildFormElements(this.schema, this.powerT)
-    },
-    finalRules: function() {
-      return this.$_.merge(buildRules(this.schema), this.rules)
-    },
     finalModelName: function() {
       return this.modelName.length > 0 ? this.modelName : this.schema.name
     }
   },
   methods: {
-    tableSearch() {
-      console.log('searched here')
-    },
     tableAdd() {
       if (Object.keys(this.schema).length > 0) {
         this.$emit('setModel', buildModel(this.schema))
@@ -187,7 +174,7 @@ export default {
       this.formVisible = true
       this.formStatus = 'create'
       this.$nextTick(() => {
-        this.$refs.dataForm.clearValidate()
+        this.$refs.form.clearValidate()
       })
     },
     rowUpdate(data) {
@@ -196,7 +183,7 @@ export default {
       this.$emit('setModel', data)
 
       this.$nextTick(() => {
-        this.$refs.dataForm.clearValidate()
+        this.$refs.form.clearValidate()
       })
     },
     rowDelete(data) {
@@ -204,24 +191,16 @@ export default {
       this.$emit('setModel', data)
     },
     createData() {
-      this.$refs.dataForm.validate((valid) => {
-        if (!valid) { return }
-
-        this.createAction(this.model).then((ret) => {
-          this.formVisible = false
-          this.$refs.table.append(ret.data)
-        })
+      this.createAction(this.model).then((ret) => {
+        this.formVisible = false
+        this.$refs.table.append(ret.data)
       })
     },
     updateData() {
-      this.$refs.dataForm.validate((valid) => {
-        if (!valid) { return }
-
-        const data = Object.assign({}, this.model)
-        this.updateAction(data).then((ret) => {
-          this.formVisible = false
-          this.$refs.table.replace(data)
-        })
+      const data = Object.assign({}, this.model)
+      this.updateAction(data).then((ret) => {
+        this.formVisible = false
+        this.$refs.table.replace(data)
       })
     },
     deleteData() {
@@ -231,11 +210,7 @@ export default {
         this.confirmVisible = false
         this.$refs.table.delete(id)
       })
-    },
-    innerFilter() {
-      this.searchVisible = true
-    },
-    powerT
+    }
   }
 }
 </script>
