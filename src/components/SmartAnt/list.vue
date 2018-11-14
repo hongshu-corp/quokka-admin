@@ -4,6 +4,7 @@
       <slot :v-bind="listQuery" name="filter" />
       <el-button v-waves v-if="allowSearch" class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
       <el-button v-if="allowAdd" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
+      <el-button v-if="allowInnerSearch" class="filter-item" style="margin-left: 10px;" type="warning" icon="el-icon-edit" @click="handlePopupInnerSearch">{{ $t('table.add') }}</el-button>
     </div>
 
     <el-table
@@ -58,6 +59,36 @@
       </span>
     </el-dialog>
 
+    <el-dialog :visible.sync="searchVisible" title="查找">
+      <el-input
+        :placeholder="$t('attributes.common.name')"
+        v-model="searchForm.name"
+        style="width: 200px"
+        @keyup.enter.native="handleSearch" />
+      <el-button class="" style="margin-left: 10px;" type="warning" icon="el-icon-edit" @click="handleInnerSearch">{{ $t('table.search') }}</el-button>
+
+      <el-table
+        v-loading="searchLoading"
+        :data="searchedList"
+        border
+        fit
+        highlight-current-row
+        stripe
+        style="width: 100%; margin-top: 10px">
+
+        <el-table-column v-for="(item, key) in columns" :key="key" v-bind="item">
+          <template slot-scope="scope">
+            <column :value="{ key: scope.row[key] }" :item="item" :model="scope.row" />
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="searchVisible = false">{{ $t('table.cancel') }}</el-button>
+        <el-button type="warning" @click="handleInnerSearchConfirm">{{ $t('table.confirm') }}</el-button>
+      </div>
+    </el-dialog>
+
     <slot name="expand" />
 
   </div>
@@ -104,6 +135,10 @@ export default {
       type: Boolean,
       default: false
     },
+    allowInnerSearch: {
+      type: Boolean,
+      default: false
+    },
     rules: {
       type: Object,
       default: () => {}
@@ -121,6 +156,11 @@ export default {
       default: () => new Promise()
     },
     deleteAction: {
+      type: Function,
+      default: () => new Promise()
+    },
+    // Inner popup dialog for search
+    innerSearchAction: {
       type: Function,
       default: () => new Promise()
     },
@@ -151,6 +191,17 @@ export default {
         create: '新增'
       },
       listQuery: {
+        page: 1,
+        limit: 20,
+        name: undefined
+      },
+
+      // search
+      searchVisible: false,
+      searchLoading: false,
+      searchForm: {},
+      searchedList: [],
+      innerSearchQuery: {
         page: 1,
         limit: 20,
         name: undefined
@@ -282,6 +333,22 @@ export default {
           duration: 2000
         })
       })
+    },
+    handlePopupInnerSearch() {
+      this.searchVisible = true
+    },
+    handleInnerSearch() {
+      this.searchLoading = true
+      this.innerSearchAction(this.innerSearchQuery).then(response => {
+        this.searchedList = response.data.items
+
+        setTimeout(() => {
+          this.searchLoading = false
+        }, 500)
+      })
+    },
+    handleInnerSearchConfirm() {
+      console.log('---------')
     },
     powerT
   }
