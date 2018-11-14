@@ -7,6 +7,7 @@
       :allow-delete="allowDelete"
       :allow-search="allowSearch"
       :allow-inner-filter="allowInnerSearch"
+      :allow-select="allowSelectRows"
       :delete-button-text="deleteButtonText"
       :show-path="showPath"
       :list-action="listAction"
@@ -52,6 +53,8 @@
         ref="searchTable"
         :list-action="innerSearchAction"
         :schema="schema"
+        :has-actions="false"
+        allow-select
         allow-search />
     </el-dialog>
 
@@ -91,6 +94,10 @@ export default {
       default: false
     },
     allowSearch: {
+      type: Boolean,
+      default: false
+    },
+    allowSelectRows: {
       type: Boolean,
       default: false
     },

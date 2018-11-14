@@ -16,6 +16,8 @@
       stripe
       style="width: 100%;">
 
+      <el-table-column v-if="allowSelect" type="selection" width="50" />
+
       <el-table-column v-for="(item, key) in columns" :key="key" v-bind="item">
         <template slot-scope="scope">
           <smart-column
@@ -27,7 +29,7 @@
         </template>
       </el-table-column>
       <slot name="columns" />
-      <el-table-column :label="$t('table.actions')" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column v-if="hasActions" :label="$t('table.actions')" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button v-if="allowEdit" type="primary" size="mini" @click="clickRowUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
           <el-button v-if="allowDelete" type="danger" size="mini" @click="clickRowDelete(scope.row)">{{ deleteButtonText || $t('table.delete') }}</el-button>
@@ -75,6 +77,14 @@ export default {
     allowSearch: {
       type: Boolean,
       default: false
+    },
+    allowSelect: {
+      type: Boolean,
+      default: false
+    },
+    hasActions: {
+      type: Boolean,
+      default: true
     },
     listAction: {
       type: Function,

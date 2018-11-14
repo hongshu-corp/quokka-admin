@@ -11,6 +11,7 @@
       allow-add
       allow-edit
       allow-delete
+      allow-select-rows
       allow-search
       show-path="/security/users"
       @setModel="setUserModel">
