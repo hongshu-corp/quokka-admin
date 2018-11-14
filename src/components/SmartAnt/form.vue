@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form ref="real" :rules="mergedRules" :model="value" label-position="left" label-width="70px" style="margin-left:50px;">
+    <el-form ref="real" :rules="mergedRules" :model="value" label-position="left" label-width="70px" style="margin-left:20px;">
       <el-form-item v-for="(item, key) in elements" :key="`el${key}`" v-bind="item">
         <smart-input :prop="key" :model="value" :schema="item" />
       </el-form-item>

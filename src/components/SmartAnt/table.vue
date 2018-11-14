@@ -9,12 +9,15 @@
 
     <el-table
       v-loading="listLoading"
+      ref="table"
       :data="list"
       border
       fit
       highlight-current-row
       stripe
-      style="width: 100%;">
+      style="width: 100%;"
+      @selection-change="selectionChange"
+      @row-click="rowClick">
 
       <el-table-column v-if="allowSelect" type="selection" width="50" />
 
@@ -108,6 +111,7 @@ export default {
       list: null,
       total: 0,
       listLoading: true,
+      selected: [],
       listQuery: {
         page: 1,
         limit: 20,
@@ -177,6 +181,15 @@ export default {
     clickRowDelete(row) {
       const data = Object.assign({}, row)
       this.$emit('row-delete', data)
+    },
+    rowClick(row) {
+      if (this.allowSelect) {
+        this.$refs.table.toggleRowSelection(row)
+      }
+    },
+    selectionChange(data) {
+      this.selected = data
+      console.log(this.selected)
     },
     powerT
   }
