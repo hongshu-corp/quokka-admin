@@ -4,6 +4,7 @@
       <slot :v-bind="listQuery" name="filter" />
       <el-button v-waves v-if="allowSearch" class="filter-item" type="primary" icon="el-icon-search" @click="clickSearch">{{ $t('table.search') }}</el-button>
       <el-button v-waves v-if="allowAdd" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="clickAdd">{{ $t('table.add') }}</el-button>
+      <el-button v-waves v-if="allowInnerFilter" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="clickInnerFilter">{{ $t('table.add') }}</el-button>
     </div>
 
     <el-table
@@ -52,6 +53,10 @@ export default {
   },
   props: {
     allowAdd: {
+      type: Boolean,
+      default: false
+    },
+    allowInnerFilter: {
       type: Boolean,
       default: false
     },
@@ -144,6 +149,9 @@ export default {
     },
     clickAdd() {
       this.$emit('table-add')
+    },
+    clickInnerFilter() {
+      this.$emit('inner-filter')
     },
     clickRowUpdate(row) {
       const data = Object.assign({}, row)

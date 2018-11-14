@@ -6,12 +6,14 @@
       :allow-edit="allowAdd"
       :allow-delete="allowDelete"
       :allow-search="allowSearch"
+      :allow-inner-filter="allowInnerSearch"
       :delete-button-text="deleteButtonText"
       :show-path="showPath"
       :list-action="listAction"
       :schema="schema"
       @table-add="tableAdd"
       @table-search="tableSearch"
+      @inner-filter="innerFilter"
       @row-delete="rowDelete"
       @row-update="rowUpdate">
       <template slot="actions">
@@ -48,33 +50,11 @@
     </el-dialog>
 
     <el-dialog :visible.sync="searchVisible" title="查找">
-      <el-input
-        :placeholder="$t('attributes.common.name')"
-        v-model="searchForm.name"
-        style="width: 200px"
-        @keyup.enter.native="handleSearch" />
-      <el-button class="" style="margin-left: 10px;" type="warning" icon="el-icon-edit" @click="handleInnerSearch">{{ $t('table.search') }}</el-button>
-
-      <el-table
-        v-loading="searchLoading"
-        :data="searchedList"
-        border
-        fit
-        highlight-current-row
-        stripe
-        style="width: 100%; margin-top: 10px">
-
-        <el-table-column v-for="(item, key) in columns" :key="key" v-bind="item">
-          <template slot-scope="scope">
-            <column :value="{ key: scope.row[key] }" :item="item" :model="scope.row" />
-          </template>
-        </el-table-column>
-      </el-table>
-
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="searchVisible = false">{{ $t('table.cancel') }}</el-button>
-        <el-button type="warning" @click="handleInnerSearchConfirm">{{ $t('table.confirm') }}</el-button>
-      </div>
+      <smart-table
+        ref="searchTable"
+        :list-action="innerSearchAction"
+        :schema="schema"
+        allow-search />
     </el-dialog>
 
     <slot name="expand" />
@@ -90,7 +70,7 @@ import Column from './columns'
 import SmartTable from './table'
 import { powerT } from './helpers/powerT'
 
-import { buildModel, buildRules, buildColumns, buildFormElements } from './helpers/builder'
+import { buildModel, buildRules, buildFormElements } from './helpers/builder'
 import Pagination from '@/components/Pagination'
 
 export default {
@@ -172,29 +152,16 @@ export default {
       formStatus: '',
       formVisible: false,
       confirmVisible: false,
+      searchVisible: false,
       textMap: {
         update: '编辑',
         create: '新增'
-      },
-
-      // search
-      searchVisible: false,
-      searchLoading: false,
-      searchForm: {},
-      searchedList: [],
-      innerSearchQuery: {
-        page: 1,
-        limit: 20,
-        name: undefined
       }
     }
   },
   computed: {
     schema: function() {
       return this.$store.getters.schemas[this.name]
-    },
-    columns: function() {
-      return buildColumns(this.schema, this.powerT)
     },
     formElements: function() {
       return buildFormElements(this.schema, this.powerT)
@@ -265,21 +232,8 @@ export default {
         this.$refs.table.delete(id)
       })
     },
-    handlePopupInnerSearch() {
+    innerFilter() {
       this.searchVisible = true
-    },
-    handleInnerSearch() {
-      this.searchLoading = true
-      this.innerSearchAction(this.innerSearchQuery).then(response => {
-        this.searchedList = response.data.items
-
-        setTimeout(() => {
-          this.searchLoading = false
-        }, 500)
-      })
-    },
-    handleInnerSearchConfirm() {
-      console.log('---------')
     },
     powerT
   }
