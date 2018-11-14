@@ -1,40 +1,28 @@
 <template>
   <div>
-    <div class="filter-container">
-      <slot :v-bind="listQuery" name="filter" />
-      <el-button v-waves v-if="allowSearch" class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
-      <el-button v-if="allowAdd" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
-      <el-button v-if="allowInnerSearch" class="filter-item" style="margin-left: 10px;" type="warning" icon="el-icon-edit" @click="handlePopupInnerSearch">{{ $t('table.add') }}</el-button>
-    </div>
+    <smart-table
+      ref="table"
+      :allow-add="allowAdd"
+      :allow-edit="allowAdd"
+      :allow-delete="allowDelete"
+      :allow-search="allowSearch"
+      :delete-button-text="deleteButtonText"
+      :show-path="showPath"
+      :list-action="listAction"
+      :schema="schema"
+      @table-add="tableAdd"
+      @table-search="tableSearch"
+      @row-delete="rowDelete"
+      @row-update="rowUpdate">
+      <template slot="actions">
+        <slot name="row-actions" />
+      </template>
 
-    <el-table
-      v-loading="listLoading"
-      :key="tableKey"
-      :data="list"
-      border
-      fit
-      highlight-current-row
-      stripe
-      style="width: 100%;">
-
-      <el-table-column v-for="(item, key) in columns" :key="key" v-bind="item">
-        <template slot-scope="scope">
-          <column :value="{ key: scope.row[key] }" :item="item" :model="scope.row" :show-path="showPath" @clickLinkHandler="handleUpdate(scope.row)" />
-        </template>
-      </el-table-column>
-
-      <slot />
-
-      <el-table-column :label="$t('table.actions')" align="center" width="230" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
-          <el-button v-if="allowEdit" type="primary" size="mini" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
-          <el-button v-if="allowDelete" type="danger" size="mini" @click="handleDelete(scope.row)">{{ deleteButtonText || $t('table.delete') }}</el-button>
-          <slot name="extra-buttons" />
-        </template>
-      </el-table-column>
-    </el-table>
-
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+      <template slot="columns">
+        <slot name="table-columns" />
+      </template>
+      <span />
+    </smart-table>
 
     <el-dialog :title="textMap[formStatus]" :visible.sync="formVisible">
       <el-form ref="dataForm" :rules="finalRules" :model="model" label-position="left" label-width="70px" style="margin-left:50px;">
@@ -98,6 +86,8 @@
 import waves from '@/directive/waves' // 水波纹指令
 import Inputs from './inputs'
 import Column from './columns'
+
+import SmartTable from './table'
 import { powerT } from './helpers/powerT'
 
 import { buildModel, buildRules, buildColumns, buildFormElements } from './helpers/builder'
@@ -105,7 +95,7 @@ import Pagination from '@/components/Pagination'
 
 export default {
   name: 'SmartList',
-  components: { Inputs, Column, Pagination },
+  components: { Inputs, Column, Pagination, SmartTable },
   filters: { },
   directives: {
     waves
@@ -179,21 +169,12 @@ export default {
   },
   data() {
     return {
-      tableKey: 0,
-      list: null,
-      total: 0,
-      listLoading: true,
       formStatus: '',
       formVisible: false,
       confirmVisible: false,
       textMap: {
         update: '编辑',
         create: '新增'
-      },
-      listQuery: {
-        page: 1,
-        limit: 20,
-        name: undefined
       },
 
       // search
@@ -225,28 +206,11 @@ export default {
       return this.modelName.length > 0 ? this.modelName : this.schema.name
     }
   },
-  created() {
-    this.getList()
-  },
   methods: {
-    getList() {
-      this.listLoading = true
-      this.listAction(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
-
-        // Just to simulate the time of the request
-        setTimeout(() => {
-          this.listLoading = false
-        }, 1000)
-      })
+    tableSearch() {
+      console.log('searched here')
     },
-    handleFilter() {
-      this.listQuery.page = 1
-      console.log(this.listQuery)
-      this.getList()
-    },
-    handleCreate() {
+    tableAdd() {
       if (Object.keys(this.schema).length > 0) {
         this.$emit('setModel', buildModel(this.schema))
       } else {
@@ -256,82 +220,49 @@ export default {
       this.formVisible = true
       this.formStatus = 'create'
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
     },
-    createData() {
-      this.$refs['dataForm'].validate((valid) => {
-        if (valid) {
-          this.createAction(this.model).then((ret) => {
-            this.list.unshift(ret.data)
-            this.formVisible = false
-            this.$notify({
-              title: '成功',
-              message: '创建成功',
-              type: 'success',
-              duration: 2000
-            })
-          })
-        }
-      })
-    },
-    handleUpdate(row) {
-      const data = Object.assign({}, row)
-
+    rowUpdate(data) {
       this.formStatus = 'update'
       this.formVisible = true
       this.$emit('setModel', data)
 
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
+      })
+    },
+    rowDelete(data) {
+      this.confirmVisible = true
+      this.$emit('setModel', data)
+    },
+    createData() {
+      this.$refs.dataForm.validate((valid) => {
+        if (!valid) { return }
+
+        this.createAction(this.model).then((ret) => {
+          this.formVisible = false
+          this.$refs.table.append(ret.data)
+        })
       })
     },
     updateData() {
-      this.$refs['dataForm'].validate((valid) => {
-        if (valid) {
-          const data = Object.assign({}, this.model)
-          this.updateAction(data).then((ret) => {
-            for (const v of this.list) {
-              if (v.id === this.model.id) {
-                const index = this.list.indexOf(v)
-                this.list.splice(index, 1, ret.data)
-                break
-              }
-            }
-            this.formVisible = false
-            this.$notify({
-              title: '成功',
-              message: '更新成功',
-              type: 'success',
-              duration: 2000
-            })
-          })
-        }
+      this.$refs.dataForm.validate((valid) => {
+        if (!valid) { return }
+
+        const data = Object.assign({}, this.model)
+        this.updateAction(data).then((ret) => {
+          this.formVisible = false
+          this.$refs.table.replace(data)
+        })
       })
-    },
-    handleDelete(row) {
-      const data = Object.assign({}, row)
-      this.confirmVisible = true
-      this.$emit('setModel', data)
     },
     deleteData() {
       const id = this.model.id
 
       this.deleteAction(id).then(() => {
-        for (const v of this.list) {
-          if (v.id === id) {
-            const index = this.list.indexOf(v)
-            this.list.splice(index, 1)
-            break
-          }
-        }
         this.confirmVisible = false
-        this.$notify({
-          title: '成功',
-          message: '删除成功',
-          type: 'success',
-          duration: 2000
-        })
+        this.$refs.table.delete(id)
       })
     },
     handlePopupInnerSearch() {
