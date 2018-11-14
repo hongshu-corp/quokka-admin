@@ -1,13 +1,9 @@
 <template>
-  <div>
-    <el-form-item v-for="(item, key) in schema" :key="`el-${key}`" v-bind="item">
-      <component
-        :is="getInputType(item)"
-        :value="value[key]"
-        v-bind="item"
-        @input="updateForm(key, $event)" />
-    </el-form-item>
-  </div>
+  <component
+    :is="getInputType(schema)"
+    :value="model[prop]"
+    v-bind="schema"
+    @input="updateForm(prop, $event)" />
 </template>
 
 <script>
@@ -16,16 +12,20 @@ import SelectInput from './select'
 import CheckboxInput from './checkbox'
 
 export default {
-  name: 'Inputs',
+  name: 'Input',
   components: { TextInput, SelectInput, CheckboxInput },
   props: {
+    model: {
+      type: Object,
+      default: () => {}
+    },
     schema: {
       type: Object,
       default: () => {}
     },
-    value: {
-      type: Object,
-      default: () => {}
+    prop: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     updateForm(key, newValue) {
-      this.$set(this.value, key, newValue)
+      this.$set(this.model, key, newValue)
     },
     getInputType(item) {
       if (this.TextInput.includes(item.type)) {

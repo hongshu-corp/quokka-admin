@@ -1,7 +1,9 @@
 <template>
   <div>
     <el-form ref="real" :rules="mergedRules" :model="value" label-position="left" label-width="70px" style="margin-left:50px;">
-      <inputs :schema="elements" v-model="value" />
+      <el-form-item v-for="(item, key) in elements" :key="`el${key}`" v-bind="item">
+        <smart-input :prop="key" :model="value" :schema="item" />
+      </el-form-item>
       <slot />
     </el-form>
 
@@ -14,12 +16,12 @@
 </template>
 
 <script>
-import Inputs from './inputs'
+import SmartInput from './inputs'
 import { buildFormElements, buildRules } from './helpers/builder'
 import { powerT } from './helpers/powerT'
 
 export default {
-  components: { Inputs },
+  components: { SmartInput },
   props: {
     rules: {
       type: Array,

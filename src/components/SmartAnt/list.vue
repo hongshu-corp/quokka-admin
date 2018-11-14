@@ -61,20 +61,14 @@
 </template>
 
 <script>
-import waves from '@/directive/waves' // 水波纹指令
-import Column from './columns'
 import SmartForm from './form'
 import SmartTable from './table'
-
 import { buildModel } from './helpers/builder'
 
 export default {
   name: 'SmartList',
-  components: { Column, SmartTable, SmartForm },
+  components: { SmartTable, SmartForm },
   filters: { },
-  directives: {
-    waves
-  },
   props: {
     model: {
       type: Object,
