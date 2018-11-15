@@ -189,7 +189,6 @@ export default {
     },
     selectionChange(data) {
       this.selected = data
-      console.log(this.selected)
     },
     powerT
   }
