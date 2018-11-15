@@ -880,11 +880,6 @@
   resolved "http://registry.npm.taobao.org/@types/strip-json-comments/download/@types/strip-json-comments-0.0.30.tgz#9aa30c04db212a9a0649d6ae6fd50accc40748a1"
   integrity sha1-mqMMBNshKpoGSdaub9UKzMQHSKE=
 
-"@types/tapable@1.0.2":
-  version "1.0.2"
-  resolved "http://registry.npm.taobao.org/@types/tapable/download/@types/tapable-1.0.2.tgz#e13182e1b69871a422d7863e11a4a6f5b814a4bd"
-  integrity sha1-4TGC4baYcaQi14Y+EaSm9bgUpL0=
-
 "@vue/babel-preset-app@^3.1.0":
   version "3.1.1"
   resolved "http://registry.npm.taobao.org/@vue/babel-preset-app/download/@vue/babel-preset-app-3.1.1.tgz#1bb6395c5ddc84bc8e993ace47151b0d95d382a7"
@@ -916,7 +911,7 @@
     "@vue/babel-preset-app" "^3.1.0"
     babel-loader "^8.0.4"
 
-"@vue/cli-plugin-e2e-cypress@^3.1.1":
+"@vue/cli-plugin-e2e-cypress@^3.1.2":
   version "3.1.2"
   resolved "http://registry.npm.taobao.org/@vue/cli-plugin-e2e-cypress/download/@vue/cli-plugin-e2e-cypress-3.1.2.tgz#0a9c852a5e86b4115857868011ce14afcec7c337"
   integrity sha1-CpyFKl6GtBFYV4aAEc4Ur87Hwzc=
@@ -925,7 +920,7 @@
     cypress "^3.1.0"
     eslint-plugin-cypress "^2.0.1"
 
-"@vue/cli-plugin-eslint@^3.1.1":
+"@vue/cli-plugin-eslint@^3.1.5":
   version "3.1.5"
   resolved "http://registry.npm.taobao.org/@vue/cli-plugin-eslint/download/@vue/cli-plugin-eslint-3.1.5.tgz#9143d3e8670ad6e73a408cafda9daba76559ddef"
   integrity sha1-kUPT6GcK1uc6QIyv2p2rp2VZ3e8=
@@ -950,7 +945,7 @@
     jest-transform-stub "^1.0.0"
     vue-jest "^3.0.0"
 
-"@vue/cli-service@^3.1.1":
+"@vue/cli-service@^3.1.4":
   version "3.1.4"
   resolved "http://registry.npm.taobao.org/@vue/cli-service/download/@vue/cli-service-3.1.4.tgz#04c84c1bb798db03e2c0fecc414d6a5f2954d602"
   integrity sha1-BMhMG7eY2wPiwP7MQU1qXylU1gI=
@@ -1822,7 +1817,7 @@ babel-code-frame@^6.22.0, babel-code-frame@^6.26.0:
     esutils "^2.0.2"
     js-tokens "^3.0.2"
 
-babel-core@6.26.3, babel-core@^6.0.0, babel-core@^6.26.0:
+babel-core@^6.0.0, babel-core@^6.26.0, babel-core@^6.26.3:
   version "6.26.3"
   resolved "http://registry.npm.taobao.org/babel-core/download/babel-core-6.26.3.tgz#b2e2f09e342d0f0c88e2f02e067794125e75c207"
   integrity sha1-suLwnjQtDwyI4vAuBneUEl51wgc=
@@ -6000,19 +5995,6 @@ html-minifier@^3.2.3:
     param-case "2.1.x"
     relateurl "0.2.x"
     uglify-js "3.4.x"
-
-html-webpack-plugin@4.0.0-alpha:
-  version "4.0.0-alpha"
-  resolved "http://registry.npm.taobao.org/html-webpack-plugin/download/html-webpack-plugin-4.0.0-alpha.tgz#b2c7b6d4885a209c999dfce3ffb9866e2c8c0eaa"
-  integrity sha1-sse21IhaIJyZnfzj/7mGbiyMDqo=
-  dependencies:
-    "@types/tapable" "1.0.2"
-    html-minifier "^3.2.3"
-    loader-utils "^1.1.0"
-    lodash "^4.17.10"
-    pretty-error "^2.0.2"
-    tapable "^1.0.0"
-    util.promisify "1.0.0"
 
 html-webpack-plugin@^3.2.0:
   version "3.2.0"
@@ -10402,12 +10384,12 @@ screenfull@3.3.3:
   resolved "http://registry.npm.taobao.org/screenfull/download/screenfull-3.3.3.tgz#8cf7e706aceac2e75131aadcb81b622acfe11d39"
   integrity sha1-jPfnBqzqwudRMarcuBtiKs/hHTk=
 
-script-ext-html-webpack-plugin@2.0.1:
-  version "2.0.1"
-  resolved "http://registry.npm.taobao.org/script-ext-html-webpack-plugin/download/script-ext-html-webpack-plugin-2.0.1.tgz#90ac3d77f1892ad9054c3752f0e4673607f6d9a3"
-  integrity sha1-kKw9d/GJKtkFTDdS8ORnNgf22aM=
+script-ext-html-webpack-plugin@^2.1.3:
+  version "2.1.3"
+  resolved "http://registry.npm.taobao.org/script-ext-html-webpack-plugin/download/script-ext-html-webpack-plugin-2.1.3.tgz#b4bf703cddbe3de2e6f483e19dfeba2b5ec4abfe"
+  integrity sha1-tL9wPN2+PeLm9IPhnf66K17Eq/4=
   dependencies:
-    debug "^3.1.0"
+    debug "^4.1.0"
 
 script-loader@0.7.2:
   version "0.7.2"
@@ -11924,7 +11906,7 @@ vue-template-es2015-compiler@^1.6.0:
   resolved "http://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.6.0.tgz#dc42697133302ce3017524356a6c61b7b69b4a18"
   integrity sha1-3EJpcTMwLOMBdSQ1amxht7abShg=
 
-vue@2.5.17:
+vue@^2.5.17:
   version "2.5.17"
   resolved "http://registry.npm.taobao.org/vue/download/vue-2.5.17.tgz#0f8789ad718be68ca1872629832ed533589c6ada"
   integrity sha1-D4eJrXGL5oyhhyYpgy7VM1icato=

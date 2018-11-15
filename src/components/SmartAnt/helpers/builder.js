@@ -64,3 +64,7 @@ export function buildDetailElements(schema, t) {
 
   return ret
 }
+
+export function buildSearchForm(schema, t) {
+  return null
+}
