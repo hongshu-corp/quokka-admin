@@ -225,7 +225,7 @@ export default {
       }
     },
     innerSearchConfirm() {
-      console.log(this.$refs.searchTable.selected)
+      this.$emit('inner-search-confirmed', this.$refs.searchTable.selected)
       this.searchVisible = false
     }
   }

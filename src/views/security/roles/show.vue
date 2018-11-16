@@ -30,6 +30,7 @@
         allow-inner-search
         show-path="/security/users"
         delete-button-text="移除"
+        @inner-search-confirmed="addUsersToCurrentRole"
         @setModel="setUserModel">
 
         <span />
@@ -79,6 +80,9 @@ export default {
     },
     getId() {
       return this.$route.params && this.$route.params.id
+    },
+    addUsersToCurrentRole(data) {
+      console.log(data)
     }
   }
 }
