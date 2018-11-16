@@ -14,7 +14,7 @@
       :schema="schema"
       @table-add="tableAdd"
       @table-search="()=>{}"
-      @inner-filter="searchVisible=true"
+      @inner-filter="searchVisible = true"
       @row-delete="rowDelete"
       @row-update="rowUpdate">
       <template slot="actions">
@@ -52,7 +52,7 @@
       </span>
     </el-dialog>
 
-    <el-dialog :visible.sync="searchVisible" title="查找">
+    <el-dialog :visible.sync="searchVisible" title="查找" @open="beforeSearchOpen">
       <smart-table
         ref="searchTable"
         :list-action="innerSearchAction"
@@ -60,6 +60,9 @@
         :has-actions="false"
         allow-select
         allow-search />
+      <div slot="footer" class="dialog-footer">
+        <el-button v-if="allowInnerSearch" type="danger" @click="innerSearchConfirm">{{ $t('table.confirm') }}</el-button>
+      </div>
     </el-dialog>
 
     <slot name="expand" />
@@ -215,6 +218,15 @@ export default {
         this.confirmVisible = false
         this.$refs.table.delete(id)
       })
+    },
+    beforeSearchOpen() {
+      if (this.$refs.searchTable) {
+        this.$refs.searchTable.clearSelection()
+      }
+    },
+    innerSearchConfirm() {
+      console.log(this.$refs.searchTable.selected)
+      this.searchVisible = false
     }
   }
 }

@@ -201,6 +201,10 @@ export default {
     selectionChange(data) {
       this.selected = data
     },
+    clearSelection() {
+      this.$refs.table.clearSelection()
+      this.selected = []
+    },
     searchFormSearch() {
       console.log(this.listQuery)
     },
