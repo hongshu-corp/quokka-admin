@@ -30,6 +30,10 @@
           @input="updateQuery(scope)"
           @keyup.enter.native="handleFilter" />
       </template>
+
+      <template slot="form-search">
+        <!-- your custom here -->
+      </template>
     </smart-list>
   </div>
 </template>

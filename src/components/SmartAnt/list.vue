@@ -24,6 +24,10 @@
       <template slot="columns">
         <slot name="table-columns" />
       </template>
+
+      <template slot="table-search">
+        <slot name="form-search" />
+      </template>
       <span />
     </smart-table>
 

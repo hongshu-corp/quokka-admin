@@ -22,9 +22,11 @@ const user = {
           required: true,
           message: '名称是必须的',
           trigger: 'blur'
-        }]
+        }],
+        placeholder: '名字'
       },
-      detail: true
+      detail: true,
+      searchable: true
     },
     email: {
       default: '',
@@ -46,9 +48,11 @@ const user = {
           required: true,
           message: '邮箱是必须的',
           trigger: 'blur'
-        }]
+        }],
+        placeholder: '邮箱'
       },
-      detail: true
+      detail: true,
+      searchable: true
     },
     password: {
       default: '',

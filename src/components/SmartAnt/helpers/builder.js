@@ -66,5 +66,16 @@ export function buildDetailElements(schema, t) {
 }
 
 export function buildSearchForm(schema, t) {
-  return null
+  const filter = _.pickBy(schema.props, (x) => _.has(x, 'searchable'))
+  var ret = {}
+
+  for (var key in filter) {
+    ret[key] = filter[key].form
+    ret[key].label = t(schema.name, key)
+    ret[key].type = ret[key].type || filter[key].type
+    ret[key].options = ret[key].options || filter[key].options
+    ret[key].prop = key
+  }
+
+  return ret
 }

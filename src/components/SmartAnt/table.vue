@@ -2,7 +2,18 @@
   <div>
     <div class="filter-container">
       <slot :v-bind="listQuery" name="filter" />
-      <el-button v-waves v-if="allowSearch" class="filter-item" type="primary" icon="el-icon-search" @click="clickSearch">{{ $t('table.search') }}</el-button>
+      <!-- search form begin-->
+      <smart-search
+        v-if="allowSearch"
+        v-model="listQuery"
+        :schema="schema"
+        style="display: inline-flex;"
+        @form-search="searchFormSearch"
+        @form-clear="searchFormClear">
+
+        <slot name="table-search" />
+
+      </smart-search>
       <el-button v-waves v-if="allowAdd" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="clickAdd">{{ $t('table.add') }}</el-button>
       <el-button v-waves v-if="allowInnerFilter" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="clickInnerFilter">{{ $t('table.add') }}</el-button>
     </div>
@@ -49,6 +60,7 @@
 <script>
 import waves from '@/directive/waves' // 水波纹指令
 import SmartColumn from './columns'
+import SmartSearch from './searchForm'
 import { powerT } from './helpers/powerT'
 
 import { buildColumns } from './helpers/builder'
@@ -56,7 +68,7 @@ import Pagination from '@/components/Pagination'
 
 export default {
   name: 'SmartTable',
-  components: { SmartColumn, Pagination },
+  components: { SmartColumn, SmartSearch, Pagination },
   directives: {
     waves
   },
@@ -114,8 +126,7 @@ export default {
       selected: [],
       listQuery: {
         page: 1,
-        limit: 20,
-        name: undefined
+        limit: 20
       }
     }
   },
@@ -189,6 +200,14 @@ export default {
     },
     selectionChange(data) {
       this.selected = data
+    },
+    searchFormSearch() {
+      console.log(this.listQuery)
+    },
+    searchFormClear() {
+      const pagePram = { page: this.listQuery.page, limit: this.listQuery.limit }
+
+      this.listQuery = Object.assign({}, pagePram)
     },
     powerT
   }
