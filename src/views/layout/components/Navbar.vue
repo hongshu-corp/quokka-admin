@@ -133,15 +133,16 @@ export default {
       height: 50px;
       margin-right: 30px;
       .avatar-wrapper {
-        cursor: pointer;
         margin-top: 5px;
         position: relative;
         .user-avatar {
+          cursor: pointer;
           width: 40px;
           height: 40px;
           border-radius: 10px;
         }
         .el-icon-caret-bottom {
+          cursor: pointer;
           position: absolute;
           right: -20px;
           top: 25px;
