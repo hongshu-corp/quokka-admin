@@ -1,9 +1,11 @@
 <template>
   <el-input-number
+    :name="name"
     :value="value"
     :step="step"
     :min="min"
     :max="max"
+    :precision="precision"
     :placeholder="placeholder"
     @input="handleInput" />
 </template>
@@ -11,6 +13,10 @@
 export default {
   name: 'InputNumber',
   props: {
+    name: {
+      type: String,
+      default: ''
+    },
     value: {
       type: Number,
       default: 0
@@ -22,6 +28,10 @@ export default {
     step: {
       type: Number,
       default: 1
+    },
+    precision: {
+      type: Number,
+      default: undefined
     },
     min: {
       type: Number,

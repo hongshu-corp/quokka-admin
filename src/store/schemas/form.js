@@ -16,6 +16,16 @@ const form = {
         max: 100,
         step: 2
       }
+    },
+    email: {
+      default: false,
+      type: 'switch',
+      form: {
+        inactiveText: 'inactive',
+        activeText: 'active',
+        activeValue: true,
+        inactiveValue: false
+      }
     }
   }
 }

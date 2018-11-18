@@ -2,6 +2,7 @@
   <component
     :is="getInputType(schema)"
     :value="model[prop]"
+    :name="prop"
     v-bind="schema"
     @input="updateForm(prop, $event)" />
 </template>
@@ -11,10 +12,17 @@ import TextInput from './text'
 import SelectInput from './select'
 import CheckboxInput from './checkbox'
 import NumberInput from './number'
+import SwitchInput from './switch'
 
 export default {
   name: 'Input',
-  components: { TextInput, SelectInput, CheckboxInput, NumberInput },
+  components: {
+    TextInput,
+    SelectInput,
+    CheckboxInput,
+    NumberInput,
+    SwitchInput
+  },
   props: {
     model: {
       type: Object,
