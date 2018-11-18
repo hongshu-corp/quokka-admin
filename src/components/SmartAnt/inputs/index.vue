@@ -10,10 +10,11 @@
 import TextInput from './text'
 import SelectInput from './select'
 import CheckboxInput from './checkbox'
+import NumberInput from './number'
 
 export default {
   name: 'Input',
-  components: { TextInput, SelectInput, CheckboxInput },
+  components: { TextInput, SelectInput, CheckboxInput, NumberInput },
   props: {
     model: {
       type: Object,
@@ -30,7 +31,7 @@ export default {
   },
   data() {
     return {
-      TextInput: ['text', 'password', 'email', 'date', 'datetime-local', 'number', 'tel', 'url']
+      TextInput: ['text', 'password', 'email', 'date', 'datetime-local', 'tel', 'url']
     }
   },
   methods: {

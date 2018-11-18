@@ -73,7 +73,9 @@ export default {
     roleAll: '角色列表',
     userAll: '用户列表',
     permissionAll: '权限列表',
-    userDetail: '用户详情'
+    userDetail: '用户详情',
+
+    formtest: '测试页面'
   },
   navbar: {
     logOut: '退出登录',

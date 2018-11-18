@@ -41,7 +41,16 @@ const securityRouter = {
       name: 'Roledetail',
       meta: { title: 'roleDetail', noCache: true },
       hidden: true
+    },
+
+    // test
+    {
+      path: 'test',
+      component: () => import('@/views/security/users/test'),
+      name: 'formtest',
+      meta: { title: 'formtest' }
     }
+
   ]
 }
 
