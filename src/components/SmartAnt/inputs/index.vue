@@ -15,6 +15,7 @@ import NumberInput from './number'
 import SwitchInput from './switch'
 import DatetimeInput from './datetime'
 import TimeInput from './time'
+import SliderInput from './slider'
 
 export default {
   name: 'Input',
@@ -25,7 +26,8 @@ export default {
     NumberInput,
     SwitchInput,
     DatetimeInput,
-    TimeInput
+    TimeInput,
+    SliderInput
   },
   props: {
     model: {
