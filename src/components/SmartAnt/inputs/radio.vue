@@ -1,17 +1,22 @@
 <template>
-  <el-checkbox-group
+  <el-radio-group
     v-model="goat"
     @click="handleClick"
     @change="handleChange">
-    <el-checkbox v-for="option in getOptions()" :label="option[keyProperty]" :key="option[valueProperty]">{{ option[valueProperty] }}</el-checkbox>
-  </el-checkbox-group>
+    <template v-if="isButton">
+      <el-radio-button v-for="(option, index) in getOptions()" :label="option[keyProperty]" :key="index">{{ option[valueProperty] }}</el-radio-button>
+    </template>
+    <template v-else>
+      <el-radio v-for="(option, index) in getOptions()" :label="option[keyProperty]" :key="index">{{ option[valueProperty] }}</el-radio>
+    </template>
+  </el-radio-group>
 </template>
 <script>
 import request from '@/utils/request'
 import mixin from '../mixin/input'
 
 export default {
-  name: 'CheckboxInput',
+  name: 'RadioInput',
   mixins: [mixin],
   props: {
     dataUrl: {
@@ -22,10 +27,8 @@ export default {
       type: String,
       default: 'get'
     },
-    value: {
-      type: Array,
-      default: () => []
-    },
+    // eslint-disable-next-line
+    value: [String, Number, Boolean],
     options: {
       type: Array,
       default: () => []
@@ -37,6 +40,10 @@ export default {
     valueProperty: {
       type: String,
       default: 'name'
+    },
+    isButton: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

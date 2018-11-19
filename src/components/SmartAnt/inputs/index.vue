@@ -16,6 +16,7 @@ import SwitchInput from './switch'
 import DatetimeInput from './datetime'
 import TimeInput from './time'
 import SliderInput from './slider'
+import RadioInput from './radio'
 
 export default {
   name: 'Input',
@@ -27,7 +28,8 @@ export default {
     SwitchInput,
     DatetimeInput,
     TimeInput,
-    SliderInput
+    SliderInput,
+    RadioInput
   },
   props: {
     model: {
