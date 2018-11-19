@@ -1,7 +1,7 @@
 <template>
   <el-input-number
+    v-model="goat"
     :name="name"
-    :value="value"
     :step="step"
     :min="min"
     :max="max"
@@ -10,8 +10,11 @@
     @input="handleInput" />
 </template>
 <script>
+import mixin from '../mixin/input'
+
 export default {
   name: 'InputNumber',
+  mixins: [mixin],
   props: {
     name: {
       type: String,

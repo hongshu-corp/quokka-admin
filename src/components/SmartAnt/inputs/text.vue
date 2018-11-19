@@ -1,13 +1,16 @@
 <template>
   <el-input
-    :value="value"
+    v-model="goat"
     :type="type"
     :placeholder="placeholder"
     @input="handleInput" />
 </template>
 <script>
+import mixin from '../mixin/input.js'
+
 export default {
   name: 'TextInput',
+  mixins: [mixin],
   props: {
     placeholder: {
       type: String,

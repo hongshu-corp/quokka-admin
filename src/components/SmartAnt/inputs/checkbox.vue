@@ -1,6 +1,6 @@
 <template>
   <el-checkbox-group
-    v-model="value"
+    v-model="goat"
     @click="handleClick"
     @change="handleChange">
     <el-checkbox v-for="option in getOptions()" :label="option[keyProperty]" :key="option[valueProperty]">{{ option[valueProperty] }}</el-checkbox>
@@ -8,9 +8,11 @@
 </template>
 <script>
 import request from '@/utils/request'
+import mixin from '../mixin/input'
 
 export default {
   name: 'CheckboxInput',
+  mixins: [mixin],
   props: {
     dataUrl: {
       type: String,

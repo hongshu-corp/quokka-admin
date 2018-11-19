@@ -1,6 +1,6 @@
 <template>
   <el-switch
-    :value="value"
+    v-model="goat"
     :active-value="activeValue"
     :inactive-value="inactiveValue"
     :active-text="activeText"
@@ -8,8 +8,11 @@
     @change="handleChange" />
 </template>
 <script>
+import mixin from '../mixin/input'
+
 export default {
   name: 'SwitchInput',
+  mixins: [mixin],
   props: {
     // eslint-disable-next-line
     value: [Boolean, String, Number],

@@ -1,5 +1,5 @@
 <template>
-  <el-select :value="value" :placeholder="placeholder" filterable @change="handleInput">
+  <el-select v-model="goat" :placeholder="placeholder" filterable @change="handleInput">
     <el-option
       v-for="item in options"
       :key="item.value"
@@ -8,8 +8,11 @@
   </el-select>
 </template>
 <script>
+import mixin from '../mixin/input'
+
 export default {
   name: 'SelectInput',
+  mixins: [mixin],
   props: {
     placeholder: {
       type: String,
