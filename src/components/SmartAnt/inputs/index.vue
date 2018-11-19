@@ -48,7 +48,7 @@ export default {
   data() {
     return {
       map: {
-        TextInput: ['text', 'password', 'email', 'tel', 'url'],
+        TextInput: ['text', 'password', 'email', 'tel', 'url', 'textarea'],
         DatetimeInput: ['date', 'datetime']
       }
     }

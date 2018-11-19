@@ -5,6 +5,7 @@
     :inactive-value="inactiveValue"
     :active-text="activeText"
     :inactive-text="inactiveText"
+    :disabled="disabled"
     @change="handleChange" />
 </template>
 <script>

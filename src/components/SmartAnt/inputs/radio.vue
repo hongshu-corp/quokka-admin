@@ -1,6 +1,8 @@
 <template>
   <el-radio-group
     v-model="goat"
+    :disabled="disabled"
+    :size="size"
     @click="handleClick"
     @change="handleChange">
     <template v-if="isButton">

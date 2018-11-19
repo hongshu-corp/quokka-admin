@@ -3,6 +3,8 @@
     v-model="goat"
     :type="type"
     :placeholder="placeholder"
+    :disabled="disabled"
+    :size="size"
     @input="handleInput" />
 </template>
 <script>
@@ -12,10 +14,6 @@ export default {
   name: 'TextInput',
   mixins: [mixin],
   props: {
-    placeholder: {
-      type: String,
-      default: ''
-    },
     value: {
       type: String,
       default: ''

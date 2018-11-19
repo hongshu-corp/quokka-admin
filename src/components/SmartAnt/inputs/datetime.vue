@@ -2,6 +2,7 @@
   <el-date-picker
     v-model="goat"
     :name="name"
+    :disabled="disabled"
     :picker-options="options"
     :placeholder="placeholder"
     :type="type"
@@ -15,23 +16,11 @@ export default {
   name: 'DatetimeInput',
   mixins: [mixin],
   props: {
-    name: {
-      type: String,
-      default: ''
-    },
     // eslint-disable-next-line
     value: [String, Date],
-    placeholder: {
-      type: String,
-      default: undefined
-    },
     format: {
       type: String,
       default: 'yyyy-MM-dd'
-    },
-    size: {
-      type: String,
-      default: 'small'
     },
     options: {
       type: Object,

@@ -5,6 +5,7 @@
     :step="step"
     :min="min"
     :max="max"
+    :disabled="disabled"
     :precision="precision"
     :placeholder="placeholder"
     @input="handleInput" />
@@ -16,17 +17,9 @@ export default {
   name: 'InputNumber',
   mixins: [mixin],
   props: {
-    name: {
-      type: String,
-      default: ''
-    },
     value: {
       type: Number,
       default: 0
-    },
-    placeholder: {
-      type: String,
-      default: ''
     },
     step: {
       type: Number,
@@ -35,14 +28,6 @@ export default {
     precision: {
       type: Number,
       default: undefined
-    },
-    min: {
-      type: Number,
-      default: 0
-    },
-    max: {
-      type: Number,
-      default: Infinity
     }
   },
   methods: {

@@ -5,6 +5,7 @@
     :picker-options="options"
     :placeholder="placeholder"
     :size="size"
+    :disabled="disabled"
     @change="handleChange" />
 </template>
 <script>
@@ -14,21 +15,9 @@ export default {
   name: 'TimeInput',
   mixins: [mixin],
   props: {
-    name: {
-      type: String,
-      default: ''
-    },
     value: {
       type: String,
       default: ''
-    },
-    placeholder: {
-      type: String,
-      default: undefined
-    },
-    size: {
-      type: String,
-      default: 'small'
     },
     options: {
       type: Object,

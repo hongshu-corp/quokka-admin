@@ -1,6 +1,8 @@
 <template>
   <el-checkbox-group
     v-model="goat"
+    :disabled="disabled"
+    :size="size"
     @click="handleClick"
     @change="handleChange">
     <el-checkbox v-for="option in getOptions()" :label="option[keyProperty]" :key="option[valueProperty]">{{ option[valueProperty] }}</el-checkbox>

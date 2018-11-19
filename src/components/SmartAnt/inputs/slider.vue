@@ -6,6 +6,8 @@
     :step="step"
     :min="min"
     :max="max"
+    :input-size="size"
+    :disabled="disabled"
     @change="handleChange" />
 </template>
 <script>
@@ -15,17 +17,9 @@ export default {
   name: 'SliderInput',
   mixins: [mixin],
   props: {
-    name: {
-      type: String,
-      default: ''
-    },
     value: {
       type: Number,
       default: 0
-    },
-    placeholder: {
-      type: String,
-      default: undefined
     },
     step: {
       type: Number,

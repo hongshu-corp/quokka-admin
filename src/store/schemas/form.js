@@ -37,6 +37,7 @@ const form = {
     updatedTime: {
       type: 'time',
       form: {
+        disabled: true
       }
     }
   }

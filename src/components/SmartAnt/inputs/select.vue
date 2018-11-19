@@ -1,5 +1,11 @@
 <template>
-  <el-select v-model="goat" :placeholder="placeholder" filterable @change="handleInput">
+  <el-select
+    v-model="goat"
+    :placeholder="placeholder"
+    :disabled="disabled"
+    :size="size"
+    filterable
+    @change="handleInput">
     <el-option
       v-for="item in options"
       :key="item.value"
@@ -14,10 +20,6 @@ export default {
   name: 'SelectInput',
   mixins: [mixin],
   props: {
-    placeholder: {
-      type: String,
-      default: ''
-    },
     value: {
       type: String,
       default: ''
