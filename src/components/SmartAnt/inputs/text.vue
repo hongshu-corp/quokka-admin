@@ -5,6 +5,7 @@
     :placeholder="placeholder"
     :disabled="disabled"
     :size="size"
+    :rows="rows"
     @input="handleInput" />
 </template>
 <script>
@@ -21,6 +22,10 @@ export default {
     type: {
       type: String,
       default: 'text'
+    },
+    rows: {
+      type: Number,
+      default: 2
     }
   },
   methods: {

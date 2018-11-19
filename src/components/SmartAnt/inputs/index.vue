@@ -17,6 +17,7 @@ import DatetimeInput from './datetime'
 import TimeInput from './time'
 import SliderInput from './slider'
 import RadioInput from './radio'
+import RateInput from './rate'
 
 export default {
   name: 'Input',
@@ -29,7 +30,8 @@ export default {
     DatetimeInput,
     TimeInput,
     SliderInput,
-    RadioInput
+    RadioInput,
+    RateInput
   },
   props: {
     model: {
