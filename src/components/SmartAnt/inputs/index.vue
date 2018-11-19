@@ -13,6 +13,7 @@ import SelectInput from './select'
 import CheckboxInput from './checkbox'
 import NumberInput from './number'
 import SwitchInput from './switch'
+import DateInput from './date'
 
 export default {
   name: 'Input',
@@ -21,7 +22,8 @@ export default {
     SelectInput,
     CheckboxInput,
     NumberInput,
-    SwitchInput
+    SwitchInput,
+    DateInput
   },
   props: {
     model: {
@@ -39,7 +41,7 @@ export default {
   },
   data() {
     return {
-      TextInput: ['text', 'password', 'email', 'date', 'datetime-local', 'tel', 'url']
+      TextInput: ['text', 'password', 'email', 'tel', 'url']
     }
   },
   methods: {

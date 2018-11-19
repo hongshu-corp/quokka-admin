@@ -26,6 +26,12 @@ const form = {
         activeValue: true,
         inactiveValue: false
       }
+    },
+    createdTime: {
+      type: 'date',
+      form: {
+        placeholder: '请选择时间'
+      }
     }
   }
 }

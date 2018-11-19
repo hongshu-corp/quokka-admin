@@ -38,7 +38,12 @@
         :schema="schema"
         :rules="rules"
         @form-ok="formStatus==='create'?createData():updateData()"
-        @form-cancel="formVisible = false" />
+        @form-cancel="formVisible = false">
+        <template>
+          <slot name="form" />
+        </template>
+      </smart-form>
+
     </el-dialog>
 
     <el-dialog

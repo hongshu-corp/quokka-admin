@@ -14,7 +14,11 @@
       @setModel="setUserModel">
 
       <template slot="form-search">
-        <!-- your custom here -->
+        <!-- your custom form search here -->
+      </template>
+
+      <template slot="form">
+        <!-- your custom form here -->
       </template>
     </smart-list>
   </div>
