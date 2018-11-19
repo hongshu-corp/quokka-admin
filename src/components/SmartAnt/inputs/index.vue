@@ -14,6 +14,7 @@ import CheckboxInput from './checkbox'
 import NumberInput from './number'
 import SwitchInput from './switch'
 import DatetimeInput from './datetime'
+import TimeInput from './time'
 
 export default {
   name: 'Input',
@@ -23,7 +24,8 @@ export default {
     CheckboxInput,
     NumberInput,
     SwitchInput,
-    DatetimeInput
+    DatetimeInput,
+    TimeInput
   },
   props: {
     model: {
@@ -38,9 +40,6 @@ export default {
       type: String,
       default: ''
     }
-  },
-  created() {
-    console.log(this.schema)
   },
   data() {
     return {
