@@ -4,8 +4,7 @@
     :name="name"
     :picker-options="options"
     :placeholder="placeholder"
-    :format="format"
-    :type="pickerType"
+    :type="type"
     :size="size"
     @change="handleChange" />
 </template>
@@ -13,7 +12,7 @@
 import mixin from '../mixin/input.js'
 
 export default {
-  name: 'DateInput',
+  name: 'DatetimeInput',
   mixins: [mixin],
   props: {
     name: {
@@ -64,7 +63,7 @@ export default {
         }
       }
     },
-    pickerType: {
+    type: {
       type: String,
       // Available types: year/month/date/dates/ week/datetime/datetimerange/daterange
       default: 'date'

@@ -13,7 +13,7 @@ import SelectInput from './select'
 import CheckboxInput from './checkbox'
 import NumberInput from './number'
 import SwitchInput from './switch'
-import DateInput from './date'
+import DatetimeInput from './datetime'
 
 export default {
   name: 'Input',
@@ -23,7 +23,7 @@ export default {
     CheckboxInput,
     NumberInput,
     SwitchInput,
-    DateInput
+    DatetimeInput
   },
   props: {
     model: {
@@ -39,9 +39,15 @@ export default {
       default: ''
     }
   },
+  created() {
+    console.log(this.schema)
+  },
   data() {
     return {
-      TextInput: ['text', 'password', 'email', 'tel', 'url']
+      map: {
+        TextInput: ['text', 'password', 'email', 'tel', 'url'],
+        DatetimeInput: ['date', 'datetime']
+      }
     }
   },
   methods: {
@@ -49,8 +55,10 @@ export default {
       this.$set(this.model, key, newValue)
     },
     getInputType(item) {
-      if (this.TextInput.includes(item.type)) {
-        return 'TextInput'
+      for (var key in this.map) {
+        if (this.map[key].includes(item.type)) {
+          return key
+        }
       }
 
       return `${item.type}Input`

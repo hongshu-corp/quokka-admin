@@ -30,7 +30,8 @@ const form = {
     createdTime: {
       type: 'date',
       form: {
-        placeholder: '请选择时间'
+        placeholder: '请选择时间',
+        type: 'datetime'
       }
     }
   }
