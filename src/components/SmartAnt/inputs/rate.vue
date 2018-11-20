@@ -29,11 +29,11 @@ export default {
     },
     colors: {
       type: Array,
-      default: ['#99A9BF', '#F7BA2A', '#FF9900']
+      default: () => ['#99A9BF', '#F7BA2A', '#FF9900']
     },
     iconClasses: {
       type: Array,
-      default: ['icon-rate-face-1', 'icon-rate-face-2', 'icon-rate-face-3']
+      default: () => ['icon-rate-face-1', 'icon-rate-face-2', 'icon-rate-face-3']
     }
   },
   methods: {
