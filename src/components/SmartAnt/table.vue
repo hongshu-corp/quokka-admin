@@ -193,8 +193,9 @@ export default {
       const data = Object.assign({}, row)
       this.$emit('row-delete', data)
     },
-    rowClick(row) {
-      if (this.allowSelect) {
+    rowClick(row, event, column) {
+      var last = this.$t('table.actions')
+      if (this.allowSelect && column.label !== last) {
         this.$refs.table.toggleRowSelection(row)
       }
     },
