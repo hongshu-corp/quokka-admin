@@ -84,9 +84,9 @@ export default {
       })
     },
     reloadSchema() {
-      this.$store.dispatch('initSchema')
-
-      location.reload()
+      this.$store.dispatch('initSchema').then(() => {
+        location.reload()
+      })
     }
   }
 }

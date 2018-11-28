@@ -5,7 +5,6 @@ export function loginByUsername(username, password) {
     username,
     password
   }
-  console.log(data)
 
   return request({
     url: '/login',
@@ -29,3 +28,10 @@ export function getUserInfo(token) {
   })
 }
 
+export function getSchemas(token) {
+  return request({
+    url: '/schemas',
+    method: 'get',
+    params: { token }
+  })
+}
