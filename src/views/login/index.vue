@@ -36,6 +36,33 @@
           <svg-icon icon-class="eye" />
         </span>
       </el-form-item>
+      <el-form-item prop="authCode">
+        <el-row :span="24">
+          <el-col :span="16">
+            <el-input
+              v-model="loginForm.authCode"
+              :placeholder="$t('login.authCode')"
+              name="authCode"
+              type="text"
+              auto-complete="false"
+              @keyup.enter.native="handleLogin" />
+          </el-col>
+          <el-col :span="8">
+            <div class="login-code">
+              <span
+                v-if="code.type == 'text'"
+                class="login-code-img"
+                @click="refreshAuthCode">{{ code.value }}</span>
+              <img
+                v-else
+                :src="code.src"
+                class="login-code-img"
+                @click="refreshAuthCode">
+            </div>
+          </el-col>
+        </el-row>
+
+      </el-form-item>
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">{{ $t('login.logIn') }}</el-button>
 
@@ -57,6 +84,7 @@
 // import { isvalidUsername } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
 import SocialSign from './socialsignin'
+import { randomString } from '@/utils'
 
 export default {
   name: 'Login',
@@ -80,12 +108,20 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: 'foofoo'
+        password: 'foofoo',
+        authCode: '',
+        random: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
+      code: {
+        src: '',
+        value: '',
+        type: 'image'
+      },
+      codeUrl: '/code',
       passwordType: 'password',
       loading: false,
       showDialog: false,
@@ -102,6 +138,7 @@ export default {
 
   },
   created() {
+    this.refreshAuthCode()
     // window.addEventListener('hashchange', this.afterQRScan)
   },
   destroyed() {
@@ -133,6 +170,11 @@ export default {
           return false
         }
       })
+    },
+    refreshAuthCode() {
+      this.loginForm.code = ''
+      this.loginForm.random = randomString()
+      this.code.src = `${process.env.BASE_API}${this.codeUrl}?random=${this.loginForm.random}`
     },
     afterQRScan() {
       // const hash = window.location.hash.slice(1)

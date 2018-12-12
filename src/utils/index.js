@@ -289,3 +289,10 @@ export function uniqueArr(arr) {
 export function isExternal(path) {
   return /^(https?:|mailto:|tel:)/.test(path)
 }
+
+export const randomString = (length = 4, withDate = true) => {
+  let random = Math.ceil(Math.random() * 100000000000000).toString().substr(0, length)
+  if (withDate) { random = random + Date.now() }
+
+  return random
+}
