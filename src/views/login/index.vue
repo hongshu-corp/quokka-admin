@@ -48,7 +48,7 @@
               @keyup.enter.native="handleLogin" />
           </el-col>
           <el-col :span="8">
-            <div class="login-code">
+            <div style="height:50px;">
               <span
                 v-if="code.type == 'text'"
                 class="login-code-img"
@@ -156,15 +156,16 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
+
           this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
             this.loading = false
+            this.loginForm.authCode = ''
             this.$router.push({ path: this.redirect || '/' })
+            // init the schema
+            this.$store.dispatch('initSchema')
           }).catch(() => {
             this.loading = false
           })
-
-          // init the schema
-          this.$store.dispatch('initSchema')
         } else {
           console.log('error submit!!')
           return false
@@ -172,7 +173,7 @@ export default {
       })
     },
     refreshAuthCode() {
-      this.loginForm.code = ''
+      this.loginForm.authCode = ''
       this.loginForm.random = randomString()
       this.code.src = `${process.env.BASE_API}${this.codeUrl}?random=${this.loginForm.random}`
     },

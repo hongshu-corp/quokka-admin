@@ -49,7 +49,7 @@ const user = {
       const username = userInfo.username.trim()
 
       return new Promise((resolve, reject) => {
-        loginByUsername(username, userInfo.password).then(response => {
+        loginByUsername(username, userInfo.password, userInfo.authCode, userInfo.random).then(response => {
           const token = response.headers.authorization
           commit('SET_TOKEN', token)
           setToken(token)
