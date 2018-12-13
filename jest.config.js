@@ -13,7 +13,8 @@ module.exports = {
     '.+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$': 'jest-transform-stub'
   },
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1'
+    '^@/(.*)$': '<rootDir>/src/$1',
+    '^tests/(.*)$': '<rootDir>/tests/$1'
   },
   snapshotSerializers: [
     'jest-serializer-vue'

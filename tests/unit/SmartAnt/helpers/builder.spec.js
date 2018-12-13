@@ -1,4 +1,4 @@
-import { buildSearchForm } from '@/components/smartAnt/helpers/bulder.js'
+import { buildSearchForm } from '@/components/SmartAnt/helpers/builder.js'
 import data from './data/schema.js'
 
 const mockT = jest.fn(x => x)
