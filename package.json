@@ -1,5 +1,5 @@
 {
-  "name": "genesisfin-backend-admin",
+  "name": "backend-admin",
   "version": "1.0.0",
   "description": "",
   "author": "jeremy cui<tsuijy@gmail.com>",
@@ -25,11 +25,11 @@
     "element-ui",
     "admin",
     "management-system",
-    "admin-template"
+    "crud"
   ],
   "repository": {
     "type": "git",
-    "url": "git://git.hongshu.info/genesisfin/backend-admin.git"
+    "url": "git://github.com/hongshu-corp/backend-admin.git"
   },
   "dependencies": {
     "axios": "0.18.0",
