@@ -4,5 +4,10 @@
 
 ## 开始
 yarn
+
 yarn dev
 请查看左侧栏安全模块。
+
+## 启动后端 API
+地址：https://github.com/hongshu-corp/backend-api
+使用正确的用户名密码登陆后可看到效果。
