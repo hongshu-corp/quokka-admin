@@ -62,6 +62,12 @@ service.interceptors.response.use(
   //   }
   // },
   error => {
+    if (error.response && error.response.status === 403) {
+      store.dispatch('FedLogOut').then(() => {
+        location.reload()
+      })
+    }
+
     console.log('err' + error) // for debug
     Message({
       message: error.message,
